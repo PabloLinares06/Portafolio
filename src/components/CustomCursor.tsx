@@ -56,17 +56,17 @@ export default function CustomCursor() {
     <motion.div
       className="fixed top-0 left-0 rounded-full pointer-events-none z-[200] hidden md:block"
       animate={{
-        width: isHovering ? 48 : 28,
-        height: isHovering ? 48 : 28,
-        x: position.x - (isHovering ? 24 : 14),
-        y: position.y - (isHovering ? 24 : 14),
+        width: isHovering ? 64 : 24,
+        height: isHovering ? 64 : 24,
+        x: position.x - (isHovering ? 32 : 12),
+        y: position.y - (isHovering ? 32 : 12),
         opacity: isVisible ? 1 : 0,
-        backgroundColor: isHovering ? 'rgba(0, 112, 243, 0.9)' : 'rgba(0, 0, 0, 0)',
-        borderColor: isHovering ? 'rgba(0, 112, 243, 0.9)' : 'rgba(0, 112, 243, 0.8)',
-        mixBlendMode: isHovering ? 'normal' : 'normal',
+        backgroundColor: isHovering ? 'rgba(255, 255, 255, 1)' : 'rgba(255, 255, 255, 0)',
+        borderWidth: isHovering ? 0 : 1.5,
+        mixBlendMode: isHovering ? 'difference' : 'difference',
       }}
       transition={{ type: 'spring', damping: 25, stiffness: 300, mass: 0.4 }}
-      style={{ border: '1.5px solid rgba(0, 112, 243, 0.8)' }}
+      style={{ borderColor: 'rgba(0, 112, 243, 0.8)', borderStyle: 'solid' }}
     />
   );
 }
