@@ -19,8 +19,8 @@ export default function HeroBackground() {
     let lastWidth = window.innerWidth;
 
     const resize = () => {
-      // Evitar re-inicializar si solo cambió la altura (común en scroll móvil por la barra de direcciones)
-      if (window.innerWidth === lastWidth && isMobile) {
+      // Si ya hay partículas y el ancho es el mismo en móvil, solo actualizamos el canvas sin resetear
+      if (particles.length > 0 && window.innerWidth === lastWidth && isMobile) {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         return; 
