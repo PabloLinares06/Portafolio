@@ -16,7 +16,17 @@ export default function HeroBackground() {
     let animationFrameId: number;
     let mouse = { x: -1000, y: -1000 };
 
+    let lastWidth = window.innerWidth;
+
     const resize = () => {
+      // Evitar re-inicializar si solo cambió la altura (común en scroll móvil por la barra de direcciones)
+      if (window.innerWidth === lastWidth && isMobile) {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        return; 
+      }
+      
+      lastWidth = window.innerWidth;
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       initParticles();
