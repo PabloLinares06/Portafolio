@@ -128,7 +128,7 @@ export default function Hero() {
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.5, delay: 1.2 }}
-          className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 mt-4 w-full sm:w-auto"
+          className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 mt-8 w-full sm:w-auto"
         >
           <a
             href="#projects"
@@ -152,7 +152,7 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2.2, duration: 1 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
         <span className="text-[10px] font-mono text-gray-600 uppercase tracking-widest">Scroll</span>
         <motion.div
