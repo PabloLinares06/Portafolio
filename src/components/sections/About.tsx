@@ -52,7 +52,7 @@ export default function About() {
         </h2>
 
         {/* Stats row */}
-        <div className="grid grid-cols-3 gap-6 md:gap-10 border-t border-white/5 pt-12">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-10 border-t border-white/5 pt-12">
           {stats.map((stat, i) => (
             <motion.div
               key={stat.label}
@@ -60,12 +60,12 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.12 }}
-              className="flex flex-col gap-3"
+              className="flex flex-col gap-2 sm:gap-3"
             >
-              <span className="text-4xl md:text-5xl font-black text-white tracking-tighter">
+              <span className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tighter">
                 {stat.value}
               </span>
-              <span className="text-gray-400 font-mono text-xs md:text-sm uppercase tracking-widest leading-tight">
+              <span className="text-gray-400 font-mono text-[10px] sm:text-xs md:text-sm uppercase tracking-widest leading-tight">
                 {stat.label}
               </span>
             </motion.div>

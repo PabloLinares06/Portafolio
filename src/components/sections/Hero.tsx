@@ -88,7 +88,7 @@ export default function Hero() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.9, delay: 0.6 }}
             style={{ transform: 'translateZ(50px)' }} // Hace que el texto resalte hacia adelante en 3D
-            className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-none"
+            className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-none"
           >
             JUAN PABLO <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-400 to-primary bg-[length:200%_auto] animate-gradient">
@@ -106,7 +106,7 @@ export default function Hero() {
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -18, opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="text-primary font-mono tracking-[0.2em] text-sm md:text-base uppercase"
+              className="text-primary font-mono tracking-[0.15em] text-[10px] sm:text-sm md:text-base uppercase"
             >
               {roles[roleIndex]}
             </motion.span>
@@ -118,7 +118,7 @@ export default function Hero() {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 1 }}
-          className="max-w-lg text-gray-400 text-base md:text-lg leading-relaxed text-balance"
+          className="max-w-md text-gray-400 text-sm sm:text-base md:text-lg leading-relaxed text-balance"
         >
           Estudiante de ingeniería de software enfocado en construir arquitecturas robustas y experiencias digitales de alto impacto.
         </motion.p>
@@ -128,11 +128,11 @@ export default function Hero() {
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.5, delay: 1.2 }}
-          className="flex flex-col sm:flex-row items-center gap-6 mt-4"
+          className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 mt-4 w-full sm:w-auto"
         >
           <a
             href="#projects"
-            className="px-8 py-4 bg-primary text-white font-bold rounded-full hover:bg-blue-600 transition-colors shadow-[0_0_30px_rgba(0,112,243,0.4)] interactive text-sm md:text-base"
+            className="w-full sm:w-auto px-8 py-4 bg-primary text-white font-bold rounded-full hover:bg-blue-600 transition-colors shadow-[0_0_30px_rgba(0,112,243,0.4)] interactive text-sm md:text-base"
           >
             Ver Proyectos
           </a>

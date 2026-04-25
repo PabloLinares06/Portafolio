@@ -47,58 +47,53 @@ export default function Experience() {
   const triggerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Small delay to ensure Lenis+GSAP bridge is initialized
-    const timer = setTimeout(() => {
-      const ctx = gsap.context(() => {
-        const totalSlides = layers.length;
-        const scrollDistance = (totalSlides - 1) * 100; // vw units
+    // Only run horizontal scroll on screens larger than mobile
+    const mm = gsap.matchMedia();
 
-        gsap.fromTo(
-          sectionRef.current,
-          { x: 0 },
-          {
-            x: () => `-${(totalSlides - 1) * 100}vw`,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: triggerRef.current,
-              start: 'top top',
-              end: () => `+=${window.innerWidth * (totalSlides - 1)}`,
-              scrub: 1,
-              pin: true,
-              anticipatePin: 1,
-              invalidateOnRefresh: true,
-            },
-          }
-        );
-        ScrollTrigger.refresh();
+    mm.add("(min-width: 768px)", () => {
+      const totalSlides = layers.length;
+      const ctx = gsap.to(sectionRef.current, {
+        x: () => `-${(totalSlides - 1) * 100}vw`,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: triggerRef.current,
+          start: 'top top',
+          end: () => `+=${window.innerWidth * (totalSlides - 1)}`,
+          scrub: 1,
+          pin: true,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+        },
       });
+      return () => ctx.kill();
+    });
 
-      return () => ctx.revert();
-    }, 300);
-
-    return () => clearTimeout(timer);
+    return () => mm.revert();
   }, []);
 
   return (
     <div id="experience" className="overflow-hidden bg-[#080808]">
       <div ref={triggerRef}>
-        <div ref={sectionRef} className="flex h-screen will-change-transform" style={{ width: `${layers.length * 100}vw` }}>
+        <div 
+          ref={sectionRef} 
+          className="flex flex-col md:flex-row min-h-screen will-change-transform" 
+          style={{ width: 'auto' }} // Reset width for mobile stack
+        >
           {layers.map((layer) => (
             <div
               key={layer.id}
-              className="h-screen flex-shrink-0 flex items-center justify-center px-8 md:px-20"
-              style={{ width: '100vw' }}
+              className="min-h-screen md:h-screen w-full md:w-[100vw] flex-shrink-0 flex items-center justify-center px-6 sm:px-12 md:px-20 py-20 md:py-0 border-b border-white/5 md:border-b-0"
             >
-              <div className="max-w-5xl w-full grid md:grid-cols-2 gap-16 items-center">
+              <div className="max-w-5xl w-full grid md:grid-cols-2 gap-10 md:gap-16 items-center">
 
                 {/* Text side */}
-                <div className="flex flex-col">
-                  <span className="text-primary font-mono text-sm mb-4 block uppercase tracking-widest">
+                <div className="flex flex-col order-2 md:order-1">
+                  <span className="text-primary font-mono text-xs sm:text-sm mb-4 block uppercase tracking-widest">
                     Mi Stack · {layer.id}/{layers.length}
                   </span>
 
-                  {/* Progress dots */}
-                  <div className="flex gap-2 mb-10">
+                  {/* Progress dots - hidden on mobile as they stack vertically */}
+                  <div className="hidden md:flex gap-2 mb-10">
                     {layers.map((l) => (
                       <div
                         key={l.id}
@@ -113,28 +108,28 @@ export default function Experience() {
                     ))}
                   </div>
 
-                  <h3 className="text-5xl md:text-6xl font-bold text-white mb-6 tracking-tighter leading-tight">
+                  <h3 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 tracking-tighter leading-tight">
                     {layer.title}
                   </h3>
-                  <div className="text-primary/80 font-mono text-sm md:text-base mb-8 border-l-2 border-primary/30 pl-4 py-1">
+                  <div className="text-primary/80 font-mono text-xs sm:text-sm md:text-base mb-8 border-l-2 border-primary/30 pl-4 py-1">
                     {layer.tech}
                   </div>
-                  <p className="text-gray-400 text-base md:text-lg leading-relaxed max-w-xl">
+                  <p className="text-gray-400 text-sm sm:text-base md:text-lg leading-relaxed max-w-xl">
                     {layer.description}
                   </p>
                 </div>
 
                 {/* Icon side */}
-                <div className="hidden md:flex items-center justify-center">
-                  <div className="relative">
+                <div className="flex order-1 md:order-2 items-center justify-center">
+                  <div className="relative scale-75 sm:scale-100">
                     <div className="absolute inset-0 bg-primary/10 blur-3xl rounded-full scale-150" />
-                    <div className="relative p-14 border border-white/5 rounded-3xl bg-white/[0.02] backdrop-blur">
+                    <div className="relative p-10 sm:p-14 border border-white/5 rounded-3xl bg-white/[0.02] backdrop-blur">
                       <layer.Icon
-                        className="w-28 h-28 text-primary/30 transition-all duration-500"
+                        className="w-16 h-16 sm:w-28 sm:h-28 text-primary/30 transition-all duration-500"
                         strokeWidth={1}
                       />
                     </div>
-                    <span className="absolute -top-3 -right-3 w-9 h-9 rounded-full bg-primary text-white text-sm font-black flex items-center justify-center shadow-lg">
+                    <span className="absolute -top-3 -right-3 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-primary text-white text-xs sm:text-sm font-black flex items-center justify-center shadow-lg">
                       {layer.id}
                     </span>
                   </div>
