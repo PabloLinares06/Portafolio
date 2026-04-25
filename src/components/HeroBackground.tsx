@@ -23,6 +23,8 @@ export default function HeroBackground() {
     };
 
     const handleMouseMove = (e: MouseEvent) => {
+      // Solo actualizamos la posición si NO es un dispositivo táctil con alta probabilidad
+      // o simplemente comprobamos si el evento tiene presión (característico de mouse)
       mouse.x = e.clientX;
       mouse.y = e.clientY;
     };
@@ -32,9 +34,14 @@ export default function HeroBackground() {
       mouse.y = -1000;
     };
 
+    // Detectar si es móvil para desactivar interacción
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
     window.addEventListener('resize', resize);
-    window.addEventListener('mousemove', handleMouseMove);
-    document.body.addEventListener('mouseleave', handleMouseLeave);
+    if (!isMobile) {
+      window.addEventListener('mousemove', handleMouseMove);
+      document.body.addEventListener('mouseleave', handleMouseLeave);
+    }
 
     class Particle {
       x: number;
