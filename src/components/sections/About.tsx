@@ -16,7 +16,8 @@ export default function About() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ['start end', 'end start'],
+    // Adjusting offset for better mobile control (triggering earlier and ending later)
+    offset: ['start 0.9', 'end 0.1'],
   });
 
   const words = text.split(' ');
@@ -25,7 +26,7 @@ export default function About() {
     <section
       id="about"
       ref={containerRef}
-      className="py-24 md:py-36 px-6 flex flex-col items-center justify-center bg-background relative overflow-hidden"
+      className="py-24 md:py-48 px-6 flex flex-col items-center justify-center bg-background relative overflow-hidden"
     >
       <div className="max-w-4xl w-full">
 
@@ -39,10 +40,11 @@ export default function About() {
         </motion.span>
 
         {/* Word-by-word reveal */}
-        <h2 className="text-2xl md:text-4xl font-medium leading-relaxed tracking-tight text-white flex flex-wrap gap-x-[0.3em] gap-y-1 mb-20">
+        <h2 className="text-2xl md:text-5xl font-medium leading-relaxed tracking-tight text-white flex flex-wrap gap-x-[0.3em] gap-y-1 mb-20">
           {words.map((word, i) => {
-            const start = i / words.length;
-            const end = start + 1.5 / words.length;
+            // Expand the range so words reveal more smoothly across the scroll distance
+            const start = i / (words.length * 1.5);
+            const end = start + 3 / words.length;
             return (
               <Word key={i} progress={scrollYProgress} range={[start, Math.min(end, 1)]}>
                 {word}
@@ -85,13 +87,17 @@ function Word({
   range,
 }: {
   children: string;
-  progress: ReturnType<typeof useScroll>['scrollYProgress'];
+  progress: any;
   range: [number, number];
 }) {
-  const opacity = useTransform(progress, range, [0.08, 1]);
+  const opacity = useTransform(progress, range, [0.1, 1]);
 
   return (
-    <motion.span style={{ opacity }} className="inline-block">
+    <motion.span 
+      style={{ opacity }} 
+      // Add a CSS transition for mobile only to smooth out jittery touch scroll
+      className="inline-block transition-opacity duration-500 ease-out md:transition-none"
+    >
       {children}
     </motion.span>
   );
