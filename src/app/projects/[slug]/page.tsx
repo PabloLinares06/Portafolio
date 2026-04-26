@@ -57,7 +57,7 @@ export default function ProjectPage() {
           <motion.span 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-primary font-mono text-[10px] md:text-sm uppercase tracking-[0.4em] mb-4 block"
+            className="text-primary-light font-mono text-[10px] md:text-sm uppercase tracking-[0.4em] mb-4 block"
           >
             {project.category}
           </motion.span>
@@ -77,7 +77,7 @@ export default function ProjectPage() {
         <div className="max-w-4xl mx-auto space-y-16 md:space-y-20">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
             <div className="col-span-1">
-              <h2 className="text-primary font-mono text-[10px] md:text-xs uppercase tracking-widest md:sticky md:top-32">EL RETO</h2>
+              <h2 className="text-primary-light font-mono text-[10px] md:text-xs uppercase tracking-widest md:sticky md:top-32">EL RETO</h2>
             </div>
             <div className="col-span-2">
               <p className="text-2xl sm:text-3xl md:text-4xl text-white font-medium leading-tight tracking-tight">
@@ -88,7 +88,7 @@ export default function ProjectPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
             <div className="col-span-1">
-              <h2 className="text-primary font-mono text-[10px] md:text-xs uppercase tracking-widest md:sticky md:top-32">ARQUITECTURA</h2>
+              <h2 className="text-primary-light font-mono text-[10px] md:text-xs uppercase tracking-widest md:sticky md:top-32">ARQUITECTURA</h2>
             </div>
             <div className="col-span-2">
               <p className="text-base sm:text-lg md:text-xl text-gray-400 leading-relaxed">
@@ -127,7 +127,7 @@ export default function ProjectPage() {
           href={`/projects/${project.nextProject.slug}`}
           className="group text-center interactive w-full"
         >
-          <span className="text-primary font-mono text-xs md:text-sm uppercase tracking-widest mb-4 md:mb-6 block">Siguiente Proyecto</span>
+          <span className="text-primary-light font-mono text-xs md:text-sm uppercase tracking-widest mb-4 md:mb-6 block">Siguiente Proyecto</span>
           <h2 className="text-4xl sm:text-6xl md:text-8xl font-bold text-white tracking-tighter group-hover:scale-105 transition-transform duration-500 leading-none">
             {project.nextProject.title}
           </h2>

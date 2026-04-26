@@ -88,7 +88,7 @@ export default function Experience() {
 
                 {/* Text side */}
                 <div className="flex flex-col order-2 md:order-1">
-                  <span className="text-primary font-mono text-xs sm:text-sm mb-4 block uppercase tracking-widest">
+                  <span className="text-primary-light font-mono text-xs sm:text-sm mb-4 block uppercase tracking-widest">
                     Mi Stack · {layer.id}/{layers.length}
                   </span>
 
@@ -101,7 +101,7 @@ export default function Experience() {
                           l.id === layer.id
                             ? 'w-8 bg-primary'
                             : l.id < layer.id
-                            ? 'w-4 bg-primary/40'
+                            ? 'w-4 bg-primary-light/40'
                             : 'w-4 bg-white/10'
                         }`}
                       />
@@ -111,7 +111,7 @@ export default function Experience() {
                   <h3 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 tracking-tighter leading-tight">
                     {layer.title}
                   </h3>
-                  <div className="text-primary/80 font-mono text-xs sm:text-sm md:text-base mb-8 border-l-2 border-primary/30 pl-4 py-1">
+                  <div className="text-primary-light/80 font-mono text-xs sm:text-sm md:text-base mb-8 border-l-2 border-primary-light/30 pl-4 py-1">
                     {layer.tech}
                   </div>
                   <p className="text-gray-400 text-sm sm:text-base md:text-lg leading-relaxed max-w-xl">

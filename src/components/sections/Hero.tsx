@@ -104,7 +104,7 @@ export default function Hero() {
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -18, opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="text-primary font-mono tracking-[0.15em] text-[10px] sm:text-sm md:text-base uppercase"
+              className="text-primary-light font-mono tracking-[0.15em] text-[10px] sm:text-sm md:text-base uppercase"
             >
               {roles[roleIndex]}
             </motion.span>

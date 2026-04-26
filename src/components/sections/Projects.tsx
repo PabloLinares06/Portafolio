@@ -16,7 +16,7 @@ export default function Projects() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="text-primary font-mono text-xs md:text-sm mb-8 block uppercase tracking-[0.3em]"
+          className="text-primary-light font-mono text-xs md:text-sm mb-8 block uppercase tracking-[0.3em]"
         >
           02. Mi Trabajo
         </motion.span>
@@ -75,7 +75,7 @@ function ProjectCard({ project, index }: { project: any, index: number }) {
       {/* Project Info */}
       <div className="w-full lg:w-2/5 flex flex-col space-y-4 md:space-y-6">
         <div className="space-y-1">
-          <span className="text-primary font-mono text-[10px] sm:text-xs uppercase tracking-widest">{project.category}</span>
+          <span className="text-primary-light font-mono text-[10px] sm:text-xs uppercase tracking-widest">{project.category}</span>
           <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight leading-tight">{project.title}</h3>
         </div>
         
@@ -85,7 +85,7 @@ function ProjectCard({ project, index }: { project: any, index: number }) {
 
         <div className="flex flex-wrap gap-2 md:gap-3">
           {project.tech.map((t: string) => (
-            <span key={t} className="px-3 py-1 bg-secondary text-gray-400 text-[10px] sm:text-xs font-mono rounded-full border border-white/5">
+            <span key={t} className="px-3 py-1 bg-secondary text-primary-light/80 text-[10px] sm:text-xs font-mono rounded-full border border-primary-light/10">
               {t}
             </span>
           ))}

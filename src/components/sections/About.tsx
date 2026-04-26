@@ -34,7 +34,7 @@ export default function About() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="text-primary font-mono text-xs md:text-sm mb-8 block uppercase tracking-[0.3em]"
+          className="text-primary-light font-mono text-xs md:text-sm mb-8 block uppercase tracking-[0.3em]"
         >
           01. Mi Trayectoria
         </motion.span>
