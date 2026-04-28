@@ -35,6 +35,16 @@ function LenisGSAPBridge() {
 }
 
 export default function SmoothScroll({ children }: { children: ReactNode }) {
+  useEffect(() => {
+    // Disable native scroll restoration
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    
+    // Force scroll to top on refresh
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <ReactLenis
       root
