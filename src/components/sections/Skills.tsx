@@ -63,10 +63,10 @@ export default function Skills() {
               {/* Category header */}
               <div className="flex items-center gap-2">
                 <span
-                  className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                  style={{ backgroundColor: cat.color }}
+                  className="w-2 h-2 rounded-full flex-shrink-0 shadow-[0_0_8px_currentColor]"
+                  style={{ backgroundColor: cat.color, color: cat.color }}
                 />
-                <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-gray-500">
+                <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-gray-400 font-medium">
                   {cat.label}
                 </span>
               </div>

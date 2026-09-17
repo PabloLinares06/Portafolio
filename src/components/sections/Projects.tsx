@@ -18,7 +18,7 @@ export default function Projects() {
           viewport={{ once: true }}
           className="text-primary-light font-mono text-xs md:text-sm mb-8 block uppercase tracking-[0.3em]"
         >
-          02. Mi Trabajo
+          03. Casos de Estudio
         </motion.span>
         
         <h2 className="text-5xl sm:text-7xl md:text-8xl font-bold text-white mb-16 md:mb-24 tracking-tighter leading-none">
@@ -54,13 +54,14 @@ function ProjectCard({ project, index }: { project: any, index: number }) {
       {/* Project Image */}
       <Link 
         href={`/projects/${project.slug}`}
-        className="w-full lg:w-3/5 aspect-video bg-secondary rounded-2xl md:rounded-[2rem] overflow-hidden border border-white/5 relative group cursor-pointer interactive"
+        className="w-full lg:w-3/5 aspect-video bg-surface-card rounded-2xl md:rounded-[2rem] overflow-hidden border border-white/10 relative group cursor-pointer interactive shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:border-primary/40 transition-colors duration-500"
       >
         <Image
           src={project.heroImage}
           alt={project.title}
           fill
-          className="object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+          sizes="(max-width: 1024px) 100vw, 60vw"
+          className="object-cover opacity-75 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
         />
         <motion.div 
           className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"

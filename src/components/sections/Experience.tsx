@@ -82,27 +82,27 @@ export default function Experience() {
           {layers.map((layer) => (
             <div
               key={layer.id}
-              className="min-h-screen md:h-screen w-full md:w-[100vw] flex-shrink-0 flex items-center justify-center px-6 sm:px-12 md:px-20 py-20 md:py-0 border-b border-white/5 md:border-b-0"
+              className="min-h-[80vh] md:h-screen w-full md:w-[100vw] flex-shrink-0 flex items-center justify-center px-6 sm:px-12 md:px-20 py-14 md:py-0 border-b border-white/5 md:border-b-0"
             >
               <div className="max-w-5xl w-full grid md:grid-cols-2 gap-10 md:gap-16 items-center">
 
                 {/* Text side */}
                 <div className="flex flex-col order-2 md:order-1">
-                  <span className="text-primary-light font-mono text-xs sm:text-sm mb-4 block uppercase tracking-widest">
-                    Mi Stack · {layer.id}/{layers.length}
+                  <span className="text-primary-light font-mono text-xs sm:text-sm mb-4 block uppercase tracking-[0.25em]">
+                    02. Stack & Arquitectura · {layer.id}/{layers.length}
                   </span>
 
-                  {/* Progress dots - hidden on mobile as they stack vertically */}
-                  <div className="hidden md:flex gap-2 mb-10">
+                  {/* Progress dots */}
+                  <div className="flex gap-2 mb-8 md:mb-10 items-center">
                     {layers.map((l) => (
                       <div
                         key={l.id}
-                        className={`h-[2px] rounded-full transition-all duration-300 ${
+                        className={`h-[3px] rounded-full transition-all duration-300 ${
                           l.id === layer.id
-                            ? 'w-8 bg-primary'
+                            ? 'w-10 bg-primary shadow-[0_0_10px_rgba(0,112,243,0.5)]'
                             : l.id < layer.id
-                            ? 'w-4 bg-primary-light/40'
-                            : 'w-4 bg-white/10'
+                            ? 'w-5 bg-primary-light/40'
+                            : 'w-5 bg-white/10'
                         }`}
                       />
                     ))}

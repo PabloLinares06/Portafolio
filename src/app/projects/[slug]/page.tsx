@@ -31,12 +31,12 @@ export default function ProjectPage() {
   return (
     <main ref={containerRef} className="bg-background min-h-screen">
       {/* Back Button */}
-      <div className="fixed top-10 left-10 z-50">
+      <div className="fixed top-6 left-6 z-50">
         <Link 
           href="/" 
-          className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors font-mono text-sm interactive"
+          className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-[#050505]/80 backdrop-blur-lg text-gray-300 hover:text-white hover:border-primary/40 transition-all font-mono text-xs uppercase tracking-widest shadow-[0_4px_20px_rgba(0,0,0,0.6)] interactive"
         >
-          <ArrowLeft size={16} /> VOLVER
+          <ArrowLeft size={15} /> VOLVER
         </Link>
       </div>
 
@@ -47,6 +47,7 @@ export default function ProjectPage() {
             src={project.heroImage}
             alt={project.title}
             fill
+            sizes="100vw"
             className="object-cover opacity-30 md:opacity-40 grayscale hover:grayscale-0 transition-all duration-1000"
             priority
           />
@@ -72,7 +73,7 @@ export default function ProjectPage() {
         </div>
       </section>
 
-      {/* The Challenge */}
+      {/* The Challenge & Architecture */}
       <section className="py-20 md:py-32 px-6">
         <div className="max-w-4xl mx-auto space-y-16 md:space-y-20">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
@@ -96,6 +97,23 @@ export default function ProjectPage() {
               </p>
             </div>
           </div>
+
+          {/* Tech Stack */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
+            <div className="col-span-1">
+              <h2 className="text-primary-light font-mono text-[10px] md:text-xs uppercase tracking-widest md:sticky md:top-32">TECNOLOGÍAS</h2>
+            </div>
+            <div className="col-span-2 flex flex-wrap gap-2.5">
+              {project.tech.map((t: string) => (
+                <span
+                  key={t}
+                  className="px-4 py-2 bg-surface text-primary-light font-mono text-xs md:text-sm rounded-xl border border-white/10 shadow-sm"
+                >
+                  {t}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -108,12 +126,13 @@ export default function ProjectPage() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="relative aspect-video rounded-2xl md:rounded-3xl overflow-hidden border border-white/5 shadow-2xl"
+              className="relative aspect-video rounded-2xl md:rounded-3xl overflow-hidden border border-white/10 shadow-2xl bg-surface-card"
             >
               <Image
                 src={img}
                 alt={`${project.title} gallery ${i}`}
                 fill
+                sizes="(max-width: 1200px) 100vw, 1200px"
                 className="object-cover"
               />
             </motion.div>
