@@ -9,7 +9,12 @@ export default function ScrollToTop() {
   const lenis = useLenis();
 
   useEffect(() => {
-    // Immediate scroll reset on route change
+    // If navigating with a hash (e.g. /#projects), let the hash handler manage scroll
+    if (typeof window !== 'undefined' && window.location.hash) {
+      return;
+    }
+
+    // Immediate scroll reset on route change without hash
     if (lenis) {
       lenis.scrollTo(0, { immediate: true });
     } else {
@@ -19,3 +24,4 @@ export default function ScrollToTop() {
 
   return null;
 }
+

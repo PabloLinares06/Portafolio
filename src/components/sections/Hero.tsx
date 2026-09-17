@@ -3,6 +3,7 @@
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
+import { useLenis } from 'lenis/react';
 import HeroBackground from '../HeroBackground';
 
 const roles = [
@@ -14,6 +15,7 @@ const roles = [
 
 export default function Hero() {
   const [roleIndex, setRoleIndex] = useState(0);
+  const lenis = useLenis();
 
   // 3D Tilt Effect State
   const x = useMotionValue(0);
@@ -39,6 +41,18 @@ export default function Hero() {
   const handleMouseLeave = () => {
     x.set(0);
     y.set(0);
+  };
+
+  const handleProjectsClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const target = document.getElementById('projects');
+    if (target) {
+      if (lenis) {
+        lenis.scrollTo(target, { offset: -25, duration: 1.2 });
+      } else {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
   };
 
   useEffect(() => {
@@ -130,6 +144,7 @@ export default function Hero() {
         >
           <a
             href="#projects"
+            onClick={handleProjectsClick}
             className="w-full sm:w-auto px-8 py-4 bg-primary text-white font-bold rounded-full hover:bg-blue-600 transition-colors shadow-[0_0_30px_rgba(0,112,243,0.4)] interactive text-sm md:text-base"
           >
             Ver Proyectos
