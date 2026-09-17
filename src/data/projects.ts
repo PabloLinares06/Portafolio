@@ -8,6 +8,8 @@ export interface ProjectData {
   tech: string[];
   heroImage: string;
   gallery: string[];
+  githubUrl?: string;
+  liveUrl?: string;
   nextProject: {
     title: string;
     slug: string;
@@ -25,6 +27,7 @@ export const projects: Record<string, ProjectData> = {
     tech: [".NET 9", "C#", "Dapper", "SQL Server", "React", "JWT", "Security"],
     heroImage: "/projects/vitalapp/hero.png",
     gallery: ["/projects/vitalapp/hero.png"],
+    githubUrl: "https://github.com/PabloLinares06",
     nextProject: {
       title: "NaTechnology",
       slug: "natechnology"
@@ -44,9 +47,11 @@ export const projects: Record<string, ProjectData> = {
       "/projects/natechnology/2.png",
       "/projects/natechnology/3.png"
     ],
+    githubUrl: "https://github.com/PabloLinares06",
     nextProject: {
       title: "VitalAPP",
       slug: "vitalapp"
     }
   }
 };
+

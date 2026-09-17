@@ -6,6 +6,7 @@ import CustomCursor from '@/components/CustomCursor';
 import Navbar from '@/components/Navbar';
 import ScrollProgress from '@/components/ScrollProgress';
 import ScrollToTop from '@/components/ScrollToTop';
+import Preloader from '@/components/Preloader';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -18,13 +19,36 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://pablolinares.dev'),
   title: 'Juan Pablo Linares | Software Engineer',
   description:
     'Portafolio inmersivo de Juan Pablo Linares Laverde — Ingeniero de Software Full Stack enfocado en arquitecturas robustas y experiencias digitales de alto impacto.',
+  keywords: [
+    'Juan Pablo Linares',
+    'Software Engineer',
+    'Full Stack Developer',
+    'Backend Engineer',
+    '.NET Core',
+    'C#',
+    'React',
+    'Next.js',
+    'Clean Architecture',
+    'CQRS',
+  ],
+  authors: [{ name: 'Juan Pablo Linares' }],
+  creator: 'Juan Pablo Linares',
   openGraph: {
     title: 'Juan Pablo Linares | Software Engineer',
-    description: 'Portafolio inmersivo de Juan Pablo Linares Laverde — Ingeniero de Software.',
+    description: 'Portafolio inmersivo de Juan Pablo Linares Laverde — Arquitectura, Rendimiento & Lógica.',
+    url: 'https://pablolinares.dev',
+    siteName: 'Juan Pablo Linares Portfolio',
+    locale: 'es_CO',
     type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Juan Pablo Linares | Software Engineer',
+    description: 'Portafolio inmersivo de Juan Pablo Linares Laverde — Ingeniero de Software.',
   },
 };
 
@@ -38,6 +62,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <Preloader />
         <SmoothScroll>
           <ScrollToTop />
           <ScrollProgress />

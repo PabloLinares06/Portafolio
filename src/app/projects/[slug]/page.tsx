@@ -96,6 +96,34 @@ export default function ProjectPage() {
             </span>
           </div>
         </div>
+
+        {/* Action Pills */}
+        {(project.githubUrl || project.liveUrl) && (
+          <div className="max-w-5xl mx-auto mt-6 pt-6 border-t border-white/5 flex flex-wrap gap-3 items-center">
+            {project.githubUrl && (
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] hover:bg-white/10 hover:border-white/30 text-white font-mono text-xs uppercase tracking-wider transition-all interactive shadow-sm"
+              >
+                <span>Ver Código en GitHub</span>
+                <span className="text-primary-light">↗</span>
+              </a>
+            )}
+            {project.liveUrl && project.liveUrl !== project.githubUrl && (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-white font-mono text-xs uppercase tracking-wider hover:bg-blue-600 transition-all interactive shadow-[0_0_20px_rgba(0,112,243,0.35)]"
+              >
+                <span>Demo en Vivo</span>
+                <span>↗</span>
+              </a>
+            )}
+          </div>
+        )}
       </section>
 
       {/* The Challenge & Architecture */}
