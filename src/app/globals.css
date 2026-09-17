@@ -79,6 +79,26 @@ html.lenis body {
   animation: gradient-shift 4s linear infinite;
 }
 
+/* Custom minimalist dark scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #222222;
+  border-radius: 9999px;
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
 /* Subtle noise texture overlay */
 body::before {
   content: '';
@@ -91,4 +111,5 @@ body::before {
   background-repeat: repeat;
   background-size: 128px;
 }
+
 

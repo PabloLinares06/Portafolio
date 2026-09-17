@@ -24,10 +24,10 @@ export default function Hero() {
   const mouseXSpring = useSpring(x, { stiffness: 300, damping: 30 });
   const mouseYSpring = useSpring(y, { stiffness: 300, damping: 30 });
 
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ['15deg', '-15deg']);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ['-15deg', '15deg']);
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ['10deg', '-10deg']);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ['-10deg', '10deg']);
 
-  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseMove = (event: React.MouseEvent<HTMLElement>) => {
     const rect = event.currentTarget.getBoundingClientRect();
     const width = rect.width;
     const height = rect.height;
@@ -55,6 +55,18 @@ export default function Hero() {
     }
   };
 
+  const handleContactClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const target = document.getElementById('contact');
+    if (target) {
+      if (lenis) {
+        lenis.scrollTo(target, { offset: -25, duration: 1.2 });
+      } else {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
       setRoleIndex((i) => (i + 1) % roles.length);
@@ -63,37 +75,40 @@ export default function Hero() {
   }, []);
 
   return (
-    <section id="hero" className="relative min-h-screen w-full flex flex-col items-center overflow-hidden pb-24">
+    <section
+      id="hero"
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="relative min-h-screen w-full flex flex-col items-center overflow-hidden pb-20"
+    >
       <HeroBackground />
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col items-center justify-center relative z-10 text-center px-6 w-full max-w-4xl mx-auto gap-6 pt-20">
+      <div className="flex-1 flex flex-col items-center justify-center relative z-10 text-center px-6 w-full max-w-4xl mx-auto gap-6 pt-24 md:pt-28">
         
         {/* "Disponible" badge */}
         <motion.div
           initial={{ y: -16, opacity: 0 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400"
+          className="flex items-center gap-2.5 px-4 py-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 backdrop-blur-md text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.15)]"
         >
           <span className="relative flex h-2 w-2 flex-shrink-0">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
           </span>
-          <span className="text-[10px] sm:text-[11px] font-mono uppercase tracking-widest">Disponible para nuevos proyectos</span>
+          <span className="text-[10px] sm:text-[11px] font-mono uppercase tracking-widest font-medium">Disponible para nuevos proyectos</span>
         </motion.div>
 
         {/* Name with 3D Tilt */}
         <motion.div
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
           style={{
             rotateX,
             rotateY,
             transformStyle: 'preserve-3d',
             perspective: 1000,
           }}
-          className="relative cursor-default"
+          className="relative cursor-default select-none"
         >
           <motion.h1
             initial={{ y: 30, opacity: 0 }}
@@ -109,19 +124,26 @@ export default function Hero() {
           </motion.h1>
         </motion.div>
 
-        {/* Animated role typewriter */}
+        {/* Animated role typewriter with terminal cursor */}
         <div className="h-8 flex items-center justify-center overflow-hidden">
           <AnimatePresence mode="wait">
-            <motion.span
+            <motion.div
               key={roleIndex}
-              initial={{ y: 18, opacity: 0 }}
+              initial={{ y: 16, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -18, opacity: 0 }}
+              exit={{ y: -16, opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="text-primary-light font-mono tracking-[0.15em] text-[10px] sm:text-sm md:text-base uppercase"
+              className="flex items-center text-primary-light font-mono tracking-[0.18em] text-xs sm:text-sm md:text-base uppercase font-semibold"
             >
-              {roles[roleIndex]}
-            </motion.span>
+              <span>{roles[roleIndex]}</span>
+              <motion.span
+                animate={{ opacity: [1, 0, 1] }}
+                transition={{ repeat: Infinity, duration: 0.8 }}
+                className="inline-block text-primary ml-1 font-black"
+              >
+                _
+              </motion.span>
+            </motion.div>
           </AnimatePresence>
         </div>
 
@@ -129,31 +151,38 @@ export default function Hero() {
         <motion.p
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1 }}
-          className="max-w-md text-gray-400 text-sm sm:text-base md:text-lg leading-relaxed text-balance"
+          transition={{ duration: 0.8, delay: 0.9 }}
+          className="max-w-xl text-gray-400 text-sm sm:text-base md:text-lg leading-relaxed text-balance"
         >
-          Estudiante de ingeniería de software enfocado en construir arquitecturas robustas y experiencias digitales de alto impacto.
+          Estudiante de ingeniería de software enfocado en construir <span className="text-white font-medium">arquitecturas backend robustas</span>, APIs escalables y experiencias digitales fluidas.
         </motion.p>
 
         {/* CTAs */}
         <motion.div
-          initial={{ scale: 0.9, opacity: 0 }}
+          initial={{ scale: 0.95, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 1.2 }}
-          className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 mt-4 w-full sm:w-auto mb-12"
+          transition={{ duration: 0.5, delay: 1.1 }}
+          className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mt-4 w-full sm:w-auto mb-10"
         >
           <a
             href="#projects"
             onClick={handleProjectsClick}
-            className="w-full sm:w-auto px-8 py-4 bg-primary text-white font-bold rounded-full hover:bg-blue-600 transition-colors shadow-[0_0_30px_rgba(0,112,243,0.4)] interactive text-sm md:text-base"
+            className="w-full sm:w-auto px-7 py-3.5 bg-primary text-white font-bold rounded-full hover:bg-blue-600 transition-all shadow-[0_0_25px_rgba(0,112,243,0.35)] interactive text-sm"
           >
             Ver Proyectos
+          </a>
+          <a
+            href="#contact"
+            onClick={handleContactClick}
+            className="w-full sm:w-auto px-7 py-3.5 border border-white/20 bg-white/[0.04] text-white font-bold rounded-full hover:bg-white/10 hover:border-white/40 transition-all interactive text-sm"
+          >
+            Contactar ✉
           </a>
           <a
             href="https://github.com/PabloLinares06"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full sm:w-auto px-8 py-4 border border-white/15 text-white font-bold rounded-full hover:bg-white/5 hover:border-white/30 transition-all interactive text-sm md:text-base"
+            className="w-full sm:w-auto px-6 py-3.5 border border-white/10 text-gray-400 hover:text-white font-medium rounded-full hover:bg-white/5 transition-all interactive text-sm font-mono uppercase tracking-wider"
           >
             GitHub ↗
           </a>

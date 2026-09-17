@@ -41,7 +41,7 @@ export default function ProjectPage() {
       </div>
 
       {/* Hero Section */}
-      <section className="relative h-[80vh] md:h-[120vh] w-full flex items-center justify-center overflow-hidden">
+      <section className="relative h-[80vh] md:h-[110vh] w-full flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
             src={project.heroImage}
@@ -58,9 +58,9 @@ export default function ProjectPage() {
           <motion.span 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-primary-light font-mono text-[10px] md:text-sm uppercase tracking-[0.4em] mb-4 block"
+            className="text-primary-light font-mono text-xs md:text-sm uppercase tracking-[0.4em] mb-4 block"
           >
-            {project.category}
+            {project.category} · Caso de Estudio
           </motion.span>
           <motion.h1 
             initial={{ opacity: 0, scale: 0.9 }}
@@ -73,35 +73,66 @@ export default function ProjectPage() {
         </div>
       </section>
 
+      {/* Executive Meta Bar */}
+      <section className="border-y border-white/10 bg-[#08080a] py-8 px-6">
+        <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="flex flex-col gap-1">
+            <span className="font-mono text-[10px] text-gray-500 uppercase tracking-widest">Rol</span>
+            <span className="text-white text-sm font-bold">Full Stack & Backend</span>
+          </div>
+          <div className="flex flex-col gap-1">
+            <span className="font-mono text-[10px] text-gray-500 uppercase tracking-widest">Enfoque</span>
+            <span className="text-white text-sm font-bold">Escalabilidad & Rendimiento</span>
+          </div>
+          <div className="flex flex-col gap-1">
+            <span className="font-mono text-[10px] text-gray-500 uppercase tracking-widest">Categoría</span>
+            <span className="text-white text-sm font-bold">{project.category}</span>
+          </div>
+          <div className="flex flex-col gap-1">
+            <span className="font-mono text-[10px] text-gray-500 uppercase tracking-widest">Estado</span>
+            <span className="text-emerald-400 text-sm font-bold flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block animate-pulse" />
+              Producción Activa
+            </span>
+          </div>
+        </div>
+      </section>
+
       {/* The Challenge & Architecture */}
       <section className="py-20 md:py-32 px-6">
         <div className="max-w-4xl mx-auto space-y-16 md:space-y-20">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10 p-8 rounded-3xl bg-white/[0.02] border border-white/10 shadow-xl">
             <div className="col-span-1">
-              <h2 className="text-primary-light font-mono text-[10px] md:text-xs uppercase tracking-widest md:sticky md:top-32">EL RETO</h2>
+              <h2 className="text-primary-light font-mono text-xs uppercase tracking-widest md:sticky md:top-32 font-bold">
+                01. EL RETO
+              </h2>
             </div>
             <div className="col-span-2">
-              <p className="text-2xl sm:text-3xl md:text-4xl text-white font-medium leading-tight tracking-tight">
+              <p className="text-xl sm:text-2xl md:text-3xl text-white font-medium leading-snug tracking-tight">
                 {project.challenge}
               </p>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10 p-8 rounded-3xl bg-white/[0.02] border border-white/10 shadow-xl">
             <div className="col-span-1">
-              <h2 className="text-primary-light font-mono text-[10px] md:text-xs uppercase tracking-widest md:sticky md:top-32">ARQUITECTURA</h2>
+              <h2 className="text-primary-light font-mono text-xs uppercase tracking-widest md:sticky md:top-32 font-bold">
+                02. ARQUITECTURA
+              </h2>
             </div>
             <div className="col-span-2">
-              <p className="text-base sm:text-lg md:text-xl text-gray-400 leading-relaxed">
+              <p className="text-base sm:text-lg text-gray-300 leading-relaxed font-normal">
                 {project.architecture}
               </p>
             </div>
           </div>
 
           {/* Tech Stack */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10 p-8 rounded-3xl bg-white/[0.02] border border-white/10 shadow-xl">
             <div className="col-span-1">
-              <h2 className="text-primary-light font-mono text-[10px] md:text-xs uppercase tracking-widest md:sticky md:top-32">TECNOLOGÍAS</h2>
+              <h2 className="text-primary-light font-mono text-xs uppercase tracking-widest md:sticky md:top-32 font-bold">
+                03. TECNOLOGÍAS
+              </h2>
             </div>
             <div className="col-span-2 flex flex-wrap gap-2.5">
               {project.tech.map((t: string) => (
