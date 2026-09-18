@@ -6,6 +6,7 @@ import HeroBackground from '@/components/HeroBackground';
 import { ChevronDown, Terminal, Search } from 'lucide-react';
 import { useLenis } from 'lenis/react';
 import { playClick, playHover, playOpen } from '@/utils/audio';
+import MagneticButton from '@/components/ui/MagneticButton';
 
 const roles = [
   'Software Engineer',
@@ -184,40 +185,51 @@ export default function Hero() {
           transition={{ duration: 0.5, delay: 1.1 }}
           className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mt-4 w-full sm:w-auto mb-10"
         >
-          <a
-            href="#projects"
-            onClick={handleProjectsClick}
-            onMouseEnter={() => playHover()}
-            className="w-full sm:w-auto px-7 py-3.5 bg-primary text-black font-bold rounded-full hover:bg-cyan-300 transition-all shadow-[0_0_25px_rgba(0,242,254,0.35)] interactive text-sm cursor-pointer"
-          >
-            Ver Casos de Estudio
-          </a>
-          <button
-            onClick={openTerminal}
-            onMouseEnter={() => playHover()}
-            className="w-full sm:w-auto px-6 py-3.5 border border-primary/40 bg-primary/10 text-cyan-300 font-mono font-bold rounded-full hover:bg-primary/20 transition-all interactive text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer"
-          >
-            <Terminal size={14} className="text-primary" />
-            <span>&gt;_ Consola Dev</span>
-          </button>
-          <a
-            href="#contact"
-            onClick={handleContactClick}
-            onMouseEnter={() => playHover()}
-            className="w-full sm:w-auto px-7 py-3.5 border border-white/20 bg-white/[0.04] text-white font-bold rounded-full hover:bg-white/10 hover:border-white/40 transition-all interactive text-sm cursor-pointer"
-          >
-            Contactar ✉
-          </a>
-          <a
-            href="https://github.com/PabloLinares06"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => playClick()}
-            onMouseEnter={() => playHover()}
-            className="w-full sm:w-auto px-6 py-3.5 border border-white/10 text-gray-400 hover:text-white font-medium rounded-full hover:bg-white/5 transition-all interactive text-sm font-mono uppercase tracking-wider cursor-pointer"
-          >
-            GitHub ↗
-          </a>
+          <MagneticButton>
+            <a
+              href="#projects"
+              onClick={handleProjectsClick}
+              onMouseEnter={() => playHover()}
+              className="inline-block px-7 py-3.5 bg-primary text-black font-bold rounded-full hover:bg-cyan-300 transition-all shadow-[0_0_25px_rgba(0,242,254,0.35)] interactive text-sm cursor-pointer"
+            >
+              Ver Casos de Estudio
+            </a>
+          </MagneticButton>
+
+          <MagneticButton>
+            <button
+              onClick={openTerminal}
+              onMouseEnter={() => playHover()}
+              className="inline-flex items-center gap-2 px-6 py-3.5 border border-primary/40 bg-primary/10 text-cyan-300 font-mono font-bold rounded-full hover:bg-primary/20 transition-all interactive text-xs uppercase tracking-wider cursor-pointer"
+            >
+              <Terminal size={14} className="text-primary" />
+              <span>&gt;_ Consola Dev</span>
+            </button>
+          </MagneticButton>
+
+          <MagneticButton>
+            <a
+              href="#contact"
+              onClick={handleContactClick}
+              onMouseEnter={() => playHover()}
+              className="inline-block px-7 py-3.5 border border-white/20 bg-white/[0.04] text-white font-bold rounded-full hover:bg-white/10 hover:border-white/40 transition-all interactive text-sm cursor-pointer"
+            >
+              Contactar ✉
+            </a>
+          </MagneticButton>
+
+          <MagneticButton>
+            <a
+              href="https://github.com/PabloLinares06"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => playClick()}
+              onMouseEnter={() => playHover()}
+              className="inline-block px-6 py-3.5 border border-white/10 text-gray-400 hover:text-white font-medium rounded-full hover:bg-white/5 transition-all interactive text-sm font-mono uppercase tracking-wider cursor-pointer"
+            >
+              GitHub ↗
+            </a>
+          </MagneticButton>
         </motion.div>
       </div>
 

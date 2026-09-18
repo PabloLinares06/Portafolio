@@ -1,4 +1,5 @@
 import Hero from '@/components/sections/Hero';
+import TelemetryHUD from '@/components/ui/TelemetryHUD';
 import About from '@/components/sections/About';
 import Experience from '@/components/sections/Experience';
 import Projects from '@/components/sections/Projects';
@@ -9,6 +10,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-background">
       <Hero />
+      <TelemetryHUD />
       <About />
       <Experience />
       <Projects />

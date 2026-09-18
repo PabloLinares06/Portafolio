@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Mail, Copy, Check, ArrowUpRight, Terminal, Sparkles } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { playClick, playHover, playSuccess, playOpen } from '@/utils/audio';
+import MagneticButton from '@/components/ui/MagneticButton';
 
 export default function Contact() {
   const [copied, setCopied] = useState(false);
@@ -81,47 +82,53 @@ export default function Contact() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="flex flex-col sm:flex-row gap-4 items-center justify-center mb-8"
+          className="flex flex-wrap gap-4 items-center justify-center mb-8"
         >
           {/* Main Mailto CTA */}
-          <a
-            href="mailto:juanpalinare@gmail.com"
-            onClick={() => playClick()}
-            onMouseEnter={() => playHover()}
-            className="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 bg-primary text-black font-bold rounded-full hover:bg-cyan-300 transition-all shadow-[0_0_35px_rgba(0,242,254,0.35)] interactive group text-sm md:text-base cursor-pointer"
-          >
-            <Mail size={18} />
-            <span>Enviar Correo</span>
-          </a>
+          <MagneticButton>
+            <a
+              href="mailto:juanpalinare@gmail.com"
+              onClick={() => playClick()}
+              onMouseEnter={() => playHover()}
+              className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-primary text-black font-bold rounded-full hover:bg-cyan-300 transition-all shadow-[0_0_35px_rgba(0,242,254,0.35)] interactive group text-sm md:text-base cursor-pointer"
+            >
+              <Mail size={18} />
+              <span>Enviar Correo</span>
+            </a>
+          </MagneticButton>
 
           {/* Copy Email Button */}
-          <button
-            onClick={handleCopyEmail}
-            onMouseEnter={() => playHover()}
-            className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-4 border border-white/15 bg-white/[0.03] hover:bg-white/[0.08] hover:border-primary/50 text-white font-mono text-xs uppercase tracking-widest rounded-full transition-all interactive relative cursor-pointer"
-          >
-            {copied ? (
-              <>
-                <Check size={16} className="text-emerald-400" />
-                <span className="text-emerald-400 font-bold">¡Copiado con Éxito!</span>
-              </>
-            ) : (
-              <>
-                <Copy size={16} className="text-primary" />
-                <span>juanpalinare@gmail.com</span>
-              </>
-            )}
-          </button>
+          <MagneticButton>
+            <button
+              onClick={handleCopyEmail}
+              onMouseEnter={() => playHover()}
+              className="inline-flex items-center justify-center gap-2 px-6 py-4 border border-white/15 bg-white/[0.03] hover:bg-white/[0.08] hover:border-primary/50 text-white font-mono text-xs uppercase tracking-widest rounded-full transition-all interactive relative cursor-pointer"
+            >
+              {copied ? (
+                <>
+                  <Check size={16} className="text-emerald-400" />
+                  <span className="text-emerald-400 font-bold">¡Copiado con Éxito!</span>
+                </>
+              ) : (
+                <>
+                  <Copy size={16} className="text-primary" />
+                  <span>juanpalinare@gmail.com</span>
+                </>
+              )}
+            </button>
+          </MagneticButton>
 
           {/* Easter egg terminal button */}
-          <button
-            onClick={openTerminal}
-            onMouseEnter={() => playHover()}
-            className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-4 border border-primary/30 bg-primary/10 text-cyan-300 hover:bg-primary/20 font-mono text-xs uppercase tracking-wider rounded-full transition-all interactive cursor-pointer"
-          >
-            <Terminal size={14} className="text-primary" />
-            <span>&gt;_ sudo hire</span>
-          </button>
+          <MagneticButton>
+            <button
+              onClick={openTerminal}
+              onMouseEnter={() => playHover()}
+              className="inline-flex items-center justify-center gap-2 px-6 py-4 border border-primary/30 bg-primary/10 text-cyan-300 hover:bg-primary/20 font-mono text-xs uppercase tracking-wider rounded-full transition-all interactive cursor-pointer"
+            >
+              <Terminal size={14} className="text-primary" />
+              <span>&gt;_ sudo hire</span>
+            </button>
+          </MagneticButton>
         </motion.div>
 
         {/* Social Links */}

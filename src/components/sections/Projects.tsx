@@ -6,7 +6,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { projects, ProjectData } from '@/data/projects';
 import { playClick, playHover } from '@/utils/audio';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import SpotlightCard from '@/components/ui/SpotlightCard';
+import MagneticButton from '@/components/ui/MagneticButton';
 
 export default function Projects() {
   const projectList = Object.values(projects);
@@ -58,45 +60,47 @@ function ProjectCard({ project, index }: { project: ProjectData; index: number }
       ref={container}
       className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-8 md:gap-14 items-center`}
     >
-      {/* Project Image Box */}
-      <Link 
-        href={`/projects/${project.slug}`}
-        onClick={() => playClick()}
-        onMouseEnter={() => playHover()}
-        className="w-full lg:w-3/5 aspect-video bg-[#090d14] rounded-2xl md:rounded-[2rem] overflow-hidden border border-white/10 relative group cursor-pointer interactive shadow-[0_10px_40px_rgba(0,0,0,0.6)] hover:border-primary/50 hover:shadow-[0_0_45px_rgba(0,242,254,0.2)] transition-all duration-500"
-      >
-        <Image
-          src={project.heroImage}
-          alt={project.title}
-          fill
-          sizes="(max-width: 1024px) 100vw, 60vw"
-          className="object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
-        />
-        
-        {/* Badges Top Left */}
-        <div className="absolute top-4 left-4 z-10 flex flex-wrap gap-2">
-          <span className="px-3 py-1 rounded-full bg-[#050505]/80 backdrop-blur-md border border-white/15 text-[10px] font-mono uppercase tracking-widest text-gray-200">
-            {project.category}
-          </span>
-          {project.badge && (
-            <span className="px-2.5 py-1 rounded-full bg-emerald-500/20 backdrop-blur-md border border-emerald-500/40 text-[10px] font-mono uppercase tracking-wider text-emerald-400 font-bold flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              {project.badge}
-            </span>
-          )}
-        </div>
+      {/* Project Image Box with Spotlight */}
+      <div className="w-full lg:w-3/5">
+        <Link 
+          href={`/projects/${project.slug}`}
+          onClick={() => playClick()}
+          onMouseEnter={() => playHover()}
+          className="block w-full cursor-pointer interactive"
+        >
+          <SpotlightCard
+            spotlightColor="rgba(0, 242, 254, 0.16)"
+            spotlightRadius={400}
+            className="w-full aspect-video rounded-2xl md:rounded-[2rem] overflow-hidden border-white/10 hover:border-primary/50 transition-all duration-500 shadow-[0_10px_40px_rgba(0,0,0,0.6)] group"
+          >
+            <Image
+              src={project.heroImage}
+              alt={project.title}
+              fill
+              sizes="(max-width: 1024px) 100vw, 60vw"
+              className="object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+            />
+            
+            {/* Badges Top Left */}
+            <div className="absolute top-4 left-4 z-10 flex flex-wrap gap-2">
+              <span className="px-3 py-1 rounded-full bg-[#050505]/80 backdrop-blur-md border border-white/15 text-[10px] font-mono uppercase tracking-widest text-gray-200">
+                {project.category}
+              </span>
+              {project.badge && (
+                <span className="px-2.5 py-1 rounded-full bg-emerald-500/20 backdrop-blur-md border border-emerald-500/40 text-[10px] font-mono uppercase tracking-wider text-emerald-400 font-bold flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  {project.badge}
+                </span>
+              )}
+            </div>
 
-        {/* Hover Gradient Overlay */}
-        <motion.div 
-          className="absolute inset-0 bg-gradient-to-tr from-primary/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        />
-
-        {/* Floating Ambient Parallax Sphere */}
-        <motion.div 
-          style={{ y }}
-          className="hidden sm:block absolute -bottom-10 -right-10 w-44 h-44 bg-primary/10 blur-3xl rounded-full pointer-events-none"
-        />
-      </Link>
+            {/* Hover Gradient Overlay */}
+            <motion.div 
+              className="absolute inset-0 bg-gradient-to-tr from-primary/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+            />
+          </SpotlightCard>
+        </Link>
+      </div>
 
       {/* Project Info */}
       <div className="w-full lg:w-2/5 flex flex-col space-y-4 md:space-y-6">
@@ -129,25 +133,28 @@ function ProjectCard({ project, index }: { project: ProjectData; index: number }
         <div className="flex flex-wrap gap-2">
           {project.tech.map((t: string) => (
             <span 
-              key={t} 
-              className="px-2.5 py-1 bg-surface text-gray-300 text-xs font-mono rounded-lg border border-white/10 hover:border-primary/40 transition-colors"
+              key={t}
+              onMouseEnter={() => playHover()}
+              className="px-2.5 py-1 bg-surface text-gray-300 text-xs font-mono rounded-lg border border-white/10 hover:border-primary/40 transition-colors cursor-default"
             >
               {t}
             </span>
           ))}
         </div>
 
-        {/* CTA Button */}
+        {/* CTA Button with Magnetic Physics */}
         <div className="pt-2 md:pt-4">
-          <Link 
-            href={`/projects/${project.slug}`}
-            onClick={() => playClick()}
-            onMouseEnter={() => playHover()}
-            className="inline-flex items-center gap-2 px-7 py-3.5 border border-primary/40 bg-primary/10 rounded-full text-white hover:bg-primary hover:text-black transition-all duration-300 font-bold uppercase text-xs tracking-widest interactive shadow-[0_0_20px_rgba(0,242,254,0.15)] group cursor-pointer"
-          >
-            <span>Explorar Caso de Estudio</span>
-            <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform text-primary group-hover:text-black" />
-          </Link>
+          <MagneticButton>
+            <Link 
+              href={`/projects/${project.slug}`}
+              onClick={() => playClick()}
+              onMouseEnter={() => playHover()}
+              className="inline-flex items-center gap-2 px-7 py-3.5 border border-primary/40 bg-primary/10 rounded-full text-white hover:bg-primary hover:text-black transition-all duration-300 font-bold uppercase text-xs tracking-widest interactive shadow-[0_0_20px_rgba(0,242,254,0.15)] group cursor-pointer"
+            >
+              <span>Explorar Caso de Estudio</span>
+              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform text-primary group-hover:text-black" />
+            </Link>
+          </MagneticButton>
         </div>
       </div>
     </div>
