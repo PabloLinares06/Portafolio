@@ -6,8 +6,9 @@ import { motion, useScroll } from 'framer-motion';
 import { useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, ArrowRight, Activity, ExternalLink, ShieldCheck, Zap } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ShieldCheck, Zap } from 'lucide-react';
 import ArchitectureTopology from '@/components/ArchitectureTopology';
+import ProjectInteractiveGallery from '@/components/ProjectInteractiveGallery';
 import { playClick, playHover } from '@/utils/audio';
 
 export default function ProjectPage() {
@@ -250,8 +251,13 @@ export default function ProjectPage() {
         </div>
       </section>
 
-      {/* Gallery */}
-      {project.gallery && project.gallery.length > 0 && (
+      {/* Interactive Gallery / Showcase */}
+      {project.galleryItems && project.galleryItems.length > 0 ? (
+        <ProjectInteractiveGallery
+          items={project.galleryItems}
+          projectTitle={project.title}
+        />
+      ) : project.gallery && project.gallery.length > 0 ? (
         <section className="py-16 md:py-20 px-4 sm:px-6 bg-[#040608] border-t border-white/5">
           <div className="max-w-6xl mx-auto">
             <div className="mb-10 text-center">
@@ -283,7 +289,7 @@ export default function ProjectPage() {
             </div>
           </div>
         </section>
-      )}
+      ) : null}
 
       {/* Next Project Link */}
       <section className="h-[70vh] md:h-screen flex items-center justify-center border-t border-white/10 relative overflow-hidden px-6 bg-[#050505]">
