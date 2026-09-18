@@ -1,50 +1,47 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { useEffect, useState } from 'react';
-import { ChevronDown } from 'lucide-react';
+import HeroBackground from '@/components/HeroBackground';
+import { ChevronDown, Terminal, Search } from 'lucide-react';
 import { useLenis } from 'lenis/react';
-import HeroBackground from '../HeroBackground';
+import { playClick, playHover, playOpen } from '@/utils/audio';
 
 const roles = [
-  'Backend Engineer',
-  'Frontend Developer',
-  'Arquitecto de Soluciones',
-  'Full Stack Developer',
+  'Software Engineer',
+  'Backend Architecture (.NET 9 & NestJS)',
+  'Industrial IoT & Edge Systems',
+  'Clean Architecture & CQRS',
 ];
 
 export default function Hero() {
   const [roleIndex, setRoleIndex] = useState(0);
   const lenis = useLenis();
 
-  // 3D Tilt Effect State
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
+  // 3D Perspective Tilt with springs
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
 
-  const mouseXSpring = useSpring(x, { stiffness: 300, damping: 30 });
-  const mouseYSpring = useSpring(y, { stiffness: 300, damping: 30 });
+  const springConfig = { damping: 25, stiffness: 150 };
+  const rotateX = useSpring(useTransform(mouseY, [-300, 300], [10, -10]), springConfig);
+  const rotateY = useSpring(useTransform(mouseX, [-300, 300], [-10, 10]), springConfig);
 
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ['10deg', '-10deg']);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ['-10deg', '10deg']);
-
-  const handleMouseMove = (event: React.MouseEvent<HTMLElement>) => {
-    const rect = event.currentTarget.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = event.clientX - rect.left;
-    const mouseY = event.clientY - rect.top;
-    
-    x.set(mouseX / width - 0.5);
-    y.set(mouseY / height - 0.5);
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    mouseX.set(e.clientX - centerX);
+    mouseY.set(e.clientY - centerY);
   };
 
   const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
+    mouseX.set(0);
+    mouseY.set(0);
   };
 
   const handleProjectsClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
+    playClick();
     const target = document.getElementById('projects');
     if (target) {
       if (lenis) {
@@ -57,6 +54,7 @@ export default function Hero() {
 
   const handleContactClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
+    playClick();
     const target = document.getElementById('contact');
     if (target) {
       if (lenis) {
@@ -67,10 +65,20 @@ export default function Hero() {
     }
   };
 
+  const openCmd = () => {
+    playOpen();
+    window.dispatchEvent(new CustomEvent('open-command-palette'));
+  };
+
+  const openTerminal = () => {
+    playOpen();
+    window.dispatchEvent(new CustomEvent('open-terminal'));
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
-      setRoleIndex((i) => (i + 1) % roles.length);
-    }, 2500);
+      setRoleIndex((prev) => (prev + 1) % roles.length);
+    }, 3200);
     return () => clearInterval(interval);
   }, []);
 
@@ -86,18 +94,30 @@ export default function Hero() {
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col items-center justify-center relative z-10 text-center px-6 w-full max-w-4xl mx-auto gap-6 pt-24 md:pt-28">
         
-        {/* "Disponible" badge */}
+        {/* Status badges */}
         <motion.div
           initial={{ y: -16, opacity: 0 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex items-center gap-2.5 px-4 py-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 backdrop-blur-md text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.15)]"
+          className="flex flex-wrap items-center justify-center gap-2.5"
         >
-          <span className="relative flex h-2 w-2 flex-shrink-0">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-          </span>
-          <span className="text-[10px] sm:text-[11px] font-mono uppercase tracking-widest font-medium">Disponible para nuevos proyectos</span>
+          <div className="flex items-center gap-2.5 px-4 py-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 backdrop-blur-md text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.15)]">
+            <span className="relative flex h-2 w-2 flex-shrink-0">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+            </span>
+            <span className="text-[10px] sm:text-[11px] font-mono uppercase tracking-widest font-medium">Disponible para nuevos proyectos</span>
+          </div>
+
+          <button
+            onClick={openCmd}
+            onMouseEnter={() => playHover()}
+            className="flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-primary/30 bg-primary/10 text-cyan-300 hover:bg-primary/20 transition-all font-mono text-[10px] sm:text-[11px] uppercase tracking-wider interactive cursor-pointer"
+          >
+            <Search size={12} className="text-primary" />
+            <span>Cmd Palette</span>
+            <span className="bg-white/10 px-1 py-0.2 rounded text-[9px] text-gray-300">Ctrl+K</span>
+          </button>
         </motion.div>
 
         {/* Name with 3D Tilt */}
@@ -118,7 +138,7 @@ export default function Hero() {
             className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-none"
           >
             JUAN PABLO <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-400 to-primary bg-[length:200%_auto] animate-gradient">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-cyan-300 to-primary bg-[length:200%_auto] animate-gradient">
               LINARES
             </span>
           </motion.h1>
@@ -154,7 +174,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.9 }}
           className="max-w-xl text-gray-400 text-sm sm:text-base md:text-lg leading-relaxed text-balance"
         >
-          Estudiante de ingeniería de software enfocado en construir <span className="text-white font-medium">arquitecturas backend robustas</span>, APIs escalables y experiencias digitales fluidas.
+          Ingeniero de software enfocado en construir <span className="text-white font-medium">arquitecturas backend de alto rendimiento</span>, sistemas distribuidos offline-first y experiencias digitales con precisión de microsegundos.
         </motion.p>
 
         {/* CTAs */}
@@ -167,14 +187,24 @@ export default function Hero() {
           <a
             href="#projects"
             onClick={handleProjectsClick}
-            className="w-full sm:w-auto px-7 py-3.5 bg-primary text-white font-bold rounded-full hover:bg-blue-600 transition-all shadow-[0_0_25px_rgba(0,112,243,0.35)] interactive text-sm"
+            onMouseEnter={() => playHover()}
+            className="w-full sm:w-auto px-7 py-3.5 bg-primary text-black font-bold rounded-full hover:bg-cyan-300 transition-all shadow-[0_0_25px_rgba(0,242,254,0.35)] interactive text-sm cursor-pointer"
           >
-            Ver Proyectos
+            Ver Casos de Estudio
           </a>
+          <button
+            onClick={openTerminal}
+            onMouseEnter={() => playHover()}
+            className="w-full sm:w-auto px-6 py-3.5 border border-primary/40 bg-primary/10 text-cyan-300 font-mono font-bold rounded-full hover:bg-primary/20 transition-all interactive text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer"
+          >
+            <Terminal size={14} className="text-primary" />
+            <span>&gt;_ Consola Dev</span>
+          </button>
           <a
             href="#contact"
             onClick={handleContactClick}
-            className="w-full sm:w-auto px-7 py-3.5 border border-white/20 bg-white/[0.04] text-white font-bold rounded-full hover:bg-white/10 hover:border-white/40 transition-all interactive text-sm"
+            onMouseEnter={() => playHover()}
+            className="w-full sm:w-auto px-7 py-3.5 border border-white/20 bg-white/[0.04] text-white font-bold rounded-full hover:bg-white/10 hover:border-white/40 transition-all interactive text-sm cursor-pointer"
           >
             Contactar ✉
           </a>
@@ -182,7 +212,9 @@ export default function Hero() {
             href="https://github.com/PabloLinares06"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full sm:w-auto px-6 py-3.5 border border-white/10 text-gray-400 hover:text-white font-medium rounded-full hover:bg-white/5 transition-all interactive text-sm font-mono uppercase tracking-wider"
+            onClick={() => playClick()}
+            onMouseEnter={() => playHover()}
+            className="w-full sm:w-auto px-6 py-3.5 border border-white/10 text-gray-400 hover:text-white font-medium rounded-full hover:bg-white/5 transition-all interactive text-sm font-mono uppercase tracking-wider cursor-pointer"
           >
             GitHub ↗
           </a>

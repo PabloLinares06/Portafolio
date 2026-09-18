@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#05080c" />
+      <stop offset="50%" stop-color="#0a1017" />
+      <stop offset="100%" stop-color="#030507" />
+    </linearGradient>
+    <linearGradient id="cyanGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00f2fe" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#4facfe" stop-opacity="0.3" />
+    </linearGradient>
+    <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00f2fe" stop-opacity="0.12" />
+      <stop offset="70%" stop-color="#00f2fe" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(255, 255, 255, 0.03)" stroke-width="1" />
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1920" height="1080" fill="url(#bgGrad)" />
+  <rect width="1920" height="1080" fill="url(#grid)" />
+  <circle cx="960" cy="540" r="600" fill="url(#centerGlow)" />
+
+  <!-- Technical Circuit Lines -->
+  <g stroke="rgba(0, 242, 254, 0.2)" stroke-width="1.5" fill="none">
+    <path d="M 200 240 L 450 240 L 520 310 L 800 310" />
+    <circle cx="200" cy="240" r="4" fill="#00f2fe" />
+    <circle cx="800" cy="310" r="4" fill="#00f2fe" />
+
+    <path d="M 1720 840 L 1470 840 L 1400 770 L 1120 770" />
+    <circle cx="1720" cy="840" r="4" fill="#4facfe" />
+    <circle cx="1120" cy="770" r="4" fill="#4facfe" />
+
+    <path d="M 300 800 L 480 800 L 550 730 L 750 730" stroke-dasharray="6,6" />
+    <path d="M 1600 280 L 1440 280 L 1380 340 L 1200 340" stroke-dasharray="6,6" />
+  </g>
+
+  <!-- Central Fuelix Logo & Badge -->
+  <g transform="translate(680, 360)">
+    <!-- SVG Fuelix Logo (Geometry from brand identity) -->
+    <g transform="scale(1.4)" fill="#ffffff">
+      <g>
+        <path d="M12.96,25.81l12.85-12.85c2.46-2.47,5.81-3.84,9.29-3.84h6.19V0h-9.96c-3.49,0-6.83,1.38-9.3,3.85l-5.26,5.26-7.66,7.66-5.26,5.26c-2.47,2.47-3.84,5.81-3.84,9.29v79.11c0,8.37,6.79,15.17,15.17,15.17h26.11v-9.11h-1.49c-2.7,0-4.9-2.2-4.9-4.9v-49.92c0-2.81-2.27-5.08-5.08-5.08h-15.81c-2.7,0-4.89-2.2-4.89-4.9v-16.6c0-3.49,1.38-6.83,3.85-9.3Z"/>
+        <path d="M67.4,0h-26.12v9.11h1.5c2.7,0,4.89,2.19,4.89,4.89v49.92c0,2.8,2.28,5.08,5.08,5.08h15.81c2.7,0,4.9,2.19,4.9,4.89v15.6c0,3.49-1.38,6.83-3.85,9.3l-13.84,13.84c-2.47,2.47-5.81,3.85-9.3,3.85h-5.19v9.11h8.97c3.49,0,6.83-1.38,9.3-3.85l19.17-19.17c2.47-2.47,3.85-5.81,3.85-9.3V15.17c0-8.37-6.79-15.17-15.17-15.17Z"/>
+        <g>
+          <path d="M108.94,93.99V30.34h42.35v12.82h-27.58v13.75h25.97v12.48h-25.97v24.61h-14.77Z"/>
+          <path d="M185.02,95.26c-5.43,0-10.2-1.06-14.3-3.18-4.1-2.12-7.3-5.12-9.59-9-2.29-3.87-3.44-8.44-3.44-13.71V30.34h14.94v39.04c0,4.02,1.1,7.21,3.31,9.59,2.21,2.38,5.18,3.56,8.91,3.56s6.87-1.19,9.08-3.56c2.21-2.38,3.31-5.57,3.31-9.59V30.34h14.94v39.04c0,5.26-1.15,9.83-3.44,13.71-2.29,3.88-5.47,6.87-9.55,9-4.07,2.12-8.8,3.18-14.17,3.18Z"/>
+          <path d="M222.58,93.99V30.34h43.28v12.82h-28.52v11.97h26.73v12.31h-26.73v13.75h28.52v12.82h-43.28Z"/>
+          <path d="M275.29,93.99V30.34h14.94v50.5h27.92v13.15h-42.86Z"/>
+          <path d="M324.72,93.99V30.34h15.02v63.65h-15.02Z"/>
+          <path d="M346.54,93.99l21.39-32.59-20.45-31.06h17.06l13.07,19.86,12.56-19.86h16.55l-21.13,32,20.79,31.66h-17.06l-13.49-20.45-12.73,20.45h-16.55Z"/>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- Technical Telemetry Badges -->
+  <g font-family="monospace" font-size="14" letter-spacing="3" fill="#00f2fe">
+    <text x="960" y="580" text-anchor="middle" font-weight="bold">INDUSTRIAL IOT // FORECOURT AUTOMATION // OFFLINE-FIRST</text>
+    <text x="960" y="615" text-anchor="middle" fill="#64748b" font-size="12">ARCH: EDGE RASPBERRY PI SERIAL SPOOL · LOCAL NESTJS SERVER · ANGULAR 22 PWA</text>
+  </g>
+
+  <!-- Floating Edge Tier Nodes -->
+  <g transform="translate(320, 680)">
+    <rect width="280" height="90" rx="12" fill="#0a0f16" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+    <text x="24" y="36" font-family="monospace" font-size="11" fill="#00f2fe" letter-spacing="2">TIER 1 · EDGE GATEWAY</text>
+    <text x="24" y="62" font-family="sans-serif" font-size="15" fill="#ffffff" font-weight="bold">Raspberry Pi + Serial</text>
+    <text x="24" y="78" font-family="monospace" font-size="10" fill="#64748b">Passive Read · SQLite Spool</text>
+  </g>
+
+  <g transform="translate(820, 680)">
+    <rect width="280" height="90" rx="12" fill="#0a0f16" stroke="rgba(0, 242, 254, 0.3)" stroke-width="1" />
+    <text x="24" y="36" font-family="monospace" font-size="11" fill="#00f2fe" letter-spacing="2">TIER 2 · LOCAL CORE</text>
+    <text x="24" y="62" font-family="sans-serif" font-size="15" fill="#ffffff" font-weight="bold">NestJS 11 + PostgreSQL</text>
+    <text x="24" y="78" font-family="monospace" font-size="10" fill="#64748b">Station Truth · Zero Outage</text>
+  </g>
+
+  <g transform="translate(1320, 680)">
+    <rect width="280" height="90" rx="12" fill="#0a0f16" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+    <text x="24" y="36" font-family="monospace" font-size="11" fill="#00f2fe" letter-spacing="2">TIER 3 · MULTI-TENANT</text>
+    <text x="24" y="62" font-family="sans-serif" font-size="15" fill="#ffffff" font-weight="bold">Angular 22 + Supabase</text>
+    <text x="24" y="78" font-family="monospace" font-size="10" fill="#64748b">Bi-directional Sync Cloud</text>
+  </g>
+
+  <!-- Top status indicator -->
+  <g transform="translate(960, 120)">
+    <circle cx="-130" cy="-4" r="5" fill="#22c55e" />
+    <text x="0" y="0" text-anchor="middle" font-family="monospace" font-size="12" fill="#94a3b8" letter-spacing="2">SYSTEM STATUS: ARCHITECTURE VALIDATED // LEGAL METROLOGY COMPLIANT</text>
+  </g>
+</svg>

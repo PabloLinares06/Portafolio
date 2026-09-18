@@ -7,6 +7,8 @@ import Navbar from '@/components/Navbar';
 import ScrollProgress from '@/components/ScrollProgress';
 import ScrollToTop from '@/components/ScrollToTop';
 import Preloader from '@/components/Preloader';
+import CommandPalette from '@/components/CommandPalette';
+import DevTerminal from '@/components/DevTerminal';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -20,26 +22,32 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://pablolinares.dev'),
-  title: 'Juan Pablo Linares | Software Engineer',
+  title: 'Juan Pablo Linares | Software Engineer & Systems Architect',
   description:
-    'Portafolio inmersivo de Juan Pablo Linares Laverde — Ingeniero de Software Full Stack enfocado en arquitecturas robustas y experiencias digitales de alto impacto.',
+    'Portafolio inmersivo de Juan Pablo Linares Laverde — Ingeniero de Software enfocado en arquitecturas de backend de alto rendimiento, .NET 9, NestJS 11, Angular 22, IoT y sistemas distribuidos.',
   keywords: [
     'Juan Pablo Linares',
     'Software Engineer',
     'Full Stack Developer',
     'Backend Engineer',
-    '.NET Core',
+    'Systems Architect',
+    '.NET 9',
     'C#',
-    'React',
-    'Next.js',
+    'Dapper',
+    'NestJS 11',
+    'Angular 22',
+    'PostgreSQL',
+    'Docker',
     'Clean Architecture',
     'CQRS',
+    'Industrial IoT',
+    'Offline-First',
   ],
   authors: [{ name: 'Juan Pablo Linares' }],
   creator: 'Juan Pablo Linares',
   openGraph: {
-    title: 'Juan Pablo Linares | Software Engineer',
-    description: 'Portafolio inmersivo de Juan Pablo Linares Laverde — Arquitectura, Rendimiento & Lógica.',
+    title: 'Juan Pablo Linares | Software Engineer & Systems Architect',
+    description: 'Portafolio inmersivo de Juan Pablo Linares Laverde — Arquitectura, Rendimiento & Sistemas Distribuidos.',
     url: 'https://pablolinares.dev',
     siteName: 'Juan Pablo Linares Portfolio',
     locale: 'es_CO',
@@ -47,7 +55,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Juan Pablo Linares | Software Engineer',
+    title: 'Juan Pablo Linares | Software Engineer & Systems Architect',
     description: 'Portafolio inmersivo de Juan Pablo Linares Laverde — Ingeniero de Software.',
   },
 };
@@ -63,6 +71,8 @@ export default function RootLayout({
     <html lang="es">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Preloader />
+        <CommandPalette />
+        <DevTerminal />
         <SmoothScroll>
           <ScrollToTop />
           <ScrollProgress />

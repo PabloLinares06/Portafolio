@@ -5,14 +5,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useLenis } from 'lenis/react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Search, Volume2, VolumeX, Terminal } from 'lucide-react';
+import { playHover, playClick, playSuccess, playOpen, isAudioMuted, setAudioMuted } from '@/utils/audio';
 
 const navItems = [
   { label: 'Inicio', href: '/#hero' },
   { label: 'Trayectoria', href: '/#about' },
   { label: 'Stack', href: '/#experience' },
   { label: 'Proyectos', href: '/#projects' },
-  { label: 'Skills', href: '/#skills' },
+  { label: 'Arsenal', href: '/#skills' },
   { label: 'Contacto', href: '/#contact' },
 ];
 
@@ -20,12 +21,38 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState('hero');
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [soundActive, setSoundActive] = useState(true);
   const pathname = usePathname();
   const isHomePage = pathname === '/';
   const lenis = useLenis();
 
+  useEffect(() => {
+    setSoundActive(!isAudioMuted());
+  }, []);
+
+  const toggleSound = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    const next = !soundActive;
+    setSoundActive(next);
+    setAudioMuted(!next);
+    if (next) playSuccess();
+  };
+
+  const openCmd = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    playOpen();
+    window.dispatchEvent(new CustomEvent('open-command-palette'));
+  };
+
+  const openTerminal = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    playOpen();
+    window.dispatchEvent(new CustomEvent('open-terminal'));
+  };
+
   // Handle smooth scroll clicks with Lenis
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    playClick();
     const hash = href.includes('#') ? href.split('#')[1] : null;
 
     if (isHomePage && hash) {
@@ -72,7 +99,6 @@ export default function Navbar() {
         return;
       }
 
-      // Check section crossing scanline (35% down viewport)
       const probeY = scrollY + windowHeight * 0.35;
       for (let i = sectionIds.length - 1; i >= 0; i--) {
         const id = sectionIds[i];
@@ -129,7 +155,10 @@ export default function Navbar() {
     };
   }, [isOpen]);
 
-  const toggleMenu = () => setIsOpen(!isOpen);
+  const toggleMenu = () => {
+    playClick();
+    setIsOpen(!isOpen);
+  };
 
   return (
     <>
@@ -138,35 +167,105 @@ export default function Navbar() {
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
-        className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 hidden md:flex items-center gap-1 px-4 py-2 rounded-full border transition-all duration-300 ${
+        className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 hidden lg:flex items-center gap-1.5 px-4 py-2 rounded-full border transition-all duration-300 ${
           isScrolled
-            ? 'border-white/15 bg-[#050505]/90 backdrop-blur-xl shadow-[0_0_35px_rgba(0,112,243,0.18)]'
-            : 'border-white/10 bg-[#050505]/75 backdrop-blur-lg shadow-[0_0_20px_rgba(0,112,243,0.08)]'
+            ? 'border-white/15 bg-[#05070a]/90 backdrop-blur-xl shadow-[0_0_35px_rgba(0,242,254,0.18)]'
+            : 'border-white/10 bg-[#05070a]/75 backdrop-blur-lg shadow-[0_0_20px_rgba(0,242,254,0.08)]'
         }`}
       >
-        {navItems.map((item) => {
-          const id = item.href.split('#')[1];
-          const isActive = isHomePage && activeSection === id;
-          return (
-            <Link
-              key={item.label}
-              href={item.href}
-              onClick={(e) => handleNavClick(e, item.href)}
-              className={`relative px-4 py-2 text-xs font-mono uppercase tracking-widest transition-colors duration-300 rounded-full interactive ${
-                isActive ? 'text-white' : 'text-gray-400 hover:text-white'
-              }`}
-            >
-              {isActive && (
-                <motion.span
-                  layoutId="nav-pill"
-                  className="absolute inset-0 rounded-full bg-primary/20 border border-primary/40 shadow-[0_0_15px_rgba(0,112,243,0.3)]"
-                  transition={{ type: 'spring', bounce: 0.2, duration: 0.5 }}
-                />
-              )}
-              <span className="relative z-10">{item.label}</span>
-            </Link>
-          );
-        })}
+        {/* Navigation items */}
+        <div className="flex items-center gap-1">
+          {navItems.map((item) => {
+            const id = item.href.split('#')[1];
+            const isActive = isHomePage && activeSection === id;
+            return (
+              <Link
+                key={item.label}
+                href={item.href}
+                onClick={(e) => handleNavClick(e, item.href)}
+                onMouseEnter={() => playHover()}
+                className={`relative px-3.5 py-1.5 text-xs font-mono uppercase tracking-widest transition-colors duration-300 rounded-full interactive ${
+                  isActive ? 'text-white' : 'text-gray-400 hover:text-white'
+                }`}
+              >
+                {isActive && (
+                  <motion.span
+                    layoutId="nav-pill"
+                    className="absolute inset-0 rounded-full bg-primary/20 border border-primary/40 shadow-[0_0_15px_rgba(0,242,254,0.3)]"
+                    transition={{ type: 'spring', bounce: 0.2, duration: 0.5 }}
+                  />
+                )}
+                <span className="relative z-10">{item.label}</span>
+              </Link>
+            );
+          })}
+        </div>
+
+        {/* Vertical divider */}
+        <div className="w-[1px] h-4 bg-white/10 mx-1.5" />
+
+        {/* Command Palette Trigger */}
+        <button
+          onClick={openCmd}
+          onMouseEnter={() => playHover()}
+          title="Abrir Command Palette (Ctrl+K)"
+          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-gray-400 hover:text-white hover:bg-white/5 transition-all text-xs font-mono border border-white/10 hover:border-primary/40 interactive cursor-pointer"
+        >
+          <Search size={12} className="text-primary" />
+          <span className="text-[10px] text-gray-400">⌘K</span>
+        </button>
+
+        {/* Sound Toggle */}
+        <button
+          onClick={toggleSound}
+          onMouseEnter={() => playHover()}
+          title={soundActive ? 'Silenciar efectos de audio' : 'Activar sonido háptico'}
+          className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-full transition-all text-xs font-mono border interactive cursor-pointer ${
+            soundActive 
+              ? 'text-cyan-300 border-primary/30 bg-primary/10 hover:bg-primary/20' 
+              : 'text-gray-500 border-white/10 hover:text-gray-300 hover:bg-white/5'
+          }`}
+        >
+          {soundActive ? (
+            <>
+              <div className="flex items-center gap-0.5 h-3">
+                <span className="w-0.5 h-2 bg-primary animate-pulse" />
+                <span className="w-0.5 h-3 bg-primary animate-pulse delay-75" />
+                <span className="w-0.5 h-1.5 bg-primary animate-pulse delay-150" />
+              </div>
+              <Volume2 size={12} />
+            </>
+          ) : (
+            <VolumeX size={12} />
+          )}
+        </button>
+      </motion.nav>
+
+      {/* Medium screens compact navbar */}
+      <motion.nav
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, ease: 'easeOut' }}
+        className={`fixed top-6 left-6 z-50 hidden md:flex lg:hidden items-center gap-2 px-4 py-2 rounded-full border transition-all duration-300 ${
+          isScrolled
+            ? 'border-white/15 bg-[#05070a]/90 backdrop-blur-xl shadow-[0_0_25px_rgba(0,242,254,0.18)]'
+            : 'border-white/10 bg-[#05070a]/75 backdrop-blur-lg shadow-[0_0_15px_rgba(0,242,254,0.08)]'
+        }`}
+      >
+        <button
+          onClick={openCmd}
+          className="flex items-center gap-2 text-xs font-mono text-gray-300 hover:text-white"
+        >
+          <Search size={14} className="text-primary" />
+          <span>Comandos</span>
+          <span className="text-[10px] bg-white/10 px-1 rounded text-gray-400">⌘K</span>
+        </button>
+        <button
+          onClick={toggleSound}
+          className="p-1.5 text-gray-400 hover:text-white rounded-full hover:bg-white/5"
+        >
+          {soundActive ? <Volume2 size={14} className="text-primary" /> : <VolumeX size={14} />}
+        </button>
       </motion.nav>
 
       {/* Mobile Navbar Trigger */}
@@ -176,10 +275,10 @@ export default function Navbar() {
         transition={{ duration: 0.5, ease: 'easeOut' }}
         onClick={toggleMenu}
         aria-label="Toggle menu"
-        className={`fixed top-6 right-6 z-[60] md:hidden w-12 h-12 flex items-center justify-center rounded-full border transition-all duration-300 text-white interactive ${
+        className={`fixed top-6 right-6 z-[60] lg:hidden w-12 h-12 flex items-center justify-center rounded-full border transition-all duration-300 text-white interactive cursor-pointer ${
           isScrolled
-            ? 'border-white/15 bg-[#050505]/90 backdrop-blur-xl shadow-[0_0_25px_rgba(0,112,243,0.18)]'
-            : 'border-white/10 bg-[#050505]/75 backdrop-blur-lg shadow-[0_0_15px_rgba(0,112,243,0.08)]'
+            ? 'border-white/15 bg-[#05070a]/90 backdrop-blur-xl shadow-[0_0_25px_rgba(0,242,254,0.18)]'
+            : 'border-white/10 bg-[#05070a]/75 backdrop-blur-lg shadow-[0_0_15px_rgba(0,242,254,0.08)]'
         }`}
       >
         <AnimatePresence mode="wait">
@@ -195,9 +294,9 @@ export default function Navbar() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed inset-0 z-[55] bg-[#050505]/98 backdrop-blur-2xl flex flex-col items-center justify-center md:hidden"
+            className="fixed inset-0 z-[55] bg-[#05070a]/98 backdrop-blur-2xl flex flex-col items-center justify-center lg:hidden"
           >
-            <div className="flex flex-col items-center gap-7">
+            <div className="flex flex-col items-center gap-6">
               {navItems.map((item, index) => {
                 const id = item.href.split('#')[1];
                 const isActive = isHomePage && activeSection === id;
@@ -206,12 +305,12 @@ export default function Navbar() {
                     key={item.label}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.08 * index }}
+                    transition={{ delay: 0.05 * index }}
                   >
                     <Link
                       href={item.href}
                       onClick={(e) => handleNavClick(e, item.href)}
-                      className={`text-3xl sm:text-4xl font-bold tracking-tighter transition-colors uppercase ${
+                      className={`text-2xl sm:text-3xl font-bold tracking-tighter transition-colors uppercase ${
                         isActive ? 'text-primary' : 'text-white hover:text-primary'
                       }`}
                     >
@@ -222,21 +321,53 @@ export default function Navbar() {
               })}
             </div>
 
+            {/* Mobile Actions Bar */}
+            <div className="mt-8 flex items-center gap-3">
+              <button
+                onClick={() => {
+                  setIsOpen(false);
+                  openCmd();
+                }}
+                className="flex items-center gap-2 px-4 py-2 rounded-full border border-primary/40 bg-primary/10 text-white text-xs font-mono"
+              >
+                <Search size={14} className="text-primary" />
+                <span>Buscar (⌘K)</span>
+              </button>
+
+              <button
+                onClick={() => {
+                  setIsOpen(false);
+                  openTerminal();
+                }}
+                className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/15 bg-white/5 text-white text-xs font-mono"
+              >
+                <Terminal size={14} className="text-cyan-300" />
+                <span>Consola</span>
+              </button>
+
+              <button
+                onClick={toggleSound}
+                className="p-2 rounded-full border border-white/15 bg-white/5 text-white text-xs font-mono"
+              >
+                {soundActive ? <Volume2 size={16} className="text-primary" /> : <VolumeX size={16} />}
+              </button>
+            </div>
+
             {/* Social / Contact bottom */}
-            <div className="absolute bottom-12 flex gap-8">
+            <div className="absolute bottom-10 flex gap-8">
               <a
-                href="mailto:juanpalinare@gmail.com"
+                href="mailto:juan.linares682@pascualbravo.edu.co"
                 className="text-gray-400 hover:text-white transition-colors font-mono text-xs uppercase tracking-widest"
               >
                 Email
               </a>
               <a
-                href="https://linkedin.com/in/jplinaresdev"
+                href="https://github.com/PabloLinares06"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-white transition-colors font-mono text-xs uppercase tracking-widest"
               >
-                LinkedIn
+                GitHub
               </a>
             </div>
           </motion.div>
@@ -245,4 +376,3 @@ export default function Navbar() {
     </>
   );
 }
-
