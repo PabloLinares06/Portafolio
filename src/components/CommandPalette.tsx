@@ -120,19 +120,6 @@ export default function CommandPalette() {
   const actions: ActionItem[] = [
     // Proyectos
     {
-      id: 'proj-vitalapp',
-      category: 'Proyectos',
-      title: 'VitalAPP',
-      subtitle: '.NET 9 · C# · Dapper · MediatR CQRS · SQL Server',
-      badge: 'Caso de Estudio',
-      icon: FolderGit2,
-      action: () => {
-        playClick();
-        setIsOpen(false);
-        router.push('/projects/vitalapp');
-      }
-    },
-    {
       id: 'proj-natec',
       category: 'Proyectos',
       title: 'NaTec V2',

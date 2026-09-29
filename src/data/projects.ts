@@ -15,7 +15,7 @@ export interface MetricItem {
 export interface GalleryItem {
   src: string;
   title: string;
-  category: 'tienda' | 'admin' | 'mobile' | 'general';
+  category: string;
   description: string;
   isFeatured?: boolean;
 }
@@ -43,35 +43,6 @@ export interface ProjectData {
 }
 
 export const projects: Record<string, ProjectData> = {
-  vitalapp: {
-    slug: "vitalapp",
-    title: "VitalAPP",
-    category: "Gestión Médica & Arquitectura .NET",
-    badge: "Backend Core",
-    description: "API REST empresarial diseñada para transformar la gestión clínica de pacientes, historias médicas y asignación de citas en entornos hospitalarios de alta demanda.",
-    challenge: "El mayor reto fue orquestar un backend con lógica de negocio densa y estricta integridad relacional, asegurando latencias ultra-bajas en consultas complejas sin penalización de memoria, mientras se dominaba React por primera vez a escala profesional desacoplado del core.",
-    architecture: "Implementación de Arquitectura Limpia en capas inspirada en CQRS con .NET 9. Separación estricta de Commands y Queries mediante MediatR, persistencia de alta velocidad con el micro-ORM Dapper sobre SQL Server, autenticación stateless con JWT y políticas de seguridad RBAC.",
-    tech: [".NET 9", "C#", "Dapper", "SQL Server", "CQRS / MediatR", "JWT", "React", "Clean Architecture"],
-    metrics: [
-      { label: "Latencia Query", value: "P99 < 15ms", detail: "Optimización Dapper sin sobrecarga de ORM pesado" },
-      { label: "Disponibilidad", value: "99.9% SLA", detail: "Tolerancia a fallos y pipeline global de excepciones" },
-      { label: "Arquitectura", value: "CQRS", detail: "Separación total de lectura y escritura con MediatR" },
-      { label: "Seguridad", value: "JWT + RBAC", detail: "Políticas de autorización por roles médicos y administrativos" }
-    ],
-    architectureFlow: [
-      { step: "01", name: "Cliente SPA", tech: "React 19 + Tailwind", detail: "Interfaz reactiva para médicos y administradores con validación en cliente", latencyOrRole: "Frontend" },
-      { step: "02", name: "API Gateway & Auth", tech: "ASP.NET Core 9", detail: "Validación de JWT claims, rate limiting y pipeline FluentValidation", latencyOrRole: "1.2ms" },
-      { step: "03", name: "Command / Query Bus", tech: "MediatR Pipeline", detail: "Desacoplamiento de casos de uso sin dependencias de infraestructura", latencyOrRole: "0.8ms" },
-      { step: "04", name: "Micro-ORM Data Layer", tech: "Dapper + SQL Server", detail: "Mapeo directo a DTOs con consultas SQL optimizadas y cero allocs", latencyOrRole: "4.5ms" }
-    ],
-    heroImage: "/projects/vitalapp/hero.png",
-    gallery: ["/projects/vitalapp/hero.png"],
-    githubUrl: "https://github.com/PabloLinares06",
-    nextProject: {
-      title: "NaTec V2",
-      slug: "natechnology"
-    }
-  },
   natechnology: {
     slug: "natechnology",
     title: "NaTec V2",
@@ -142,7 +113,7 @@ export const projects: Record<string, ProjectData> = {
         src: "/projects/natechnology/gallery/tienda/06_Filtro_Categoria_Audifonos.png",
         title: "Filtro por Categoría: Audio & Accesorios",
         category: "tienda",
-        description: "Visualización limpia de catálogo de auriculares inalámbricos con especificaciones técnicas al vuelo."
+        description: "Exploración de accesorios de audio con especificaciones técnicas y disponibilidad al vuelo."
       },
       {
         src: "/projects/natechnology/gallery/tienda/02_Popup_Promociones_Especiales.png",
@@ -322,16 +293,242 @@ export const projects: Record<string, ProjectData> = {
       { step: "03", name: "Station Core Server", tech: "NestJS + Local Postgres", detail: "Servidor local en PC que valida transacciones y emite recibos POS", latencyOrRole: "3.2ms" },
       { step: "04", name: "Cloud Multi-Tenant", tech: "Angular 22 PWA + Supabase", detail: "Consola gerencial, SICOM reporting y sincronización hacia la nube", latencyOrRole: "Cloud Sync" }
     ],
-    heroImage: "/projects/fuelix/hero.svg",
+    heroImage: "/projects/fuelix/hero.png",
     gallery: [
-      "/projects/fuelix/hero.svg",
-      "/projects/fuelix/imagotipo-dark.svg",
-      "/projects/fuelix/isotipo-dark.svg"
+      "/projects/fuelix/hero.png",
+      "/projects/fuelix/gallery/operaciones/01_Dashboard_Consolidado.png",
+      "/projects/fuelix/gallery/operaciones/02_Monitoreo_Tanques.png",
+      "/projects/fuelix/gallery/turnos/01_Grilla_Turnos.png",
+      "/projects/fuelix/gallery/turnos/03_Nomina_Semanal.png",
+      "/projects/fuelix/gallery/corporativo/01_Despacho_Corporativo.png",
+      "/projects/fuelix/gallery/corporativo/04_Reportes_Regulatorios_SICOM.png"
+    ],
+    galleryItems: [
+      // ⛽ OPERACIONES & TELEMETRÍA DE TANQUES
+      {
+        src: "/projects/fuelix/gallery/operaciones/01_Dashboard_Consolidado.png",
+        title: "Dashboard Consolidado de Operaciones",
+        category: "operaciones",
+        description: "Panel de control general con telemetría de tanques, ventas en tiempo real, alarmas operativas y estado de conexión de nodos Edge.",
+        isFeatured: true
+      },
+      {
+        src: "/projects/fuelix/gallery/operaciones/02_Monitoreo_Tanques.png",
+        title: "Monitoreo de Nivel y Capacidad de Tanques",
+        category: "operaciones",
+        description: "Visualización en vivo de inventario volumétrico de combustible (Corriente, Extra, Diésel), volumen neto disponible y agua de fondo.",
+        isFeatured: true
+      },
+      {
+        src: "/projects/fuelix/gallery/operaciones/03_Detalle_Lecturas_Tanque.png",
+        title: "Histórico y Telemetría Detallada de Tanque",
+        category: "operaciones",
+        description: "Gráficas de variación de nivel, registro de descargas de camión cisterna y calibración de sondas magnetostrictivas.",
+        isFeatured: true
+      },
+      {
+        src: "/projects/fuelix/gallery/operaciones/04_Formulario_Nuevo_Tanque.png",
+        title: "Configuración de Nuevos Tanques",
+        category: "operaciones",
+        description: "Parametrización de capacidades nominales, tablas de aforo y umbrales críticos de alarma operativa."
+      },
+      {
+        src: "/projects/fuelix/gallery/operaciones/05_Estaciones_Servicio.png",
+        title: "Gestión Multi-Estación Centralizada",
+        category: "operaciones",
+        description: "Panel multi-tenant para administrar múltiples islas y puntos de venta desde una sola cuenta gerencial."
+      },
+      {
+        src: "/projects/fuelix/gallery/operaciones/06_Inventario_Productos.png",
+        title: "Inventario de Lubricantes & Tienda de Conveniencia",
+        category: "operaciones",
+        description: "Control de stock de aceites, aditivos y productos de conveniencia en pista con alertas de reorden."
+      },
+      {
+        src: "/projects/fuelix/gallery/operaciones/07_Formulario_Nuevo_Producto.png",
+        title: "Alta de Productos de Pista",
+        category: "operaciones",
+        description: "Creación de ítems con control de IVA, margen de utilidad, código de barras y categoría contable."
+      },
+      {
+        src: "/projects/fuelix/gallery/operaciones/08_Inventario_Registrar_Movimiento.png",
+        title: "Kardex & Movimientos de Inventario",
+        category: "operaciones",
+        description: "Registro de traslados, compras de combustible y ajustes de merma con trazabilidad completa."
+      },
+
+      // ⏱️ GESTIÓN DE TURNOS & NÓMINA DE PISTA
+      {
+        src: "/projects/fuelix/gallery/turnos/01_Grilla_Turnos.png",
+        title: "Grilla Operativa de Turnos en Isla",
+        category: "turnos",
+        description: "Matriz visual interactiva para asignación de turnos (mañana, tarde, noche) por isla y dispensador.",
+        isFeatured: true
+      },
+      {
+        src: "/projects/fuelix/gallery/turnos/03_Nomina_Semanal.png",
+        title: "Cálculo de Nómina Semanal de Pista",
+        category: "turnos",
+        description: "Cálculo automático de recargos nocturnos, horas extras, dominicales y festivos según la legislación laboral colombiana.",
+        isFeatured: true
+      },
+      {
+        src: "/projects/fuelix/gallery/turnos/05_Liquidacion_Turnos.png",
+        title: "Liquidación y Cuadre de Turnos de Isleros",
+        category: "turnos",
+        description: "Cierre de turno con cruce automático entre lecturas de totalizador de surtidores vs efectivo, tarjetas bancarias y vales.",
+        isFeatured: true
+      },
+      {
+        src: "/projects/fuelix/gallery/turnos/06_Panel_Control_Turnos.png",
+        title: "Panel de Supervisión de Turnos Activos",
+        category: "turnos",
+        description: "Supervisión en tiempo real de turnos abiertos, arqueos parciales y detección temprana de descuadres de caja."
+      },
+      {
+        src: "/projects/fuelix/gallery/turnos/02_Horarios_Semanales.png",
+        title: "Programador de Horarios Semanales",
+        category: "turnos",
+        description: "Calendario de rotación de operarios respetando límites de jornada y descansos obligatorios."
+      },
+      {
+        src: "/projects/fuelix/gallery/turnos/04_Novedades_Personal.png",
+        title: "Gestión de Novedades del Personal",
+        category: "turnos",
+        description: "Registro de incapacidades médicas, licencias, permisos y ausencias con impacto directo en liquidación."
+      },
+      {
+        src: "/projects/fuelix/gallery/turnos/07_Gestion_Empleados.png",
+        title: "Directorio de Empleados y Operarios",
+        category: "turnos",
+        description: "Gestión completa de cuadrilla de isleros, conductores corporativos y administradores de patio."
+      },
+      {
+        src: "/projects/fuelix/gallery/turnos/08_Formulario_Nuevo_Empleado.png",
+        title: "Registro y Asignación de Operario",
+        category: "turnos",
+        description: "Configuración de datos contractuales, rol de permisos y PIN de acceso a la terminal táctil de isla."
+      },
+
+      // 🏢 VENTAS CORPORATIVAS & REGULACIÓN SICOM
+      {
+        src: "/projects/fuelix/gallery/corporativo/01_Despacho_Corporativo.png",
+        title: "Despacho y Crédito a Flotas Corporativas",
+        category: "corporativo",
+        description: "Autorización y validación de suministro de combustible a flotas empresariales con verificación de cupo disponible y kilometraje.",
+        isFeatured: true
+      },
+      {
+        src: "/projects/fuelix/gallery/corporativo/02_Cuentas_Corporativas.png",
+        title: "Directorio de Cuentas y Convenios Corporativos",
+        category: "corporativo",
+        description: "Manejo de convenios comerciales empresariales, límites de crédito y vehículos habilitados por placa.",
+        isFeatured: true
+      },
+      {
+        src: "/projects/fuelix/gallery/corporativo/04_Reportes_Regulatorios_SICOM.png",
+        title: "Reportes Regulatorios Oficiales SICOM (MinMinas)",
+        category: "corporativo",
+        description: "Generación automatizada de reportes oficiales de compras, ventas e inventarios para el Ministerio de Minas y Energía de Colombia.",
+        isFeatured: true
+      },
+      {
+        src: "/projects/fuelix/gallery/corporativo/03_Formulario_Nueva_Cuenta.png",
+        title: "Alta de Cuenta Corporativa",
+        category: "corporativo",
+        description: "Parametrización de NIT, días de crédito, facturación electrónica periódica y restricciones por combustible."
+      },
+      {
+        src: "/projects/fuelix/gallery/corporativo/05_Configuracion_Sistema.png",
+        title: "Configuración del Sistema y Hardware Edge",
+        category: "corporativo",
+        description: "Ajustes de comunicación con los nodos Raspberry Pi, baud rate de bucle serial y parámetros fiscales."
+      },
+
+      // 📱 EXPERIENCIA MÓVIL (PWA EN PATIO DE ESTACIÓN)
+      {
+        src: "/projects/fuelix/gallery/mobile/03_Mobile_Dashboard.png",
+        title: "Mobile Dashboard: Métricas de Pista",
+        category: "mobile",
+        description: "Vista gerencial en smartphone con ventas del día, galonaje despachado y alertas operativas críticas.",
+        isFeatured: true
+      },
+      {
+        src: "/projects/fuelix/gallery/mobile/04_Mobile_Monitoreo_Tanques.png",
+        title: "Mobile: Nivel de Tanques en Patio",
+        category: "mobile",
+        description: "Monitoreo en vivo de inventario volumétrico de combustible desde la tablet del patio.",
+        isFeatured: true
+      },
+      {
+        src: "/projects/fuelix/gallery/mobile/07_Mobile_Despacho_Corporativo.png",
+        title: "Mobile: Validación de Placa de Flota",
+        category: "mobile",
+        description: "Autorización ágil en isla para carga de combustible corporativo con validación de placa.",
+        isFeatured: true
+      },
+      {
+        src: "/projects/fuelix/gallery/mobile/05_Mobile_Grilla_Turnos.png",
+        title: "Mobile: Control de Turnos",
+        category: "mobile",
+        description: "Asignación rápida de turns e isleros en servicio desde dispositivos móviles."
+      },
+      {
+        src: "/projects/fuelix/gallery/mobile/06_Mobile_Nomina_Semanal.png",
+        title: "Mobile: Resumen de Nómina y Recargos",
+        category: "mobile",
+        description: "Supervisión de costos de nómina y turnos laborados en patio."
+      },
+      {
+        src: "/projects/fuelix/gallery/mobile/08_Mobile_Reportes_SICOM.png",
+        title: "Mobile: Consulta Regulatoria SICOM",
+        category: "mobile",
+        description: "Verificación de envíos y cumplimiento de normatividad ante el Ministerio de Minas."
+      },
+      {
+        src: "/projects/fuelix/gallery/mobile/01_Mobile_Landing.png",
+        title: "Mobile: Landing Page Adaptable",
+        category: "mobile",
+        description: "Diseño PWA responsive con legibilidad optimizada bajo luz solar directa en patio de estación."
+      },
+      {
+        src: "/projects/fuelix/gallery/mobile/02_Mobile_Login.png",
+        title: "Mobile: Login Rápido de Islero",
+        category: "mobile",
+        description: "Acceso simplificado con PIN para tabletas de operación en isla de dispensadores."
+      },
+
+      // 🌐 LANDING & ACCESO
+      {
+        src: "/projects/fuelix/gallery/landing/01_Landing_Hero.png",
+        title: "Landing Page: Propuesta de Valor & Forecourt",
+        category: "landing",
+        description: "Cabecera principal de Fuelix destacando la autonomía absoluta offline-first y reducción de costos de hardware para EDS.",
+        isFeatured: true
+      },
+      {
+        src: "/projects/fuelix/gallery/landing/02_Landing_Completa.png",
+        title: "Arquitectura de Producto & Módulos",
+        category: "landing",
+        description: "Visión completa de la suite Fuelix: telemetría de tanques, POS, turnos y facturación electrónica."
+      },
+      {
+        src: "/projects/fuelix/gallery/landing/03_Login.png",
+        title: "Autenticación & Portal de Estación",
+        category: "landing",
+        description: "Inicio de sesión seguro multi-tenant con verificación de estación y roles de operador."
+      },
+      {
+        src: "/projects/fuelix/gallery/landing/04_Registro.png",
+        title: "Onboarding de Nuevas Estaciones",
+        category: "landing",
+        description: "Flujo de registro y configuración de tanques, mangueras e identificadores SICOM."
+      }
     ],
     githubUrl: "https://github.com/PabloLinares06",
     nextProject: {
-      title: "VitalAPP",
-      slug: "vitalapp"
+      title: "NaTec V2",
+      slug: "natechnology"
     }
   }
 };

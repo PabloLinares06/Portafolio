@@ -116,9 +116,8 @@ persistencia relacional (SQL Server, PostgreSQL) e infraestructura Docker VPS.`
         newHistory.push({
           id: Math.random().toString(),
           type: 'output',
-          content: `[01] VitalAPP   — Backend .NET 9 / C# / Dapper / CQRS / SQL Server (Gestión Médica)
-[02] NaTec V2   — NestJS 11 / Angular 22 / EFFI ERP / Docker VPS / SSE (E-Commerce Mayorista)
-[03] Fuelix     — Angular 22 / NestJS 11 / Raspberry Pi / Offline-First (Industrial IoT)`
+          content: `[01] NaTec V2   — NestJS 11 / Angular 22 / EFFI ERP / Docker VPS / SSE (E-Commerce Mayorista)
+[02] Fuelix     — Angular 22 / NestJS 11 / Raspberry Pi / Offline-First (Industrial IoT)`
         });
         break;
 

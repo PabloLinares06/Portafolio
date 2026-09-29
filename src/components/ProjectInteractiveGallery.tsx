@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { GalleryItem } from '@/data/projects';
 import { 
-  Eye, 
   X, 
   ChevronLeft, 
   ChevronRight, 
@@ -14,20 +13,47 @@ import {
   Store, 
   Settings, 
   Smartphone, 
-  ShieldCheck, 
   Sparkles,
-  ArrowUpRight
+  ArrowUpRight,
+  Clock,
+  Briefcase,
+  Cpu,
+  ShieldCheck,
+  Fuel
 } from 'lucide-react';
 import { playClick, playHover, playOpen } from '@/utils/audio';
 
 interface ProjectInteractiveGalleryProps {
   items: GalleryItem[];
   projectTitle: string;
+  projectSlug?: string;
 }
 
-export default function ProjectInteractiveGallery({ items, projectTitle }: ProjectInteractiveGalleryProps) {
-  const [selectedCategory, setSelectedCategory] = useState<'all' | 'tienda' | 'admin' | 'mobile'>('all');
+export default function ProjectInteractiveGallery({ 
+  items, 
+  projectTitle, 
+  projectSlug = 'natechnology' 
+}: ProjectInteractiveGalleryProps) {
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [activeImageIndex, setActiveImageIndex] = useState<number | null>(null);
+
+  const isFuelix = projectSlug === 'fuelix';
+
+  const categories = isFuelix
+    ? [
+        { id: 'all', label: 'Todas las Vistas', icon: Layers },
+        { id: 'operaciones', label: 'Operaciones & Tanques', icon: Fuel },
+        { id: 'turnos', label: 'Turnos & Nómina', icon: Clock },
+        { id: 'corporativo', label: 'Ventas Corp & SICOM', icon: Briefcase },
+        { id: 'mobile', label: 'Vistas Móviles', icon: Smartphone },
+        { id: 'landing', label: 'Landing & Acceso', icon: Store },
+      ]
+    : [
+        { id: 'all', label: 'Todas las Vistas', icon: Layers },
+        { id: 'tienda', label: 'Tienda Pública', icon: Store },
+        { id: 'admin', label: 'Panel Admin, ERP & BI', icon: Settings },
+        { id: 'mobile', label: 'Vistas Móviles', icon: Smartphone },
+      ];
 
   const filteredItems = items.filter((item) => {
     if (selectedCategory === 'all') return true;
@@ -81,11 +107,30 @@ export default function ProjectInteractiveGallery({ items, projectTitle }: Proje
     };
   }, [activeImageIndex]);
 
-  const counts = {
-    all: items.length,
-    tienda: items.filter((i) => i.category === 'tienda').length,
-    admin: items.filter((i) => i.category === 'admin').length,
-    mobile: items.filter((i) => i.category === 'mobile').length,
+  const getCategoryCount = (catId: string) => {
+    if (catId === 'all') return items.length;
+    return items.filter((i) => i.category === catId).length;
+  };
+
+  const getCategoryBadgeLabel = (cat: string) => {
+    switch (cat) {
+      case 'admin':
+        return '⚙️ Admin & EFFI ERP';
+      case 'tienda':
+        return '🛒 Tienda Pública';
+      case 'mobile':
+        return '📱 Vista Móvil';
+      case 'operaciones':
+        return '⛽ Operaciones & Tanques';
+      case 'turnos':
+        return '⏱️ Turnos & Nómina';
+      case 'corporativo':
+        return '🏢 Ventas Corp & SICOM';
+      case 'landing':
+        return '🌐 Landing & Acceso';
+      default:
+        return 'Módulo';
+    }
   };
 
   const activeItem = activeImageIndex !== null ? filteredItems[activeImageIndex] : null;
@@ -114,120 +159,117 @@ export default function ProjectInteractiveGallery({ items, projectTitle }: Proje
             Galería Interactiva del Sistema
           </h2>
           <p className="text-gray-400 text-sm sm:text-base leading-relaxed">
-            Explora las pantallas reales de la plataforma {projectTitle}: desde la experiencia del cliente mayorista en tienda y dispositivos móviles, hasta los módulos de analítica BI y la integración fiscal con EFFI ERP.
+            {isFuelix
+              ? `Explora las ${items.length} pantallas operativas de Fuelix: desde el monitoreo volumétrico de tanques y liquidación laboral de turnos, hasta la gestión de flotas corporativas y reportes regulatorios ante el SICOM.`
+              : `Explora las ${items.length} pantallas reales de la plataforma ${projectTitle}: desde la experiencia del cliente mayorista en tienda y dispositivos móviles, hasta los módulos de analítica BI y la integración fiscal con EFFI ERP.`}
           </p>
         </div>
 
-        {/* Technical Migration Comparison Callout */}
+        {/* Technical Callout Comparison */}
         <div className="mb-14 p-6 md:p-8 rounded-3xl bg-[#080d14]/90 border border-white/10 shadow-2xl relative overflow-hidden">
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 pb-6 border-b border-white/10">
             <div>
               <span className="text-[10px] font-mono text-primary uppercase tracking-widest font-bold block mb-1">
-                Arquitectura en Evolución // Caso Real de Negocio
+                {isFuelix ? 'Arquitectura de Misión Crítica // IoT Edge Industrial' : 'Arquitectura en Evolución // Caso Real de Negocio'}
               </span>
               <h3 className="text-xl md:text-2xl font-bold text-white">
-                Migración Estratégica: Firebase Serverless → VPS Auto-Hospedado
+                {isFuelix
+                  ? 'Innovación de Hardware: Commodity Edge Nodes vs Controladores Privativos'
+                  : 'Migración Estratégica: Firebase Serverless → VPS Auto-Hospedado'}
               </h3>
             </div>
             <span className="px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs font-bold">
-              ROI & COSTOS OPTIMIZADOS
+              {isFuelix ? 'OFFLINE-FIRST & SIC COMPLIANT' : 'ROI & COSTOS OPTIMIZADOS'}
             </span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6">
-            {/* Antes */}
-            <div className="p-5 rounded-2xl bg-red-500/[0.03] border border-red-500/20 space-y-2">
-              <div className="flex items-center gap-2 text-red-400 font-mono text-xs uppercase tracking-wider font-bold">
-                <span>✕ Arquitectura Previa (Firebase Serverless)</span>
-              </div>
-              <ul className="text-xs font-mono text-gray-400 space-y-1.5 pt-2">
-                <li>• Facturación elástica impredecible por lecturas continuas de Firestore.</li>
-                <li>• Exportación manual y digitación repetitiva de pedidos en software contable.</li>
-                <li>• Ausencia de modo kiosko interactivo con bloqueo de seguridad en bodega.</li>
-                <li>• Banners estáticos sin generación dinámica para vendedores de WhatsApp.</li>
-              </ul>
-            </div>
+            {isFuelix ? (
+              <>
+                {/* Fuelix Antes / Tradicional */}
+                <div className="p-5 rounded-2xl bg-red-500/[0.03] border border-red-500/20 space-y-2">
+                  <div className="flex items-center gap-2 text-red-400 font-mono text-xs uppercase tracking-wider font-bold">
+                    <span>✕ Controladores Legacy Tradicionales (Dominus / Iscom)</span>
+                  </div>
+                  <ul className="text-xs font-mono text-gray-400 space-y-1.5 pt-2">
+                    <li>• Costo de adquisición excesivo: controladores privativos de más de $3,000 USD.</li>
+                    <li>• Caídas de red o fallas del PC en isla detienen inmediatamente el despacho.</li>
+                    <li>• Cuadres de caja y turnos manuales propensos a pérdidas de combustible.</li>
+                    <li>• Reportes regulatorios SICOM generados a mano con alto riesgo sancionatorio.</li>
+                  </ul>
+                </div>
 
-            {/* Ahora */}
-            <div className="p-5 rounded-2xl bg-emerald-500/[0.03] border border-emerald-500/20 space-y-2">
-              <div className="flex items-center gap-2 text-emerald-400 font-mono text-xs uppercase tracking-wider font-bold">
-                <span>✓ NaTec V2 (NestJS + Docker VPS + EFFI ERP)</span>
-              </div>
-              <ul className="text-xs font-mono text-gray-300 space-y-1.5 pt-2">
-                <li>• Costo fijo mensual de $14 USD/mes en Droplet VPS DigitalOcean + Nginx.</li>
-                <li>• Integración oficial con EFFI ERP: exportación masiva en .xlsx con ExcelJS.</li>
-                <li>• Modo Kiosko táctil con PIN de seguridad y reinicio automático por inactividad.</li>
-                <li>• Motor Canvas 2D a 1200×1200 px con copiado directo al portapapeles.</li>
-              </ul>
-            </div>
+                {/* Fuelix Ahora */}
+                <div className="p-5 rounded-2xl bg-emerald-500/[0.03] border border-emerald-500/20 space-y-2">
+                  <div className="flex items-center gap-2 text-emerald-400 font-mono text-xs uppercase tracking-wider font-bold">
+                    <span>✓ Arquitectura Fuelix (Edge Multi-Tier + Angular PWA + Supabase)</span>
+                  </div>
+                  <ul className="text-xs font-mono text-gray-300 space-y-1.5 pt-2">
+                    <li>• Hardware accesible: Raspberry Pi (~$50 USD) con lectura serial pasiva RS-485.</li>
+                    <li>• Autonomía Offline-First: Spool local SQLite + Postgres en PC sin parar ventas.</li>
+                    <li>• Liquidación automática con ley laboral colombiana, horas extras y recargos.</li>
+                    <li>• Cumplimiento estricto con metrología legal SIC (Resoluciones 77507 / 67760).</li>
+                  </ul>
+                </div>
+              </>
+            ) : (
+              <>
+                {/* NaTec Antes */}
+                <div className="p-5 rounded-2xl bg-red-500/[0.03] border border-red-500/20 space-y-2">
+                  <div className="flex items-center gap-2 text-red-400 font-mono text-xs uppercase tracking-wider font-bold">
+                    <span>✕ Arquitectura Previa (Firebase Serverless)</span>
+                  </div>
+                  <ul className="text-xs font-mono text-gray-400 space-y-1.5 pt-2">
+                    <li>• Facturación elástica impredecible por lecturas continuas de Firestore.</li>
+                    <li>• Exportación manual y digitación repetitiva de pedidos en software contable.</li>
+                    <li>• Ausencia de modo kiosko interactivo con bloqueo de seguridad en bodega.</li>
+                    <li>• Banners estáticos sin generación dinámica para vendedores de WhatsApp.</li>
+                  </ul>
+                </div>
+
+                {/* NaTec Ahora */}
+                <div className="p-5 rounded-2xl bg-emerald-500/[0.03] border border-emerald-500/20 space-y-2">
+                  <div className="flex items-center gap-2 text-emerald-400 font-mono text-xs uppercase tracking-wider font-bold">
+                    <span>✓ NaTec V2 (NestJS + Docker VPS + EFFI ERP)</span>
+                  </div>
+                  <ul className="text-xs font-mono text-gray-300 space-y-1.5 pt-2">
+                    <li>• Costo fijo mensual de $14 USD/mes en Droplet VPS DigitalOcean + Nginx.</li>
+                    <li>• Integración oficial con EFFI ERP: exportación masiva en .xlsx con ExcelJS.</li>
+                    <li>• Modo Kiosko táctil con PIN de seguridad y reinicio automático por inactividad.</li>
+                    <li>• Motor Canvas 2D a 1200×1200 px con copiado directo al portapapeles.</li>
+                  </ul>
+                </div>
+              </>
+            )}
           </div>
         </div>
 
-        {/* Category Filter Tabs */}
+        {/* Dynamic Category Filter Tabs */}
         <div className="flex flex-wrap items-center justify-center gap-2.5 mb-10">
-          <button
-            onClick={() => {
-              playClick();
-              setSelectedCategory('all');
-            }}
-            onMouseEnter={() => playHover()}
-            className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono uppercase tracking-wider transition-all interactive cursor-pointer ${
-              selectedCategory === 'all'
-                ? 'bg-primary text-black font-bold shadow-[0_0_20px_rgba(0,242,254,0.35)]'
-                : 'bg-white/[0.03] text-gray-400 border border-white/10 hover:border-white/30 hover:text-white'
-            }`}
-          >
-            <Layers size={14} />
-            <span>Todas las Vistas ({counts.all})</span>
-          </button>
+          {categories.map((cat) => {
+            const Icon = cat.icon;
+            const count = getCategoryCount(cat.id);
+            const isSelected = selectedCategory === cat.id;
 
-          <button
-            onClick={() => {
-              playClick();
-              setSelectedCategory('tienda');
-            }}
-            onMouseEnter={() => playHover()}
-            className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono uppercase tracking-wider transition-all interactive cursor-pointer ${
-              selectedCategory === 'tienda'
-                ? 'bg-primary text-black font-bold shadow-[0_0_20px_rgba(0,242,254,0.35)]'
-                : 'bg-white/[0.03] text-gray-400 border border-white/10 hover:border-white/30 hover:text-white'
-            }`}
-          >
-            <Store size={14} />
-            <span>Tienda Pública ({counts.tienda})</span>
-          </button>
-
-          <button
-            onClick={() => {
-              playClick();
-              setSelectedCategory('admin');
-            }}
-            onMouseEnter={() => playHover()}
-            className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono uppercase tracking-wider transition-all interactive cursor-pointer ${
-              selectedCategory === 'admin'
-                ? 'bg-primary text-black font-bold shadow-[0_0_20px_rgba(0,242,254,0.35)]'
-                : 'bg-white/[0.03] text-gray-400 border border-white/10 hover:border-white/30 hover:text-white'
-            }`}
-          >
-            <Settings size={14} />
-            <span>Panel Admin, ERP & BI ({counts.admin})</span>
-          </button>
-
-          <button
-            onClick={() => {
-              playClick();
-              setSelectedCategory('mobile');
-            }}
-            onMouseEnter={() => playHover()}
-            className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono uppercase tracking-wider transition-all interactive cursor-pointer ${
-              selectedCategory === 'mobile'
-                ? 'bg-primary text-black font-bold shadow-[0_0_20px_rgba(0,242,254,0.35)]'
-                : 'bg-white/[0.03] text-gray-400 border border-white/10 hover:border-white/30 hover:text-white'
-            }`}
-          >
-            <Smartphone size={14} />
-            <span>Vistas Móviles ({counts.mobile})</span>
-          </button>
+            return (
+              <button
+                key={cat.id}
+                onClick={() => {
+                  playClick();
+                  setSelectedCategory(cat.id);
+                }}
+                onMouseEnter={() => playHover()}
+                className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono uppercase tracking-wider transition-all interactive cursor-pointer ${
+                  isSelected
+                    ? 'bg-primary text-black font-bold shadow-[0_0_20px_rgba(0,242,254,0.35)]'
+                    : 'bg-white/[0.03] text-gray-400 border border-white/10 hover:border-white/30 hover:text-white'
+                }`}
+              >
+                <Icon size={14} />
+                <span>{cat.label} ({count})</span>
+              </button>
+            );
+          })}
         </div>
 
         {/* Gallery Grid */}
@@ -263,7 +305,7 @@ export default function ProjectInteractiveGallery({ items, projectTitle }: Proje
                   {/* Category Pill Badge */}
                   <div className="absolute top-3 left-3 z-10">
                     <span className="px-2.5 py-1 rounded-full bg-black/80 backdrop-blur-md border border-white/15 text-[9px] font-mono uppercase tracking-wider text-gray-200">
-                      {item.category === 'admin' ? '⚙️ Admin & ERP' : item.category === 'tienda' ? '🛒 Tienda' : '📱 Móvil'}
+                      {getCategoryBadgeLabel(item.category)}
                     </span>
                   </div>
 
@@ -310,7 +352,7 @@ export default function ProjectInteractiveGallery({ items, projectTitle }: Proje
             <div className="flex items-center justify-between text-white z-20 pb-4 border-b border-white/10">
               <div className="flex items-center gap-3">
                 <span className="px-3 py-1 rounded-full bg-primary/20 border border-primary/40 text-primary font-mono text-xs uppercase tracking-wider font-bold">
-                  {activeItem.category === 'admin' ? 'Panel Admin & EFFI ERP' : activeItem.category === 'tienda' ? 'Tienda Pública' : 'Vista Móvil UX'}
+                  {getCategoryBadgeLabel(activeItem.category)}
                 </span>
                 <span className="font-mono text-xs text-gray-400 hidden sm:inline">
                   [{activeImageIndex! + 1} / {filteredItems.length}]

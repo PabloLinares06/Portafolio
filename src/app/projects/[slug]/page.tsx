@@ -256,6 +256,7 @@ export default function ProjectPage() {
         <ProjectInteractiveGallery
           items={project.galleryItems}
           projectTitle={project.title}
+          projectSlug={project.slug}
         />
       ) : project.gallery && project.gallery.length > 0 ? (
         <section className="py-16 md:py-20 px-4 sm:px-6 bg-[#040608] border-t border-white/5">
