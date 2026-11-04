@@ -1,0 +1,191 @@
+<USER_REQUEST>
+# PROMPT MAESTRO: CINEMATIC 3D MOTION GRAPHICS PIPELINE (HYPERFRAMES / GSAP)
+
+Actúa como un Senior Creative Technologist, Lead Motion Designer y Creative Coder experto en GSAP 3 y CSS 3D Transforms para Hyperframes y Remotion.
+
+Quiero reconstruir por completo el video promocional de mi portafolio web **pablolinares.tech** para convertirlo en una pieza cinematográfica comercial de Motion Graphics 3D de alto impacto (estilo Linear.app, Apple Keynote, Vercel Ship o lanzamientos de Supabase).
+
+---
+
+## 1. ESPECIFICACIONES TÉCNICAS BASE
+- **Resolución:** 1080x1920 (9:16 vertical para TikTok / Reels / Shorts).
+- **Framerate:** 60 FPS estables.
+- **Duración total:** 12.0 segundos exactos (ritmo acelerado, retención máxima, sin tiempos muertos).
+- **URL de referencia:** https://pablolinares.tech
+- **Identidad:** Juan Pablo Linares — Full Stack & Distributed Systems Architect.
+
+---
+
+## 2. REGLAS NEGATIVAS ESTRICTAS (QUÉ QUEDA TERMINANTEMENTE PROHIBIDO)
+1. **PROHIBIDO EL PASE DE DIAPOSITIVAS (SLIDESHOW):** No ocultes y muestres contenedores 2D mediante cambios simples de `opacity` o `display:none`. Todo el video debe existir dentro de un espacio tridimensional continuo.
+2. **PROHIBIDO ENMARCAR CAPTURAS COMPLETAS CON PADDING:** Las tarjetas de UI jamás deben caber enteras dentro de la pantalla vertical con márgenes vacíos alrededor. Deben renderizarse a escala macro (`scale: 1.4` a `2.2`), cortándose intencionalmente en los bordes para simular una toma de cámara cinematográfica enfocando detalles concretos.
+3. **PROHIBIDO EL PLANO 2D FRONTAL:** Nada debe estar completamente plano a 0 grados. Todo elemento estructural debe tener inclinación angular 3D (`perspective`, `rotateX`, `rotateY`, `rotateZ`).
+4. **PROHIBIDO EL ESTATISMO (0% QUIETO):** Ningún elemento puede permanecer congelado. Incluso durante la lectura de un titular, la cámara debe conservar una deriva continua (*camera drift* suave hacia adelante o en rotación).
+5. **PROHIBIDO EASINGS LINEALES O LENTOS:** Prohibido el uso de `linear`, `power1` o transiciones de entrada superiores a 0.4s. Usa exclusivamente curvas agresivas: `expo.out`, `power4.out`, `back.out(2)` y `circ.out`.
+
+---
+
+## 3. ARQUITECTURA DEL DOM (CÁMARA CONTINUA 3D)
+Construye un único rig de cámara virtual persistente en HTML/CSS donde convivan todas las escenas:
+
+```html
+<div id="viewport" style="width: 1080px; height: 1920px; overflow: hidden; perspective: 1200px; background: #030508; position: relative;">
+  <!-- Fondo reactivo continuo -->
+  <div id="ambient-mesh" style="position: absolute; inset: -50%; background: radial-gradient(circle at 50% 40%, rgba(16, 185, 129, 0.18) 0%, transparent 55%), radial-gradient(circle at 85% 75%, rgba(56, 189, 248, 0.12) 0%, transparent 50%); filter: blur(90px); pointer-events: none;"></div>
+
+  <!-- Rig de Cámara 3D -->
+  <div id="camera-rig" style="width: 100%; height: 100%; position: absolute; inset: 0; transform-style: preserve-3d; will-change: transform;">
+    <section id="scene-intro" class="scene-node"></section>
+    <section id="scene-fuelix" class="scene-node"></section>
+    <section id="scene-terminal" class="scene-node"></section>
+    <section id="scene-metrics" class="scene-node"></section>
+    <section id="scene-outro" class="scene-node"></section>
+  </div>
+</div> Markdown
+# PROMPT MAESTRO: CINEMATIC 3D MOTION GRAPHICS PIPELINE (HYPERFRAMES / GSAP)
+
+Actúa como un Senior Creative Technologist, Lead Motion Designer y Creative Coder experto en GSAP 3 y CSS 3D Transforms para Hyperframes y Remotion.
+
+Quiero reconstruir por completo el video promocional de mi portafolio web **pablolinares.tech** para convertirlo en una pieza cinematográfica comercial de Motion Graphics 3D de alto impacto (estilo Linear.app, Apple Keynote, Vercel Ship o lanzamientos de Supabase).
+
+---
+
+## 1. ESPECIFICACIONES TÉCNICAS BASE
+- **Resolución:** 1080x1920 (9:16 vertical para TikTok / Reels / Shorts).
+- **Framerate:** 60 FPS estables.
+- **Duración total:** 12.0 segundos exactos (ritmo acelerado, retención máxima, sin tiempos muertos).
+- **URL de referencia:** https://pablolinares.tech
+- **Identidad:** Juan Pablo Linares — Full Stack & Distributed Systems Architect.
+
+---
+
+## 2. REGLAS NEGATIVAS ESTRICTAS (QUÉ QUEDA TERMINANTEMENTE PROHIBIDO)
+1. **PROHIBIDO EL PASE DE DIAPOSITIVAS (SLIDESHOW):** No ocultes y muestres contenedores 2D mediante cambios simples de `opacity` o `display:none`. Todo el video debe existir dentro de un espacio tridimensional continuo.
+2. **PROHIBIDO ENMARCAR CAPTURAS COMPLETAS CON PADDING:** Las tarjetas de UI jamás deben caber enteras dentro de la pantalla vertical con márgenes vacíos alrededor. Deben renderizarse a escala macro (`scale: 1.4` a `2.2`), cortándose intencionalmente en los bordes para simular una toma de cámara cinematográfica enfocando detalles concretos.
+3. **PROHIBIDO EL PLANO 2D FRONTAL:** Nada debe estar completamente plano a 0 grados. Todo elemento estructural debe tener inclinación angular 3D (`perspective`, `rotateX`, `rotateY`, `rotateZ`).
+4. **PROHIBIDO EL ESTATISMO (0% QUIETO):** Ningún elemento puede permanecer congelado. Incluso durante la lectura de un titular, la cámara debe conservar una deriva continua (*camera drift* suave hacia adelante o en rotación).
+5. **PROHIBIDO EASINGS LINEALES O LENTOS:** Prohibido el uso de `linear`, `power1` o transiciones de entrada superiores a 0.4s. Usa exclusivamente curvas agresivas: `expo.out`, `power4.out`, `back.out(2)` y `circ.out`.
+
+---
+
+## 3. ARQUITECTURA DEL DOM (CÁMARA CONTINUA 3D)
+Construye un único rig de cámara virtual persistente en HTML/CSS donde convivan todas las escenas:
+
+```html
+<div id="viewport" style="width: 1080px; height: 1920px; overflow: hidden; perspective: 1200px; background: #030508; position: relative;">
+  <!-- Fondo reactivo continuo -->
+  <div id="ambient-mesh" style="position: absolute; inset: -50%; background: radial-gradient(circle at 50% 40%, rgba(16, 185, 129, 0.18) 0%, transparent 55%), radial-gradient(circle at 85% 75%, rgba(56, 189, 248, 0.12) 0%, transparent 50%); filter: blur(90px); pointer-events: none;"></div>
+
+  <!-- Rig de Cámara 3D -->
+  <div id="camera-rig" style="width: 100%; height: 100%; position: absolute; inset: 0; transform-style: preserve-3d; will-change: transform;">
+    <section id="scene-intro" class="scene-node"></section>
+    <section id="scene-fuelix" class="scene-node"></section>
+    <section id="scene-terminal" class="scene-node"></section>
+    <section id="scene-metrics" class="scene-node"></section>
+    <section id="scene-outro" class="scene-node"></section>
+  </div>
+</div>
+Sistema de Estilos y Tokens Visuales:
+Scene Nodes: position: absolute; inset: 0; width: 100%; height: 100%; transform-style: preserve-3d; display: flex; align-items: center; justify-content: center;
+
+Glassmorphism Técnico:
+background: rgba(11, 15, 23, 0.72); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.08); border-top: 1px solid rgba(255, 255, 255, 0.2); border-radius: 24px; box-shadow: 0 40px 100px rgba(0, 0, 0, 0.85), 0 0 40px rgba(16, 185, 129, 0.08);
+
+Tipografía: Sans-serif condensada y pesada (Inter, Geist o Syne, 800-900 weight) para impactos; Monospace (JetBrains Mono / Fira Code) en verde esmeralda neón (#10B981) y azul cian (#38BDF8) para telemetría y datos.
+
+4. TIMELINE DE GSAP Y COREOGRAFÍA DE CÁMARA (12.0s EXACTOS)
+BEAT 1: IMPACTO TIPOGRÁFICO Y ACCELERACIÓN (0.0s - 2.2s)
+Posición de Cámara: #camera-rig inicia en { translateZ: 0, rotateX: 0, rotateY: 0, translateY: 0 }.
+
+0.0s - 0.35s: Badge pill AVAILABLE FOR WORK • 2026 entra volando con { y: -100, opacity: 0, scale: 0.8 } -> { y: 0, opacity: 1, scale: 1 } (ease: back.out(2.2)).
+
+0.15s - 0.7s: Nombre principal JUAN PABLO LINARES aparece en máscara gigante ocupando el 92% del ancho, letra por letra con stagger de 0.03s (yPercent: 120 -> 0, ease: power4.out). Acompaña un barrido diagonal de brillo metálico.
+
+0.5s - 0.9s: Subtítulo DISTRIBUTED SYSTEMS & NEXT-GEN INTERFACES con tracking que se abre dinámicamente (letterSpacing: '0px' -> '3px').
+
+1.8s - 2.2s (Whip Transition): #camera-rig no corta. Acelera agresivamente hacia adelante: { translateZ: 1300, rotateX: 20, rotateY: -18, ease: 'power3.in', duration: 0.4 }, atravesando el texto como si fuera un portal.
+
+BEAT 2: MACRO SHOWCASE DE PROYECTO FUELIX (2.2s - 5.0s)
+Coordenadas de Escena: #scene-fuelix está ubicada en { translateZ: -250 }.
+
+Cámara: #camera-rig frena con rebote en { translateZ: -80, rotateX: 26, rotateY: -16, rotateZ: 5, ease: 'power4.out', duration: 0.5 }. Durante toda la escena conserva un drift continuo { rotateY: '-=4', translateZ: '+=60' }.
+
+Composición Visual:
+
+Mockup de FUELIX escalado a scale: 1.65, saliéndose de los bordes inferior y derecho.
+
+Paralaje en Z: La barra de métricas (RS-485 MODBUS, RASPBERRY PI 5, 94.2% TANK 01) está desacoplada con transform: translateZ(80px).
+
+Acción Dinámica:
+
+2.5s: Un cursor SVG estilizado (flecha blanca neón con estela cian) entra cruzando el viewport hasta la sección de telemetría.
+
+3.1s: Click del cursor (scale: 0.82 en 0.08s) -> Micro-impacto en la tarjeta (scale: 1.62 -> 1.65) y los datos de litros/galones parpadean en verde vivo.
+
+4.2s: Tarjeta de NATEC V2 cruza velozmente en un plano superior (translateZ: 140px, rotateY: -28deg) generando profundidad multicapa.
+
+BEAT 3: INMERSIÓN EN TERMINAL EDGE Y CÓDIGO PULSANTE (5.0s - 7.6s)
+Transición de Cámara: Giro rápido de ángulo y empuje hacia adelante: #camera-rig rota a { translateZ: 550, rotateY: 28, rotateX: -12, ease: 'expo.inOut', duration: 0.38 }.
+
+Escena: #scene-terminal entra rotada en 3D (rotateX: 14deg, rotateY: 10deg, scale: 1.3), nunca plana.
+
+Acción:
+
+5.3s - 5.6s: Prompt ejecuta a velocidad supersónica: $ pablo-cli --diagnose-architecture.
+
+5.7s, 6.0s, 6.3s: Tres líneas de diagnóstico entran como disparos con micro-sacudida de pantalla (#viewport tiembla x: '+=3px', y: '-=2px' durante 0.07s por cada check):
+
+✔ Edge Telemetry: CONNECTED (RS-485 Modbus, 0ms drift)
+
+✔ Next.js 15 App Router: Turbopack compile in 3.6s
+
+✔ GSAP Kinetic Engine: 60 FPS Deterministic Timeline
+
+Bloque JSON flotando en el fondo con resplandor cyan y ligera rotación continua.
+
+BEAT 4: BENTO GRID DE MÉTRICAS EN CASCADA (7.6s - 9.8s)
+Transición de Cámara: Paneo vertical rápido: #camera-rig se traslada a { translateY: -750, rotateX: -18, rotateY: 6, translateZ: 50, ease: 'power4.inOut', duration: 0.42 }.
+
+Estructura Bento: 4 tarjetas distribuidas en diferentes planos Z (translateZ: 0px, 45px, 90px, 130px) para generar paralaje volumétrico real.
+
+Acción:
+
+Bordes con brillo en movimiento mediante gradiente cónico animado (conic-gradient).
+
+Contadores numéricos suben rápidamente en 0.75s con curva power3.out:
+
+0% -> 99.9% (UPTIME INDUSTRIAL)
+
+0+ -> 33+ (PANTALLAS EN VIVO)
+
+0/100 -> 100/100 (LIGHTHOUSE SCORE)
+
+>80ms -> <8ms (TELEMETRY LATENCY)
+
+BEAT 5: WHIP PULL-BACK CINEMATOGRÁFICO Y OUTRO (9.8s - 12.0s)
+Transición: Retroceso violento de cámara ("Whip Pull-back"): #camera-rig se aleja a { translateZ: -1300, rotateX: 0, rotateY: 0, translateY: 0, ease: 'expo.out', duration: 0.5 }.
+
+Composición:
+
+Todo el ecosistema de proyectos se retira al fondo, transformándose en una miniatura flotante con desenfoque (filter: blur(14px), opacity: 0.3).
+
+En primer plano frontal (translateZ: 220px):
+
+Titular contundente: "LET'S BUILD SOMETHING EXTRAORDINARY" con fade-in y scale de 0.9 a 1.0.
+
+URL en neón destacado: pablolinares.tech (con reflejo metálico animado).
+
+Botón de llamado a la acción: DISPONIBLE PARA PROYECTOS -> con onda de pulso expansiva (radar ripple effect).
+
+5. INSTRUCCIONES DE EJECUCIÓN PARA EL AGENTE
+Diseña y genera el código en la composición de Hyperframes asegurando que cada fotograma se renderice de forma determinista mediante el timeline de GSAP.
+
+Evita cualquier desfase de layout (overflow: hidden estricto en el viewport).
+
+Asegura el solapamiento de transiciones (overlap de -=0.15s a -=0.25s en GSAP) para que el ritmo sea continuo y no existan pausas entre beats.
+
+Ejecuta el render del video final a 1080x1920 y entrégame el archivo MP4 listo para publicación.
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-10-13T18:43:08-05:00.
+</ADDITIONAL_METADATA>

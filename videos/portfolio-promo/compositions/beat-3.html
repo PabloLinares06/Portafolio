@@ -1,0 +1,312 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #ffffff;
+          font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+          overflow: hidden;
+          perspective: 1200px;
+          transform-style: preserve-3d;
+        }
+        .b3-stage {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transform-style: preserve-3d;
+        }
+
+        .terminal-chassis-3d {
+          width: 960px;
+          border-radius: 32px;
+          background: rgba(10, 13, 22, 0.94);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          box-shadow: 
+            0 45px 120px rgba(0, 0, 0, 0.95),
+            0 0 70px rgba(99, 102, 241, 0.28);
+          backdrop-filter: blur(36px);
+          overflow: hidden;
+          transform-style: preserve-3d;
+          opacity: 0;
+        }
+
+        .terminal-topbar {
+          height: 70px;
+          background: rgba(255, 255, 255, 0.05);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          display: flex;
+          align-items: center;
+          padding: 0 28px;
+          position: relative;
+        }
+        .traffic-cluster {
+          display: flex;
+          gap: 14px;
+        }
+        .traffic-light {
+          width: 18px;
+          height: 18px;
+          border-radius: 50%;
+        }
+        .t-red { background: #ef4444; box-shadow: 0 0 12px rgba(239, 68, 68, 0.5); }
+        .t-yellow { background: #f59e0b; box-shadow: 0 0 12px rgba(245, 158, 11, 0.5); }
+        .t-green { background: #10b981; box-shadow: 0 0 12px rgba(16, 185, 129, 0.5); }
+
+        .terminal-header-title {
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 21px;
+          font-weight: 600;
+          color: #cbd5e1;
+          letter-spacing: 0.04em;
+        }
+
+        .terminal-inner {
+          padding: 44px 50px;
+          font-family: 'JetBrains Mono', monospace;
+          display: flex;
+          flex-direction: column;
+          gap: 24px;
+        }
+        .term-command-row {
+          font-size: 28px;
+          display: flex;
+          align-items: center;
+          gap: 18px;
+        }
+        .prompt-symbol {
+          color: #818cf8;
+          font-weight: 800;
+        }
+        .cmd-string {
+          color: #ffffff;
+          font-weight: 700;
+        }
+        .neon-cursor {
+          display: inline-block;
+          width: 16px;
+          height: 32px;
+          background: #818cf8;
+          box-shadow: 0 0 15px #818cf8;
+        }
+
+        .output-row {
+          font-size: 26px;
+          line-height: 1.4;
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          opacity: 0;
+        }
+        .strike-check {
+          color: #10b981;
+          font-weight: 900;
+          font-size: 30px;
+          text-shadow: 0 0 20px #10b981;
+        }
+        .output-text {
+          color: #f1f5f9;
+          font-weight: 600;
+        }
+
+        /* Pulsing Neon Code Drawer */
+        .neon-code-drawer {
+          margin-top: 18px;
+          border-radius: 20px;
+          background: rgba(0, 0, 0, 0.65);
+          border: 1px solid rgba(16, 185, 129, 0.35);
+          box-shadow: inset 0 0 35px rgba(0, 0, 0, 0.9), 0 0 40px rgba(16, 185, 129, 0.15);
+          padding: 30px 36px;
+          font-size: 23px;
+          line-height: 1.55;
+          color: #e2e8f0;
+          opacity: 0;
+          transform: translateZ(50px);
+        }
+        .kw-pink { color: #f43f5e; font-weight: 800; text-shadow: 0 0 15px rgba(244, 63, 94, 0.4); }
+        .type-cyan { color: #38bdf8; font-weight: 700; text-shadow: 0 0 15px rgba(56, 189, 248, 0.4); }
+        .str-green { color: #34d399; text-shadow: 0 0 15px rgba(52, 211, 153, 0.4); }
+        .num-amber { color: #fbbf24; }
+        .prop-indigo { color: #c7d2fe; font-weight: 600; }
+      </style>
+
+      <div id="root" data-composition-id="beat-3" data-duration="3.5" data-width="1080" data-height="1920">
+        <div id="b3-stage" class="b3-stage">
+          <div id="b3-terminal" class="terminal-chassis-3d">
+            <div class="terminal-topbar">
+              <div class="traffic-cluster">
+                <span class="traffic-light t-red"></span>
+                <span class="traffic-light t-yellow"></span>
+                <span class="traffic-light t-green"></span>
+              </div>
+              <div class="terminal-header-title">juanpablo@arch-node: ~/portfolio (main)</div>
+            </div>
+
+            <div class="terminal-inner">
+              <div class="term-command-row">
+                <span class="prompt-symbol">$</span>
+                <span id="b3-cmd" class="cmd-string">pablo-cli --diagnose-architecture</span>
+                <span class="neon-cursor"></span>
+              </div>
+
+              <div id="b3-strike-1" class="output-row">
+                <span class="strike-check">✔</span>
+                <span class="output-text">Edge Telemetry: CONNECTED (RS-485 Modbus, 0ms drift)</span>
+              </div>
+
+              <div id="b3-strike-2" class="output-row">
+                <span class="strike-check">✔</span>
+                <span class="output-text">Turbopack 15 Engine: READY (3.6s compile time)</span>
+              </div>
+
+              <div id="b3-strike-3" class="output-row">
+                <span class="strike-check">✔</span>
+                <span class="output-text">Motion Pipeline: 60 FPS DETERMINISTIC TIMELINE</span>
+              </div>
+
+              <div id="b3-code" class="neon-code-drawer">
+                <div><span class="kw-pink">interface</span> <span class="type-cyan">TelemetryStream</span> {</div>
+                <div style="padding-left: 32px;">
+                  <span class="prop-indigo">edgeNode</span>: <span class="str-green">"RaspberryPi-RS485"</span>;
+                </div>
+                <div style="padding-left: 32px;">
+                  <span class="prop-indigo">resilience</span>: <span class="str-green">"SQLite Local Spool"</span>;
+                </div>
+                <div style="padding-left: 32px;">
+                  <span class="prop-indigo">latency</span>: <span class="num-amber">&lt; 10</span>; <span style="color:#64748b;">// ms WebSockets</span>
+                </div>
+                <div style="padding-left: 32px;">
+                  <span class="prop-indigo">compliance</span>: <span class="str-green">"SICOM Metrologia Legal"</span>;
+                </div>
+                <div>}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        const tl = gsap.timeline({ paused: true });
+
+        // Terminal chassis whip-tilt lateral entrance (scale 1.25, isometric slant)
+        tl.fromTo(
+          "#b3-terminal",
+          {
+            opacity: 0,
+            scale: 0.95,
+            x: -250,
+            y: 80,
+            rotateX: 24,
+            rotateY: 28,
+            rotateZ: -4,
+          },
+          {
+            opacity: 1,
+            scale: 1.25,
+            x: 0,
+            y: 0,
+            rotateX: 14,
+            rotateY: 10,
+            rotateZ: -2,
+            duration: 0.7,
+            ease: "expo.out",
+          },
+          0.05
+        );
+
+        // Command typing burst (rapid wipe)
+        tl.fromTo(
+          "#b3-cmd",
+          { clipPath: "inset(0 100% 0 0)" },
+          { clipPath: "inset(0 0% 0 0)", duration: 0.45, ease: "steps(28)" },
+          0.35
+        );
+
+        // Checkmark strike 1 + screen shake!
+        tl.fromTo(
+          "#b3-strike-1",
+          { opacity: 0, x: -30, scale: 0.9 },
+          { opacity: 1, x: 0, scale: 1, duration: 0.22, ease: "back.out(2.0)" },
+          0.9
+        );
+        tl.to(
+          "#b3-stage",
+          { x: 3, y: -3, duration: 0.05, yoyo: true, repeat: 2, ease: "power1.inOut" },
+          0.92
+        );
+
+        // Checkmark strike 2 + screen shake!
+        tl.fromTo(
+          "#b3-strike-2",
+          { opacity: 0, x: -30, scale: 0.9 },
+          { opacity: 1, x: 0, scale: 1, duration: 0.22, ease: "back.out(2.0)" },
+          1.35
+        );
+        tl.to(
+          "#b3-stage",
+          { x: -3, y: 3, duration: 0.05, yoyo: true, repeat: 2, ease: "power1.inOut" },
+          1.37
+        );
+
+        // Checkmark strike 3 + screen shake!
+        tl.fromTo(
+          "#b3-strike-3",
+          { opacity: 0, x: -30, scale: 0.9 },
+          { opacity: 1, x: 0, scale: 1, duration: 0.22, ease: "back.out(2.0)" },
+          1.8
+        );
+        tl.to(
+          "#b3-stage",
+          { x: 3, y: 3, duration: 0.05, yoyo: true, repeat: 2, ease: "power1.inOut" },
+          1.82
+        );
+
+        // Neon code drawer illuminates in 3D
+        tl.fromTo(
+          "#b3-code",
+          { opacity: 0, y: 40, scale: 0.9 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: "back.out(1.8)" },
+          2.2
+        );
+
+        // Continuous float across Scene 3 (starts at 0.75s, after entrance)
+        tl.to(
+          "#b3-terminal",
+          { rotateY: 4, y: -15, duration: 2.35, ease: "sine.inOut" },
+          0.75
+        );
+
+        // Exit at 3.15s
+        tl.to(
+          "#b3-stage",
+          {
+            scale: 1.5,
+            z: 300,
+            opacity: 0,
+            filter: "blur(14px)",
+            duration: 0.35,
+            ease: "expo.in",
+          },
+          3.15
+        );
+
+        window.__timelines["beat-3"] = tl;
+        tl.seek(0);
+      </script>
+    </template>
+  </body>
+</html>

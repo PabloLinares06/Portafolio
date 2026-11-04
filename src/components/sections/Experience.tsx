@@ -139,7 +139,7 @@ export default function Experience() {
   }, []);
 
   return (
-    <div id="experience" className="overflow-hidden bg-[#06080c]">
+    <div id="experience" className="overflow-hidden bg-background transition-colors">
       <div ref={triggerRef}>
         <div
           ref={sectionRef}
@@ -151,10 +151,10 @@ export default function Experience() {
               <div
                 key={layer.id}
                 onMouseEnter={() => playHover()}
-                className="w-full md:w-screen min-h-screen md:h-full flex items-center justify-center p-6 md:p-14 relative border-b md:border-b-0 md:border-r border-white/10"
+                className="w-full md:w-screen min-h-screen md:h-full flex items-center justify-center p-6 md:p-14 relative border-b md:border-b-0 md:border-r border-surface-border"
               >
                 {/* Layer Number background watermark */}
-                <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[14rem] sm:text-[18rem] md:text-[24rem] font-black text-white/[0.02] select-none pointer-events-none font-mono">
+                <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[14rem] sm:text-[18rem] md:text-[24rem] font-black text-foreground/[0.03] select-none pointer-events-none font-mono">
                   0{layer.id}
                 </span>
 
@@ -162,7 +162,7 @@ export default function Experience() {
                   {/* Left Column: Description & Metadata */}
                   <div className="space-y-4 md:space-y-6">
                     <div className="flex items-center gap-3">
-                      <div className="p-3 bg-primary/10 border border-primary/20 rounded-2xl text-primary shadow-[0_0_20px_rgba(0,242,254,0.2)]">
+                      <div className="p-3 bg-primary/10 border border-primary/25 rounded-2xl text-primary shadow-sm">
                         <Icon size={24} className="md:w-7 md:h-7" />
                       </div>
                       <span className="text-primary font-mono text-xs uppercase tracking-[0.25em] font-semibold">
@@ -170,60 +170,60 @@ export default function Experience() {
                       </span>
                     </div>
 
-                    <h3 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-tight">
+                    <h3 className="text-3xl sm:text-4xl md:text-5xl font-black text-foreground tracking-tight leading-tight">
                       {layer.title}
                     </h3>
 
-                    <p className="text-xs sm:text-sm font-mono text-cyan-300 font-medium px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/10 inline-block">
+                    <p className="text-xs sm:text-sm font-mono text-primary font-medium px-3 py-1.5 rounded-lg bg-primary/10 border border-primary/20 inline-block">
                       {layer.tech}
                     </p>
 
-                    <p className="text-gray-400 text-sm sm:text-base leading-relaxed">
+                    <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
                       {layer.description}
                     </p>
 
-                    <div className="flex items-center gap-2 text-xs font-mono text-emerald-400 pt-1">
+                    <div className="flex items-center gap-2 text-xs font-mono text-emerald-600 dark:text-emerald-400 font-medium pt-1">
                       <Shield size={14} />
                       <span>{layer.metric}</span>
                     </div>
                   </div>
 
                   {/* Right Column: Interactive Code Console Mockup */}
-                  <div className="rounded-2xl border border-white/10 bg-[#040608]/90 backdrop-blur-xl shadow-2xl overflow-hidden">
+                  <div className="rounded-2xl border border-surface-border bg-surface-card backdrop-blur-xl shadow-xl overflow-hidden">
                     {/* Console Header Bar */}
-                    <div className="flex items-center justify-between px-4 py-2.5 bg-black/60 border-b border-white/10 text-gray-500 font-mono text-[11px]">
+                    <div className="flex items-center justify-between px-4 py-2.5 bg-surface-elevated/70 border-b border-surface-border text-muted-foreground font-mono text-[11px]">
                       <div className="flex items-center gap-2">
                         <span className="w-2.5 h-2.5 rounded-full bg-red-500/80 inline-block" />
                         <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80 inline-block" />
                         <span className="w-2.5 h-2.5 rounded-full bg-green-500/80 inline-block" />
-                        <span className="ml-2 text-gray-300 flex items-center gap-1">
+                        <span className="ml-2 text-foreground/90 font-medium flex items-center gap-1.5">
                           <Terminal size={11} className="text-primary" />
                           {layer.filename}
                         </span>
                       </div>
-                      <span className="text-[10px] text-gray-600 uppercase tracking-widest hidden sm:inline">
+                      <span className="text-[10px] text-muted-foreground uppercase tracking-widest hidden sm:inline">
                         PRODUCTION
                       </span>
                     </div>
 
                     {/* Code Snippet Display */}
-                    <div className="p-4 sm:p-5 overflow-x-auto text-[11px] sm:text-xs font-mono text-gray-300 leading-relaxed custom-scroll">
+                    <div className="p-4 sm:p-5 overflow-x-auto text-[11px] sm:text-xs font-mono text-foreground/90 bg-surface/40 leading-relaxed custom-scroll">
                       <pre>
                         <code>{layer.code}</code>
                       </pre>
                     </div>
 
                     {/* Console Footer Telemetry */}
-                    <div className="px-4 py-2 bg-black/40 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-gray-500">
+                    <div className="px-4 py-2 bg-surface-elevated/50 border-t border-surface-border flex items-center justify-between text-[10px] font-mono text-muted-foreground">
                       <span>STATUS: OPTIMIZED</span>
-                      <span className="text-primary-light">THREAD: SAFE</span>
+                      <span className="text-primary font-semibold">THREAD: SAFE</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Bottom Slide Progress Tracker */}
-                <div className="absolute bottom-8 left-14 hidden md:flex items-center gap-2 text-xs font-mono text-gray-600">
-                  <span className="text-white font-bold">0{index + 1}</span>
+                <div className="absolute bottom-8 left-14 hidden md:flex items-center gap-2 text-xs font-mono text-muted-foreground">
+                  <span className="text-foreground font-bold">0{index + 1}</span>
                   <span>/</span>
                   <span>0{layers.length}</span>
                 </div>

@@ -1,0 +1,244 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #ffffff;
+          font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+          overflow: hidden;
+          perspective: 1200px;
+          transform-style: preserve-3d;
+        }
+        .b5-stage {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          position: relative;
+          transform-style: preserve-3d;
+        }
+
+        /* Defocused Background Mockup */
+        .defocused-bg-mockup {
+          position: absolute;
+          width: 680px;
+          height: 850px;
+          border-radius: 44px;
+          background: #000;
+          border: 2px solid rgba(255, 255, 255, 0.1);
+          box-shadow: 0 40px 100px rgba(0, 0, 0, 0.95);
+          overflow: hidden;
+          filter: blur(10px);
+          opacity: 0;
+          transform: translateZ(-150px) scale(0.9);
+          pointer-events: none;
+          z-index: 1;
+        }
+        .defocused-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: top center;
+        }
+
+        /* Razor-Sharp Foreground Elements */
+        .fg-content {
+          position: relative;
+          z-index: 20;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          transform-style: preserve-3d;
+        }
+
+        .b5-headline {
+          font-size: 72px;
+          font-weight: 900;
+          letter-spacing: -0.04em;
+          line-height: 1.1;
+          text-transform: uppercase;
+          max-width: 980px;
+          color: #ffffff;
+          text-shadow: 0 10px 40px rgba(0, 0, 0, 0.95);
+          opacity: 0;
+        }
+
+        .b5-domain-pill {
+          margin-top: 40px;
+          display: inline-flex;
+          align-items: center;
+          gap: 18px;
+          padding: 18px 44px;
+          border-radius: 9999px;
+          background: #0a0d18;
+          border: 1px solid rgba(255, 255, 255, 0.28);
+          box-shadow: 0 15px 50px rgba(0, 0, 0, 0.8), 0 0 40px rgba(99, 102, 241, 0.25);
+          opacity: 0;
+        }
+        .github-svg {
+          width: 36px;
+          height: 36px;
+          fill: #ffffff;
+        }
+        .domain-url {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 30px;
+          font-weight: 700;
+          letter-spacing: 0.04em;
+          color: #ffffff;
+        }
+
+        /* High-End Animated Glowing Border Beam CTA Button */
+        .cta-beam-container {
+          margin-top: 52px;
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          padding: 3px;
+          border-radius: 9999px;
+          overflow: hidden;
+          opacity: 0;
+          box-shadow: 0 0 60px rgba(99, 102, 241, 0.6), 0 20px 50px rgba(0, 0, 0, 0.8);
+        }
+        .border-beam-spinner {
+          position: absolute;
+          width: 250%;
+          height: 250%;
+          background: conic-gradient(from 0deg, transparent 0deg, #6366f1 90deg, #10b981 180deg, #38bdf8 270deg, transparent 360deg);
+          animation: none; /* driven by GSAP rotation */
+        }
+        .cta-btn-inner {
+          position: relative;
+          z-index: 10;
+          display: inline-flex;
+          align-items: center;
+          gap: 20px;
+          padding: 26px 68px;
+          border-radius: 9999px;
+          background: #090c16;
+        }
+        .cta-btn-text {
+          font-size: 32px;
+          font-weight: 900;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          color: #ffffff;
+        }
+        .cta-btn-arrow {
+          font-size: 38px;
+          font-weight: 900;
+          color: #38bdf8;
+          display: inline-block;
+        }
+      </style>
+
+      <div id="root" data-composition-id="beat-5" data-duration="2.2" data-width="1080" data-height="1920">
+        <div id="b5-stage" class="b5-stage">
+          <!-- Background Defocused Device Mockup -->
+          <div id="b5-bg-device" class="defocused-bg-mockup">
+            <img src="assets/fuelix-mobile.png" alt="Device Outro" class="defocused-img" />
+          </div>
+
+          <!-- Razor Sharp Foreground -->
+          <div class="fg-content">
+            <h2 id="b5-head" class="b5-headline">
+              LET'S BUILD SOMETHING EXTRAORDINARY
+            </h2>
+
+            <div id="b5-pill" class="b5-domain-pill">
+              <svg class="github-svg" viewBox="0 0 24 24">
+                <path
+                  d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"
+                />
+              </svg>
+              <span class="domain-url">github.com/PabloLinares06</span>
+            </div>
+
+            <div id="b5-cta-wrap" class="cta-beam-container">
+              <div id="b5-beam" class="border-beam-spinner"></div>
+              <div class="cta-btn-inner">
+                <span class="cta-btn-text">DISPONIBLE PARA PROYECTOS</span>
+                <span id="b5-arrow" class="cta-btn-arrow">→</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        const tl = gsap.timeline({ paused: true });
+
+        // Pull-back camera move with background depth of field
+        tl.fromTo(
+          "#b5-bg-device",
+          { opacity: 0, scale: 1.4, z: 200, y: 150 },
+          { opacity: 0.65, scale: 0.95, z: -150, y: 0, duration: 0.8, ease: "power4.out" },
+          0.05
+        );
+
+        // Foreground Headline entrance
+        tl.fromTo(
+          "#b5-head",
+          { opacity: 0, y: 50, scale: 0.9 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: "expo.out" },
+          0.2
+        );
+
+        // Domain pill entrance
+        tl.fromTo(
+          "#b5-pill",
+          { opacity: 0, scale: 0.75, y: 35 },
+          { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: "back.out(2.0)" },
+          0.5
+        );
+
+        // CTA button entrance
+        tl.fromTo(
+          "#b5-cta-wrap",
+          { opacity: 0, scale: 0.7, y: 45 },
+          { opacity: 1, scale: 1, y: 0, duration: 0.55, ease: "back.out(2.2)" },
+          0.8
+        );
+
+        // Continuous border beam rotation
+        tl.to(
+          "#b5-beam",
+          { rotate: 360, duration: 1.1, ease: "none", repeat: 1 },
+          0.0
+        );
+
+        // Continuous floating arrow pulse
+        tl.to(
+          "#b5-arrow",
+          { x: 12, duration: 0.35, yoyo: true, repeat: 3, ease: "power2.inOut" },
+          1.1
+        );
+
+        // Continuous ambient camera drift
+        tl.to(
+          "#b5-stage",
+          { y: -12, duration: 2.2, ease: "sine.inOut" },
+          0.0
+        );
+
+        window.__timelines["beat-5"] = tl;
+        tl.seek(0);
+      </script>
+    </template>
+  </body>
+</html>

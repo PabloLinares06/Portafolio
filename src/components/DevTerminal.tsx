@@ -186,7 +186,7 @@ Estado: Abierto a retos desafiantes de arquitectura y desarrollo backend/full-st
         newHistory.push({
           id: Math.random().toString(),
           type: 'success',
-          content: `🚀 [AUTORIZACIÓN CONFIRMADA: SUDO ACCESS GRANTED]
+          content: `[AUTORIZACIÓN CONFIRMADA: SUDO ACCESS GRANTED]
 *************************************************************
 ¡Excelente decisión!
 Has desbloqueado a un ingeniero enfocado en resolver problemas reales,
@@ -257,11 +257,11 @@ Escríbeme directamente a: juan.linares682@pascualbravo.edu.co
             setIsOpen(true);
             setIsMinimized(false);
           }}
-          className="flex items-center gap-2 px-3.5 py-2 rounded-full border border-primary/30 bg-[#090d14]/90 backdrop-blur-md text-gray-300 hover:text-white hover:border-primary transition-all shadow-[0_0_20px_rgba(0,242,254,0.2)] font-mono text-xs interactive cursor-pointer"
+          className="flex items-center gap-2 px-3.5 py-2 rounded-full border border-surface-border bg-surface-elevated/90 backdrop-blur-md text-foreground/85 hover:text-foreground hover:border-primary transition-all shadow-md font-mono text-xs interactive cursor-pointer"
         >
           <TerminalIcon size={14} className="text-primary animate-pulse" />
           <span className="hidden sm:inline">&gt;_ Dev Console</span>
-          <span className="text-[10px] bg-white/10 px-1 rounded text-gray-400">`</span>
+          <span className="text-[10px] bg-surface-border px-1 rounded text-muted-foreground">`</span>
         </motion.button>
       </div>
 
@@ -277,10 +277,10 @@ Escríbeme directamente a: juan.linares682@pascualbravo.edu.co
               isMinimized
                 ? 'bottom-6 right-20 w-80 h-12'
                 : 'bottom-4 right-4 sm:bottom-10 sm:right-10 w-[95vw] sm:w-[680px] h-[520px] max-h-[85vh]'
-            } bg-[#06090e]/95 border border-primary/30 rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.9)] backdrop-blur-xl flex flex-col overflow-hidden text-gray-200 font-mono text-xs`}
+            } bg-surface-card/95 border border-surface-border rounded-2xl shadow-2xl backdrop-blur-xl flex flex-col overflow-hidden text-foreground font-mono text-xs`}
           >
             {/* Window Title Bar */}
-            <div className="flex items-center justify-between px-4 py-3 bg-black/60 border-b border-white/10 select-none">
+            <div className="flex items-center justify-between px-4 py-3 bg-surface-elevated/80 border-b border-surface-border select-none">
               <div className="flex items-center gap-2">
                 <div 
                   onClick={() => {
@@ -303,19 +303,19 @@ Escríbeme directamente a: juan.linares682@pascualbravo.edu.co
                   }} 
                   className="w-3 h-3 rounded-full bg-emerald-500/80 hover:bg-emerald-400 cursor-pointer transition-colors" 
                 />
-                <span className="ml-3 text-[11px] text-gray-400 font-mono flex items-center gap-1.5">
+                <span className="ml-3 text-[11px] text-muted-foreground font-mono flex items-center gap-1.5">
                   <TerminalIcon size={12} className="text-primary" />
                   core-terminal // pablo@production
                 </span>
               </div>
 
-              <div className="flex items-center gap-2 text-gray-400">
+              <div className="flex items-center gap-2 text-muted-foreground">
                 <button
                   onClick={() => {
                     playClick();
                     setIsMinimized(!isMinimized);
                   }}
-                  className="p-1 hover:text-white rounded hover:bg-white/5 transition-colors cursor-pointer"
+                  className="p-1 hover:text-foreground rounded hover:bg-surface-elevated transition-colors cursor-pointer"
                 >
                   {isMinimized ? <Maximize2 size={13} /> : <Minimize2 size={13} />}
                 </button>
@@ -324,7 +324,7 @@ Escríbeme directamente a: juan.linares682@pascualbravo.edu.co
                     playClick();
                     setIsOpen(false);
                   }}
-                  className="p-1 hover:text-white rounded hover:bg-white/5 transition-colors cursor-pointer"
+                  className="p-1 hover:text-foreground rounded hover:bg-surface-elevated transition-colors cursor-pointer"
                 >
                   <X size={14} />
                 </button>
@@ -336,19 +336,19 @@ Escríbeme directamente a: juan.linares682@pascualbravo.edu.co
               <>
                 <div 
                   ref={scrollRef}
-                  className="flex-1 p-4 overflow-y-auto space-y-2 select-text custom-scroll"
+                  className="flex-1 p-4 overflow-y-auto space-y-2 select-text custom-scroll bg-surface/30"
                 >
                   {history.map((line) => (
                     <div 
                       key={line.id} 
                       className={`whitespace-pre-wrap leading-relaxed ${
                         line.type === 'input' 
-                          ? 'text-cyan-300 font-semibold' 
+                          ? 'text-primary font-semibold' 
                           : line.type === 'error' 
-                          ? 'text-red-400' 
+                          ? 'text-red-500 dark:text-red-400 font-medium' 
                           : line.type === 'success' 
-                          ? 'text-emerald-400 font-medium' 
-                          : 'text-gray-300'
+                          ? 'text-emerald-600 dark:text-emerald-400 font-medium' 
+                          : 'text-foreground/80'
                       }`}
                     >
                       {line.content}
@@ -357,7 +357,7 @@ Escríbeme directamente a: juan.linares682@pascualbravo.edu.co
                 </div>
 
                 {/* Input Prompt Line */}
-                <div className="flex items-center gap-2 px-4 py-3 bg-black/40 border-t border-white/5">
+                <div className="flex items-center gap-2 px-4 py-3 bg-surface-elevated/60 border-t border-surface-border">
                   <span className="text-primary font-bold">pablo@core:~$</span>
                   <input
                     ref={inputRef}
@@ -366,7 +366,7 @@ Escríbeme directamente a: juan.linares682@pascualbravo.edu.co
                     onChange={(e) => setInputVal(e.target.value)}
                     onKeyDown={handleKeyDown}
                     placeholder="Escribe 'help' o un comando..."
-                    className="flex-1 bg-transparent text-white focus:outline-none placeholder-gray-600 font-mono text-xs"
+                    className="flex-1 bg-transparent text-foreground focus:outline-none placeholder-muted-foreground/60 font-mono text-xs"
                     autoFocus
                   />
                   <span className="w-2 h-4 bg-primary animate-pulse" />

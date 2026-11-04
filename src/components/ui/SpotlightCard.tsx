@@ -16,7 +16,7 @@ interface SpotlightCardProps {
 export default function SpotlightCard({
   children,
   className = '',
-  spotlightColor = 'rgba(0, 242, 254, 0.08)',
+  spotlightColor = 'rgba(16, 185, 129, 0.08)',
   spotlightRadius = 380,
   onClick,
   onMouseEnter,
@@ -52,7 +52,7 @@ export default function SpotlightCard({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
-      className={`relative overflow-hidden rounded-3xl border border-white/10 bg-[#080c14]/90 transition-all duration-300 ${className}`}
+      className={`relative overflow-hidden rounded-3xl border border-surface-border bg-surface-card transition-all duration-300 shadow-sm hover:shadow-md ${className}`}
     >
       {/* Dynamic Cursor Spotlight Surface */}
       <div
@@ -70,7 +70,7 @@ export default function SpotlightCard({
           style={{
             opacity: isHovered ? 1 : 0,
             padding: '1px',
-            background: `radial-gradient(220px circle at ${mousePos.x}px ${mousePos.y}px, rgba(0, 242, 254, 0.4), transparent 70%)`,
+            background: `radial-gradient(220px circle at ${mousePos.x}px ${mousePos.y}px, rgba(16, 185, 129, 0.35), transparent 70%)`,
             mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
             maskComposite: 'exclude',
             WebkitMaskComposite: 'xor',

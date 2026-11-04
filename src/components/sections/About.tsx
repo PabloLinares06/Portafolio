@@ -48,13 +48,13 @@ export default function About() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="text-primary font-mono text-xs md:text-sm mb-8 block uppercase tracking-[0.3em] font-semibold"
+          className="text-primary font-mono text-xs md:text-sm mb-6 block uppercase tracking-[0.25em] font-semibold"
         >
-          01. Trayectoria & Filosofía
+          Trayectoria & Filosofía
         </motion.span>
 
         {/* Word-by-word reveal */}
-        <h2 className="text-2xl sm:text-3xl md:text-5xl font-medium leading-relaxed tracking-tight text-white flex flex-wrap gap-x-[0.35em] gap-y-2 mb-16 md:mb-20">
+        <h2 className="text-2xl sm:text-3xl md:text-5xl font-medium leading-relaxed tracking-tight text-foreground flex flex-wrap gap-x-[0.35em] gap-y-2 mb-16 md:mb-20">
           {words.map((word, i) => {
             const start = (i / words.length) * 0.75;
             const end = start + 0.12;
@@ -68,7 +68,7 @@ export default function About() {
         </h2>
 
         {/* Stats Grid with Spotlight Luxury Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 border-t border-white/10 pt-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 border-t border-surface-border pt-12">
           {stats.map((stat, i) => (
             <motion.div
               key={stat.label}
@@ -79,19 +79,19 @@ export default function About() {
             >
               <SpotlightCard
                 onMouseEnter={() => playHover()}
-                spotlightColor="rgba(0, 242, 254, 0.12)"
+                spotlightColor="rgba(16, 185, 129, 0.12)"
                 spotlightRadius={260}
-                className="p-5 sm:p-6 flex flex-col justify-between h-full bg-[#080d14]/70 border-white/10 hover:border-primary/40 group"
+                className="p-5 sm:p-6 flex flex-col justify-between h-full bg-surface-card border-surface-border hover:border-primary/50 group"
               >
                 <div>
-                  <span className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tighter group-hover:text-primary transition-colors block mb-1">
+                  <span className="text-2xl sm:text-3xl md:text-4xl font-black text-foreground tracking-tighter group-hover:text-primary transition-colors block mb-1">
                     {stat.value}
                   </span>
-                  <span className="text-gray-200 font-mono text-xs uppercase tracking-wider font-semibold block mb-1">
+                  <span className="text-foreground/90 font-mono text-xs uppercase tracking-wider font-semibold block mb-1">
                     {stat.label}
                   </span>
                 </div>
-                <span className="text-gray-500 font-mono text-[10px] sm:text-xs">
+                <span className="text-muted-foreground font-mono text-[10px] sm:text-xs">
                   {stat.detail}
                 </span>
               </SpotlightCard>

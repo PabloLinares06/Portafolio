@@ -16,7 +16,10 @@ import {
   Briefcase, 
   Cpu, 
   Send,
-  Sparkles
+  Sparkles,
+  Keyboard,
+  FileText,
+  Printer
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { playHover, playClick, playSuccess, playOpen, isAudioMuted, setAudioMuted } from '@/utils/audio';
@@ -156,25 +159,25 @@ export default function CommandPalette() {
       action: () => navigateToSection('hero')
     },
     {
-      id: 'nav-exp',
+      id: 'nav-about',
       category: 'Navegación',
-      title: '01. Trayectoria & Experiencia',
+      title: 'Trayectoria & Filosofía',
       subtitle: 'Historial y evolución como desarrollador',
       icon: Briefcase,
-      action: () => navigateToSection('experience')
+      action: () => navigateToSection('about')
     },
     {
-      id: 'nav-stack',
+      id: 'nav-exp',
       category: 'Navegación',
-      title: '02. Stack & Arquitectura',
+      title: 'Arquitectura & Experiencia',
       subtitle: 'Consolas interactivas de código y capas del sistema',
       icon: Layers,
-      action: () => navigateToSection('architecture')
+      action: () => navigateToSection('experience')
     },
     {
       id: 'nav-projects',
       category: 'Navegación',
-      title: '03. Casos de Estudio',
+      title: 'Casos de Estudio & Arquitectura',
       subtitle: 'Proyectos destacados con métricas y arquitectura',
       icon: FolderGit2,
       action: () => navigateToSection('projects')
@@ -182,7 +185,7 @@ export default function CommandPalette() {
     {
       id: 'nav-skills',
       category: 'Navegación',
-      title: '04. Arsenal Técnico',
+      title: 'Arsenal Técnico',
       subtitle: 'Especialidades backend, frontend y bases de datos',
       icon: Cpu,
       action: () => navigateToSection('skills')
@@ -190,7 +193,7 @@ export default function CommandPalette() {
     {
       id: 'nav-contact',
       category: 'Navegación',
-      title: '05. Contacto',
+      title: 'Contacto & Despliegue',
       subtitle: 'Canales directos de comunicación',
       icon: Send,
       action: () => navigateToSection('contact')
@@ -223,6 +226,45 @@ export default function CommandPalette() {
       badge: soundEnabled ? 'ON' : 'OFF',
       icon: soundEnabled ? Volume2 : VolumeX,
       action: toggleSound
+    },
+    {
+      id: 'tool-shortcuts',
+      category: 'Herramientas',
+      title: 'Guía de Atajos de Teclado',
+      subtitle: 'Comandos globales de navegación del sistema',
+      badge: '?',
+      icon: Keyboard,
+      action: () => {
+        playClick();
+        setIsOpen(false);
+        window.dispatchEvent(new CustomEvent('open-shortcuts'));
+      }
+    },
+    {
+      id: 'tool-llms',
+      category: 'Herramientas',
+      title: 'Ver llms.txt (Markdown para LLMs)',
+      subtitle: 'Formato estructurado para agentes de inteligencia artificial',
+      badge: 'API / AI',
+      icon: FileText,
+      action: () => {
+        playClick();
+        setIsOpen(false);
+        window.open('/llms.txt', '_blank');
+      }
+    },
+    {
+      id: 'tool-print',
+      category: 'Herramientas',
+      title: 'Imprimir / Exportar CV (PDF)',
+      subtitle: 'Vista limpia optimizada para hojas de vida de ingeniería',
+      badge: 'Ctrl+P',
+      icon: Printer,
+      action: () => {
+        playClick();
+        setIsOpen(false);
+        setTimeout(() => window.print(), 200);
+      }
     },
 
     // Social
@@ -287,10 +329,10 @@ export default function CommandPalette() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: -10 }}
             transition={{ type: 'spring', damping: 25, stiffness: 350 }}
-            className="relative w-full max-w-xl bg-[#090d12]/95 border border-white/15 rounded-2xl shadow-[0_20px_70px_rgba(0,0,0,0.8)] overflow-hidden text-white z-10 flex flex-col max-h-[75vh]"
+            className="relative w-full max-w-xl bg-surface-card/95 border border-surface-border rounded-2xl shadow-2xl overflow-hidden text-foreground z-10 flex flex-col max-h-[75vh] backdrop-blur-xl"
           >
             {/* Header Search Input */}
-            <div className="flex items-center gap-3 px-5 py-4 border-b border-white/10 bg-white/[0.02]">
+            <div className="flex items-center gap-3 px-5 py-4 border-b border-surface-border bg-surface-elevated/40">
               <Search size={18} className="text-primary flex-shrink-0" />
               <input
                 ref={inputRef}
@@ -302,17 +344,17 @@ export default function CommandPalette() {
                   setSelectedIndex(0);
                 }}
                 onKeyDown={handleKeyDownList}
-                className="w-full bg-transparent text-sm text-white placeholder-gray-500 focus:outline-none font-sans"
+                className="w-full bg-transparent text-sm text-foreground placeholder-muted-foreground/60 focus:outline-none font-sans"
               />
-              <span className="hidden sm:inline-block text-[10px] font-mono px-2 py-0.5 rounded border border-white/10 text-gray-400 bg-white/5">
+              <span className="hidden sm:inline-block text-[10px] font-mono px-2 py-0.5 rounded border border-surface-border text-muted-foreground bg-surface-elevated">
                 ESC para cerrar
               </span>
             </div>
 
             {/* Actions List */}
-            <div className="overflow-y-auto p-2 divide-y divide-white/5 max-h-[50vh] custom-scroll">
+            <div className="overflow-y-auto p-2 divide-y divide-surface-border/40 max-h-[50vh] custom-scroll">
               {filteredActions.length === 0 ? (
-                <div className="py-12 text-center text-gray-500 text-xs font-mono">
+                <div className="py-12 text-center text-muted-foreground text-xs font-mono">
                   No se encontraron comandos para &quot;{query}&quot;
                 </div>
               ) : (
@@ -329,30 +371,30 @@ export default function CommandPalette() {
                       onClick={item.action}
                       className={`flex items-center justify-between px-3.5 py-3 rounded-xl cursor-pointer transition-all duration-150 ${
                         isSelected
-                          ? 'bg-primary/15 text-white border border-primary/30 shadow-[0_0_20px_rgba(0,242,254,0.15)]'
-                          : 'text-gray-300 hover:bg-white/5 border border-transparent'
+                          ? 'bg-primary/10 text-foreground border border-primary/30 shadow-sm'
+                          : 'text-muted-foreground hover:bg-surface-elevated/60 border border-transparent'
                       }`}
                     >
                       <div className="flex items-center gap-3.5 min-w-0">
-                        <div className={`p-2 rounded-lg ${isSelected ? 'bg-primary text-black' : 'bg-white/5 text-gray-400'}`}>
+                        <div className={`p-2 rounded-lg ${isSelected ? 'bg-primary text-white dark:text-slate-950 font-bold' : 'bg-surface-elevated text-muted-foreground'}`}>
                           <Icon size={16} />
                         </div>
                         <div className="min-w-0">
                           <div className="flex items-center gap-2">
-                            <span className="text-xs font-semibold tracking-wide truncate">{item.title}</span>
-                            <span className="text-[9px] font-mono uppercase px-1.5 py-0.2 rounded bg-white/10 text-gray-400">
+                            <span className="text-xs font-semibold tracking-wide truncate text-foreground">{item.title}</span>
+                            <span className="text-[9px] font-mono uppercase px-1.5 py-0.2 rounded bg-surface-elevated text-muted-foreground border border-surface-border">
                               {item.category}
                             </span>
                           </div>
                           {item.subtitle && (
-                            <p className="text-[11px] text-gray-400 truncate mt-0.5 font-mono">{item.subtitle}</p>
+                            <p className="text-[11px] text-muted-foreground truncate mt-0.5 font-mono">{item.subtitle}</p>
                           )}
                         </div>
                       </div>
 
                       {item.badge && (
                         <span className={`text-[10px] font-mono font-medium px-2 py-0.5 rounded-full border ${
-                          isSelected ? 'bg-primary/20 text-primary-light border-primary/40' : 'bg-white/5 text-gray-400 border-white/10'
+                          isSelected ? 'bg-primary/20 text-primary border-primary/40' : 'bg-surface-elevated text-muted-foreground border-surface-border'
                         }`}>
                           {item.badge}
                         </span>
@@ -364,14 +406,14 @@ export default function CommandPalette() {
             </div>
 
             {/* Footer Telemetry */}
-            <div className="px-5 py-2.5 bg-black/40 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-gray-500">
+            <div className="px-5 py-2.5 bg-surface-elevated/50 border-t border-surface-border flex items-center justify-between text-[11px] font-mono text-muted-foreground">
               <div className="flex items-center gap-3">
                 <span>↑↓ para navegar</span>
                 <span>↵ seleccionar</span>
               </div>
-              <div className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span>CORE TERMINAL READY</span>
+              <div className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 font-medium">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                <span>CORE PALETTE READY</span>
               </div>
             </div>
           </motion.div>

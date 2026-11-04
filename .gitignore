@@ -39,3 +39,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# agent directories
+.agent/
+.claude/
+.gemini/
+.opencode/
+
+# hyperframes temporary cache
+.hyperframes/
+**/.hyperframes/

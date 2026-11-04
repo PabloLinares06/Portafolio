@@ -1,0 +1,313 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #ffffff;
+          font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+          overflow: hidden;
+          perspective: 1300px;
+          transform-style: preserve-3d;
+        }
+        .b4-stage {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          transform-style: preserve-3d;
+        }
+
+        .b4-header-cluster {
+          text-align: center;
+          margin-bottom: 40px;
+          transform-style: preserve-3d;
+          opacity: 0;
+        }
+        .header-pill {
+          display: inline-flex;
+          align-items: center;
+          gap: 12px;
+          padding: 12px 28px;
+          border-radius: 9999px;
+          background: rgba(14, 18, 28, 0.9);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        .dot-glow {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background: #10b981;
+          box-shadow: 0 0 14px #10b981;
+        }
+        .pill-caption {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 21px;
+          font-weight: 700;
+          letter-spacing: 0.1em;
+          color: #ffffff;
+        }
+        .b4-main-title {
+          font-size: 60px;
+          font-weight: 900;
+          letter-spacing: -0.04em;
+          margin-top: 18px;
+          text-transform: uppercase;
+          color: #ffffff;
+          text-shadow: 0 4px 25px rgba(0, 0, 0, 0.8);
+        }
+
+        /* 3D Staggered Z-Depth Grid */
+        .metrics-3d-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 470px);
+          grid-template-rows: repeat(2, 450px);
+          gap: 36px;
+          transform-style: preserve-3d;
+        }
+
+        .metric-tile-3d {
+          border-radius: 36px;
+          background: rgba(11, 14, 24, 0.92);
+          border: 1px solid rgba(255, 255, 255, 0.16);
+          backdrop-filter: blur(28px);
+          box-shadow: 0 35px 80px rgba(0, 0, 0, 0.85);
+          padding: 44px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          position: relative;
+          overflow: hidden;
+          transform-style: preserve-3d;
+          opacity: 0;
+        }
+        .tile-indigo {
+          box-shadow: 0 35px 80px rgba(0, 0, 0, 0.85), 0 0 50px rgba(99, 102, 241, 0.25);
+          border-color: rgba(99, 102, 241, 0.4);
+        }
+        .tile-emerald {
+          box-shadow: 0 35px 80px rgba(0, 0, 0, 0.85), 0 0 50px rgba(16, 185, 129, 0.25);
+          border-color: rgba(16, 185, 129, 0.4);
+        }
+        .tile-cyan {
+          box-shadow: 0 35px 80px rgba(0, 0, 0, 0.85), 0 0 50px rgba(56, 189, 248, 0.25);
+          border-color: rgba(56, 189, 248, 0.4);
+        }
+        .tile-purple {
+          box-shadow: 0 35px 80px rgba(0, 0, 0, 0.85), 0 0 50px rgba(168, 85, 247, 0.25);
+          border-color: rgba(168, 85, 247, 0.4);
+        }
+
+        .num-readout {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 84px;
+          font-weight: 900;
+          letter-spacing: -0.04em;
+          line-height: 1;
+        }
+        .col-indigo { color: #818cf8; text-shadow: 0 0 35px rgba(129, 140, 248, 0.5); }
+        .col-emerald { color: #34d399; text-shadow: 0 0 35px rgba(52, 211, 153, 0.5); }
+        .col-cyan { color: #38bdf8; text-shadow: 0 0 35px rgba(56, 189, 248, 0.5); }
+        .col-purple { color: #c084fc; text-shadow: 0 0 35px rgba(192, 132, 252, 0.5); }
+
+        .tile-label {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 21px;
+          font-weight: 800;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: #ffffff;
+          margin-top: 14px;
+        }
+        .tile-subtitle {
+          font-size: 22px;
+          color: #94a3b8;
+          line-height: 1.35;
+          margin-top: 8px;
+        }
+      </style>
+
+      <div id="root" data-composition-id="beat-4" data-duration="2.3" data-width="1080" data-height="1920">
+        <div id="b4-stage" class="b4-stage">
+          <div id="b4-header" class="b4-header-cluster">
+            <div class="header-pill">
+              <span class="dot-glow"></span>
+              <span class="pill-caption">BENCHMARKS & PRODUCTION METRICS</span>
+            </div>
+            <h2 class="b4-main-title">Engineering by the Numbers</h2>
+          </div>
+
+          <div class="metrics-3d-grid">
+            <!-- Box 1: Z=40px -->
+            <div id="b4-tile-1" class="metric-tile-3d tile-indigo" style="transform: translateZ(40px);">
+              <div class="num-readout col-indigo">
+                <span id="b4-counter-1">99.9</span>%
+              </div>
+              <div>
+                <div class="tile-label">UPTIME INDUSTRIAL</div>
+                <p class="tile-subtitle">Nodos Edge & Despacho Continuo</p>
+              </div>
+            </div>
+
+            <!-- Box 2: Z=90px (Floating higher) -->
+            <div id="b4-tile-2" class="metric-tile-3d tile-emerald" style="transform: translateZ(90px);">
+              <div class="num-readout col-emerald">
+                <span id="b4-counter-2">33</span>+
+              </div>
+              <div>
+                <div class="tile-label">PANTALLAS EN VIVO</div>
+                <p class="tile-subtitle">Módulos Operacionales & PWA</p>
+              </div>
+            </div>
+
+            <!-- Box 3: Z=60px -->
+            <div id="b4-tile-3" class="metric-tile-3d tile-cyan" style="transform: translateZ(60px);">
+              <div class="num-readout col-cyan">
+                <span id="b4-counter-3">100</span>/100
+              </div>
+              <div>
+                <div class="tile-label">LIGHTHOUSE SCORE</div>
+                <p class="tile-subtitle">Turbopack & Optimización Extrema</p>
+              </div>
+            </div>
+
+            <!-- Box 4: Z=120px (Floating highest) -->
+            <div id="b4-tile-4" class="metric-tile-3d tile-purple" style="transform: translateZ(120px);">
+              <div class="num-readout col-purple">
+                &lt;<span id="b4-counter-4">9</span>ms
+              </div>
+              <div>
+                <div class="tile-label">TELEMETRY LATENCY</div>
+                <p class="tile-subtitle">WebSockets & SQLite Local Spool</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        const tl = gsap.timeline({ paused: true });
+
+        // Header entrance
+        tl.fromTo(
+          "#b4-header",
+          { opacity: 0, y: -45, scale: 0.9 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "power4.out" },
+          0.05
+        );
+
+        // 3D Staggered Z-Depth Slam In
+        tl.fromTo(
+          "#b4-tile-1",
+          { opacity: 0, scale: 0.5, y: 80, z: -100 },
+          { opacity: 1, scale: 1, y: 0, z: 40, duration: 0.45, ease: "back.out(2.2)" },
+          0.1
+        );
+        tl.fromTo(
+          "#b4-tile-2",
+          { opacity: 0, scale: 0.5, y: 80, z: -50 },
+          { opacity: 1, scale: 1, y: 0, z: 90, duration: 0.45, ease: "back.out(2.2)" },
+          0.2
+        );
+        tl.fromTo(
+          "#b4-tile-3",
+          { opacity: 0, scale: 0.5, y: 80, z: -80 },
+          { opacity: 1, scale: 1, y: 0, z: 60, duration: 0.45, ease: "back.out(2.2)" },
+          0.3
+        );
+        tl.fromTo(
+          "#b4-tile-4",
+          { opacity: 0, scale: 0.5, y: 80, z: -20 },
+          { opacity: 1, scale: 1, y: 0, z: 120, duration: 0.45, ease: "back.out(2.2)" },
+          0.4
+        );
+
+        // Continuous 3D isometric tilt
+        tl.fromTo(
+          "#b4-stage",
+          { rotateX: 18, rotateY: -14 },
+          { rotateX: 10, rotateY: -6, duration: 2.2, ease: "sine.inOut" },
+          0.0
+        );
+
+        // Supersonic Number Odometer Spin with heavy power4.out deceleration
+        const counters = { c1: 0, c2: 0, c3: 0, c4: 0 };
+        const el1 = document.getElementById("b4-counter-1");
+        const el2 = document.getElementById("b4-counter-2");
+        const el3 = document.getElementById("b4-counter-3");
+        const el4 = document.getElementById("b4-counter-4");
+
+        tl.to(
+          counters,
+          {
+            c1: 99.9,
+            duration: 0.85,
+            ease: "power4.out",
+            onUpdate: () => {
+              if (el1) el1.textContent = counters.c1.toFixed(1);
+            },
+          },
+          0.15
+        );
+        tl.to(
+          counters,
+          {
+            c2: 33,
+            duration: 0.8,
+            ease: "power4.out",
+            onUpdate: () => {
+              if (el2) el2.textContent = Math.floor(counters.c2);
+            },
+          },
+          0.25
+        );
+        tl.to(
+          counters,
+          {
+            c3: 100,
+            duration: 0.75,
+            ease: "power4.out",
+            onUpdate: () => {
+              if (el3) el3.textContent = Math.floor(counters.c3);
+            },
+          },
+          0.35
+        );
+        tl.to(
+          counters,
+          {
+            c4: 9,
+            duration: 0.7,
+            ease: "power4.out",
+            onUpdate: () => {
+              if (el4) el4.textContent = Math.floor(counters.c4);
+            },
+          },
+          0.45
+        );
+
+        // Exit at 1.95s
+        tl.to(
+          "#b4-stage",
+          { scale: 0.8, z: -350, opacity: 0, filter: "blur(12px)", duration: 0.35, ease: "expo.in" },
+          1.95
+        );
+
+        window.__timelines["beat-4"] = tl;
+        tl.seek(0);
+      </script>
+    </template>
+  </body>
+</html>

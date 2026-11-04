@@ -1,0 +1,40 @@
+# Juan Pablo Linares Laverde — Software Engineer & Backend Architect
+
+> Portfolio: https://pablolinares.tech
+> Contact: juanpalinare@gmail.com / juan.linares682@pascualbravo.edu.co
+> GitHub: https://github.com/PabloLinares06
+> LinkedIn: https://linkedin.com/in/jplinaresdev
+> Location: Medellín, Colombia (GMT-5)
+
+## Executive Summary
+Software Engineer (8th Semester) specializing in high-performance Backend Architecture, Distributed Systems, Industrial IoT, and Clean Architecture. Experienced in .NET 9 (C#), NestJS 11, Angular 22 (Signals), React 19, micro-ORMs (Dapper), relational database optimization (SQL Server, PostgreSQL), and Docker Compose VPS deployments.
+
+## Core Projects & Case Studies
+
+### 1. NaTec V2 (Wholesale E-Commerce & ERP Integration)
+- **Problem**: Cloud billing spikes with Firebase Serverless under heavy wholesale catalog reads.
+- **Solution**: Complete architectural migration to self-hosted DigitalOcean VPS using Docker Compose and Alpine Nginx.
+- **Results**: Reduced operational cloud costs to a predictable $14 USD/month with sub-second response times.
+- **Key Integrations**:
+  - Official EFFI ERP integration generating bulk accounting `.xlsx` files via ExcelJS.
+  - Server-Sent Events (SSE) bus for real-time inventory synchronization.
+  - Interactive touch kiosk mode with PIN lock for warehouse operations.
+  - Canvas 2D engine (1200x1200px) generating marketing banners on the fly.
+- **Tech Stack**: NestJS 11, Angular 22 Signals, Docker, Nginx, DigitalOcean Spaces S3, PostgreSQL.
+
+### 2. Fuelix (Industrial Gas Station IoT & Edge Telemetry)
+- **Problem**: Proprietary legacy gas station controllers ($3000+ USD) failing during network cuts and stopping fuel pumps.
+- **Solution**: Three-tier distributed edge architecture utilizing commodity hardware with offline-first autonomy:
+  - Tier 1: Raspberry Pi commodity edge node reading RS-485 passive serial telemetry from dispensers into SQLite spool.
+  - Tier 2: On-premise PC server with NestJS + PostgreSQL acting as station source of truth without internet reliance.
+  - Tier 3: Multi-tenant cloud portal with Angular 22 PWA and Supabase synchronization.
+- **Compliance & Logic**:
+  - Automated Colombian labor shift liquidation (overtime, night surcharges, Sunday rates).
+  - Strict compliance with Colombian legal metrology (SIC Resolutions 77507 & 67760) and SICOM reporting.
+- **Tech Stack**: Angular 22 Signals, NestJS 11, Raspberry Pi, RS-485, SQLite, PostgreSQL, Supabase.
+
+## Technical Skills & Architecture Competencies
+- **Backend**: .NET 9, C#, ASP.NET Core Web API, NestJS 11, CQRS, MediatR, SSE, Java.
+- **Frontend**: Angular 22 (Signals), React 19, Next.js (App Router, Turbopack), TypeScript, Tailwind CSS.
+- **Data & Persistence**: PostgreSQL, Microsoft SQL Server, Dapper (Micro-ORM, <15ms queries), Prisma ORM, Supabase.
+- **DevOps & Infrastructure**: Docker Compose, DigitalOcean Droplets, Linux/Alpine, Nginx Reverse Proxy, Git/GitHub CI.

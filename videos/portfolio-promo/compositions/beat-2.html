@@ -1,0 +1,440 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #ffffff;
+          font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+          overflow: hidden;
+          perspective: 1400px;
+          transform-style: preserve-3d;
+        }
+        .b2-stage {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transform-style: preserve-3d;
+        }
+
+        /* 3D Macro Showcase Card */
+        .macro-card-3d {
+          position: absolute;
+          width: 960px;
+          height: 1300px;
+          border-radius: 40px;
+          background: rgba(10, 13, 20, 0.92);
+          border: 1px solid rgba(255, 255, 255, 0.18);
+          box-shadow: 
+            0 40px 100px rgba(0, 0, 0, 0.9),
+            0 0 70px rgba(16, 185, 129, 0.22);
+          backdrop-filter: blur(32px);
+          padding: 44px;
+          display: flex;
+          flex-direction: column;
+          transform-style: preserve-3d;
+          opacity: 0;
+        }
+
+        .card-header-row {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 24px;
+          transform-style: preserve-3d;
+        }
+        .brand-cluster {
+          display: flex;
+          align-items: center;
+          gap: 18px;
+        }
+        .brand-badge-icon {
+          width: 58px;
+          height: 58px;
+          border-radius: 16px;
+          display: grid;
+          place-items: center;
+          font-size: 28px;
+          box-shadow: 0 0 25px rgba(16, 185, 129, 0.45);
+        }
+        .fuelix-gradient {
+          background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+        }
+        .natec-gradient {
+          background: linear-gradient(135deg, #6366f1 0%, #3730a3 100%);
+          box-shadow: 0 0 25px rgba(99, 102, 241, 0.45);
+        }
+
+        .macro-title {
+          font-size: 40px;
+          font-weight: 900;
+          letter-spacing: -0.03em;
+          color: #ffffff;
+        }
+        .macro-subtitle {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 20px;
+          font-weight: 600;
+          color: #94a3b8;
+        }
+
+        .pill-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          padding: 10px 22px;
+          border-radius: 9999px;
+          background: rgba(16, 185, 129, 0.15);
+          border: 1px solid rgba(16, 185, 129, 0.4);
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 17px;
+          font-weight: 700;
+          color: #a7f3d0;
+        }
+        .pill-badge.indigo {
+          background: rgba(99, 102, 241, 0.15);
+          border-color: rgba(99, 102, 241, 0.4);
+          color: #c7d2fe;
+        }
+
+        /* Macro Image Viewport */
+        .macro-viewport {
+          width: 100%;
+          height: 720px;
+          border-radius: 24px;
+          overflow: hidden;
+          position: relative;
+          background: #000;
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.85);
+          margin-bottom: 24px;
+          transform-style: preserve-3d;
+        }
+        .macro-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: top center;
+        }
+
+        /* Exploding Z-Layer Elements */
+        .z-telemetry-strip {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 18px 28px;
+          border-radius: 18px;
+          background: rgba(16, 185, 129, 0.15);
+          border: 1px solid rgba(16, 185, 129, 0.45);
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 30px rgba(16, 185, 129, 0.2);
+          margin-bottom: 24px;
+          transform-style: preserve-3d;
+        }
+        .telemetry-txt {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 21px;
+          font-weight: 700;
+          color: #6ee7b7;
+        }
+        .telemetry-data {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 21px;
+          font-weight: 800;
+          color: #ffffff;
+        }
+
+        .z-badge-cluster {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 14px;
+          justify-content: center;
+          transform-style: preserve-3d;
+        }
+        .z-badge {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 20px;
+          font-weight: 700;
+          padding: 12px 24px;
+          border-radius: 14px;
+          background: rgba(14, 18, 28, 0.95);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+          color: #f1f5f9;
+          transform-style: preserve-3d;
+        }
+        .z-badge.glow-emerald {
+          border-color: rgba(16, 185, 129, 0.6);
+          box-shadow: 0 0 25px rgba(16, 185, 129, 0.35);
+          color: #6ee7b7;
+        }
+        .z-badge.glow-indigo {
+          border-color: rgba(99, 102, 241, 0.6);
+          box-shadow: 0 0 25px rgba(99, 102, 241, 0.35);
+          color: #a5b4fc;
+        }
+
+        /* Cyber Cursor */
+        .cyber-cursor {
+          position: absolute;
+          width: 72px;
+          height: 72px;
+          pointer-events: none;
+          z-index: 80;
+          opacity: 0;
+          filter: drop-shadow(0 0 20px #10b981);
+        }
+        .cursor-trail {
+          position: absolute;
+          width: 160px;
+          height: 160px;
+          border-radius: 50%;
+          border: 2px solid #10b981;
+          pointer-events: none;
+          opacity: 0;
+          z-index: 79;
+        }
+      </style>
+
+      <div id="root" data-composition-id="beat-2" data-duration="4.2" data-width="1080" data-height="1920">
+        <div id="b2-stage" class="b2-stage">
+          <!-- Cyber Cursor -->
+          <svg id="b2-cursor" class="cyber-cursor" viewBox="0 0 32 32" fill="none">
+            <path
+              d="M6 3L26 15L16 17L12 27L6 3Z"
+              fill="#10b981"
+              stroke="#ffffff"
+              stroke-width="2.5"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <div id="b2-trail" class="cursor-trail"></div>
+
+          <!-- Card 1: FUELIX (Extreme 3D Tilt & Macro Crop) -->
+          <div id="b2-fuelix" class="macro-card-3d" data-layout-allow-overlap>
+            <div class="card-header-row" data-layout-allow-overlap>
+              <div class="brand-cluster">
+                <div class="brand-badge-icon fuelix-gradient">⛽</div>
+                <div>
+                  <h2 class="macro-title">FUELIX</h2>
+                  <p class="macro-subtitle">Industrial IoT & Telemetry Platform</p>
+                </div>
+              </div>
+              <div class="pill-badge">
+                <span>●</span> SICOM COMPLIANT
+              </div>
+            </div>
+
+            <div class="macro-viewport" data-layout-allow-overflow>
+              <img src="assets/fuelix-hero.png" alt="Fuelix Real Dashboard" class="macro-img" data-layout-allow-overflow />
+            </div>
+
+            <div id="b2-fuelix-strip" class="z-telemetry-strip" data-layout-allow-overlap>
+              <span class="telemetry-txt">RS-485 EDGE NODE: TANQUE 01</span>
+              <span class="telemetry-data">94.2% [4,820 GAL] • OK</span>
+            </div>
+
+            <div id="b2-fuelix-badges" class="z-badge-cluster">
+              <span class="z-badge glow-emerald">Next.js 15</span>
+              <span class="z-badge glow-emerald">TypeScript</span>
+              <span class="z-badge">Raspberry Pi</span>
+              <span class="z-badge">RS-485 Modbus</span>
+              <span class="z-badge glow-emerald">SQLite Spool</span>
+              <span class="z-badge glow-indigo">33 Screens</span>
+            </div>
+          </div>
+
+          <!-- Card 2: NATEC V2 (Extreme 3D Tilt) -->
+          <div id="b2-natec" class="macro-card-3d" data-layout-allow-overlap>
+            <div class="card-header-row" data-layout-allow-overlap>
+              <div class="brand-cluster">
+                <div class="brand-badge-icon natec-gradient">⚡</div>
+                <div>
+                  <h2 class="macro-title">NATEC V2</h2>
+                  <p class="macro-subtitle">Enterprise E-Commerce Architecture</p>
+                </div>
+              </div>
+              <div class="pill-badge indigo">
+                <span>●</span> 100/100 LIGHTHOUSE
+              </div>
+            </div>
+
+            <div class="macro-viewport" data-layout-allow-overflow>
+              <img src="assets/natec-hero.png" alt="NaTec V2 Catalog" class="macro-img" data-layout-allow-overflow />
+            </div>
+
+            <div class="z-telemetry-strip" style="background: rgba(99,102,241,0.15); border-color: rgba(99,102,241,0.45);" data-layout-allow-overlap>
+              <span class="telemetry-txt" style="color: #a5b4fc;">TURBOPACK COMPILE PIPELINE</span>
+              <span class="telemetry-data">3.6s • ZERO LINT WARNINGS</span>
+            </div>
+
+            <div class="z-badge-cluster">
+              <span class="z-badge glow-indigo">Full Stack</span>
+              <span class="z-badge glow-indigo">PostgreSQL</span>
+              <span class="z-badge">GSAP Motion</span>
+              <span class="z-badge">Tailwind CSS</span>
+              <span class="z-badge glow-indigo">Micro-Interactions</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        const tl = gsap.timeline({ paused: true });
+
+        // Fuelix Card enters flying with extreme 3D isometric tilt and macro crop (scale 1.65)
+        tl.fromTo(
+          "#b2-fuelix",
+          {
+            opacity: 0,
+            x: 200,
+            y: 400,
+            scale: 1.3,
+            rotateX: 26,
+            rotateY: -22,
+            rotateZ: 6,
+          },
+          {
+            opacity: 1,
+            x: -20,
+            y: 50,
+            scale: 1.65,
+            rotateX: 20,
+            rotateY: -15,
+            rotateZ: 4,
+            duration: 0.85,
+            ease: "expo.out",
+          },
+          0.05
+        );
+
+        // Continuous slow camera float across Fuelix (ends at 2.35s)
+        tl.to(
+          "#b2-fuelix",
+          {
+            y: 20,
+            rotateX: 18,
+            rotateY: -12,
+            duration: 1.45,
+            ease: "sine.inOut",
+          },
+          0.9
+        );
+
+        // Cyber cursor darts in at high speed
+        tl.fromTo(
+          "#b2-cursor",
+          { opacity: 0, x: 950, y: 1400, scale: 1.4 },
+          { opacity: 1, x: 500, y: 880, scale: 1.0, duration: 0.55, ease: "expo.out" },
+          1.2
+        );
+
+        // Click action: card depresses and ripple fires
+        tl.to(
+          "#b2-cursor",
+          { scale: 0.75, duration: 0.08, yoyo: true, repeat: 1, ease: "power2.inOut" },
+          1.75
+        );
+        tl.to(
+          "#b2-fuelix",
+          { scale: 1.58, duration: 0.1, yoyo: true, repeat: 1, ease: "power2.inOut" },
+          1.78
+        );
+        tl.fromTo(
+          "#b2-trail",
+          { opacity: 1, scale: 0.3, x: 440, y: 820 },
+          { opacity: 0, scale: 2.5, duration: 0.45, ease: "power2.out" },
+          1.8
+        );
+
+        // 3D Z-Layer Parallax Explosion!
+        tl.to(
+          "#b2-fuelix-strip",
+          { z: 75, duration: 0.4, ease: "back.out(2.0)" },
+          1.82
+        );
+        tl.to(
+          "#b2-fuelix-badges .z-badge",
+          { z: 125, stagger: 0.04, duration: 0.45, ease: "back.out(2.2)" },
+          1.85
+        );
+
+        // Whip-tilt camera transition to NaTec V2 at 2.4s
+        tl.to(
+          "#b2-fuelix",
+          {
+            x: -1200,
+            rotateY: -35,
+            scale: 1.2,
+            opacity: 0,
+            duration: 0.55,
+            ease: "expo.in",
+          },
+          2.4
+        );
+        tl.to("#b2-cursor", { opacity: 0, duration: 0.2 }, 2.3);
+
+        // NaTec V2 slams in from opposite angle with macro scale 1.7
+        tl.fromTo(
+          "#b2-natec",
+          {
+            opacity: 0,
+            x: 1000,
+            y: -100,
+            scale: 1.3,
+            rotateX: 20,
+            rotateY: 25,
+            rotateZ: -5,
+          },
+          {
+            opacity: 1,
+            x: 20,
+            y: 30,
+            scale: 1.7,
+            rotateX: 18,
+            rotateY: 12,
+            rotateZ: -3,
+            duration: 0.75,
+            ease: "expo.out",
+          },
+          2.6
+        );
+
+        // Continuous float across NaTec (starts after entrance at 3.35s)
+        tl.to(
+          "#b2-natec",
+          { y: 0, rotateY: 8, duration: 0.45, ease: "sine.inOut" },
+          3.35
+        );
+
+        // Scene 2 Exit: whip-tilt out into Terminal
+        tl.to(
+          "#b2-stage",
+          {
+            rotateX: 35,
+            z: -400,
+            opacity: 0,
+            filter: "blur(12px)",
+            duration: 0.38,
+            ease: "expo.in",
+          },
+          3.82
+        );
+
+        window.__timelines["beat-2"] = tl;
+        tl.seek(0);
+      </script>
+    </template>
+  </body>
+</html>

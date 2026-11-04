@@ -1,9 +1,11 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { useTheme } from 'next-themes';
 
 export default function HeroBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { resolvedTheme } = useTheme();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -15,7 +17,6 @@ export default function HeroBackground() {
     let particles: Particle[] = [];
     let animationFrameId: number;
     
-    // Track mouse in viewport coordinates and map to canvas coordinates
     const mouseViewport = { x: -1000, y: -1000 };
     const mouse = { x: -1000, y: -1000 };
 
@@ -43,6 +44,8 @@ export default function HeroBackground() {
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
       navigator.userAgent
     );
+
+    const isDark = resolvedTheme === 'dark';
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
@@ -91,21 +94,15 @@ export default function HeroBackground() {
       vx: number;
       vy: number;
       size: number;
-      color: string;
-      glow: string;
       canvas: HTMLCanvasElement;
 
       constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.vx = (Math.random() - 0.5) * 0.7;
-        this.vy = (Math.random() - 0.5) * 0.7;
-        this.size = Math.random() * 2.5 + 1;
-
-        const isPrimary = Math.random() > 0.3;
-        this.color = isPrimary ? 'rgba(0, 112, 243, 1)' : 'rgba(168, 85, 247, 1)';
-        this.glow = isPrimary ? 'rgba(0, 112, 243, 0.5)' : 'rgba(168, 85, 247, 0.5)';
+        this.vx = (Math.random() - 0.5) * 0.45;
+        this.vy = (Math.random() - 0.5) * 0.45;
+        this.size = Math.random() * 1.8 + 0.8;
       }
 
       update() {
@@ -120,14 +117,18 @@ export default function HeroBackground() {
         if (!ctx) return;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = this.color;
+        // Architectural Sober Mint dots
+        ctx.fillStyle = isDark
+          ? 'rgba(52, 211, 153, 0.45)'
+          : 'rgba(13, 148, 136, 0.4)';
         ctx.fill();
       }
     }
 
     const initParticles = () => {
       particles = [];
-      const numberOfParticles = Math.floor((canvas.width * canvas.height) / 14000);
+      // Balanced density: fewer, more restrained nodes (anti-slop)
+      const numberOfParticles = Math.floor((canvas.width * canvas.height) / 22000);
       for (let i = 0; i < numberOfParticles; i++) {
         particles.push(new Particle(canvas));
       }
@@ -136,61 +137,59 @@ export default function HeroBackground() {
     const drawLines = () => {
       if (!ctx) return;
 
-      // Connect nearby particles
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
-          if (distance < 150) {
+          if (distance < 130) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(0, 112, 243, ${0.25 - distance / 600})`;
-            ctx.lineWidth = 0.8;
+            const alpha = (1 - distance / 130) * (isDark ? 0.12 : 0.08);
+            ctx.strokeStyle = isDark
+              ? `rgba(52, 211, 153, ${alpha})`
+              : `rgba(13, 148, 136, ${alpha})`;
+            ctx.lineWidth = 0.6;
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
             ctx.stroke();
           }
         }
 
-        // Connect and attract to cursor if inside hero bounds
+        // Subtle interactive proximity to cursor
         if (mouse.x > -500 && mouse.y > -500) {
           const dxMouse = particles[i].x - mouse.x;
           const dyMouse = particles[i].y - mouse.y;
           const distanceMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
 
-          if (distanceMouse < 300) {
+          if (distanceMouse < 180) {
+            const force = (1 - distanceMouse / 180) * 0.02;
+            particles[i].vx += (dxMouse / distanceMouse) * force;
+            particles[i].vy += (dyMouse / distanceMouse) * force;
+
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(0, 112, 243, ${Math.max(0, 0.8 - distanceMouse / 375)})`;
-            ctx.lineWidth = 1.4;
+            const mouseAlpha = (1 - distanceMouse / 180) * (isDark ? 0.22 : 0.15);
+            ctx.strokeStyle = isDark
+              ? `rgba(52, 211, 153, ${mouseAlpha})`
+              : `rgba(13, 148, 136, ${mouseAlpha})`;
+            ctx.lineWidth = 0.8;
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(mouse.x, mouse.y);
             ctx.stroke();
-
-            // Attract towards the ball's center, leaving a clean compact halo around the cursor
-            if (distanceMouse > 25) {
-              particles[i].x -= dxMouse * 0.01;
-              particles[i].y -= dyMouse * 0.01;
-            }
           }
         }
       }
     };
 
     const animate = () => {
-      updateMouseCanvasPosition();
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      ctx.globalCompositeOperation = 'screen';
+      particles.forEach((particle) => {
+        particle.update();
+        particle.draw();
+      });
 
       drawLines();
-      for (let i = 0; i < particles.length; i++) {
-        particles[i].update();
-        particles[i].draw();
-      }
-
-      ctx.globalCompositeOperation = 'source-over';
-
       animationFrameId = requestAnimationFrame(animate);
     };
 
@@ -200,21 +199,24 @@ export default function HeroBackground() {
     return () => {
       window.removeEventListener('resize', resize);
       window.removeEventListener('scroll', updateMouseCanvasPosition);
-      window.removeEventListener('mousemove', handleMouseMove);
-      document.body.removeEventListener('mouseleave', handleMouseLeave);
+      if (!isMobile) {
+        window.removeEventListener('mousemove', handleMouseMove);
+        document.body.removeEventListener('mouseleave', handleMouseLeave);
+      }
       resizeObserver.disconnect();
       cancelAnimationFrame(animationFrameId);
     };
-  }, []);
+  }, [resolvedTheme]);
 
   return (
-    <div className="absolute inset-0 z-0 bg-[#050505] overflow-hidden pointer-events-none">
+    <div className="absolute inset-0 pointer-events-none overflow-hidden">
       <canvas
         ref={canvasRef}
-        className="block w-full h-full"
+        className="w-full h-full block opacity-70 transition-opacity duration-700"
       />
-      <div className="absolute inset-0 bg-[#050505] [mask-image:radial-gradient(ellipse_70%_70%_at_center,transparent_0%,black_100%)] opacity-80" />
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#050505]" />
+      {/* Architectural subtle ambient background gradient: calm sober mint vignette */}
+      <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[720px] h-[720px] bg-primary/[0.04] dark:bg-primary/[0.06] rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-background to-transparent pointer-events-none" />
     </div>
   );
 }

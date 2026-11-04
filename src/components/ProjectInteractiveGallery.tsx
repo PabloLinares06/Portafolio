@@ -19,7 +19,9 @@ import {
   Briefcase,
   Cpu,
   ShieldCheck,
-  Fuel
+  Fuel,
+  CheckCircle2,
+  XCircle
 } from 'lucide-react';
 import { playClick, playHover, playOpen } from '@/utils/audio';
 
@@ -115,19 +117,19 @@ export default function ProjectInteractiveGallery({
   const getCategoryBadgeLabel = (cat: string) => {
     switch (cat) {
       case 'admin':
-        return '⚙️ Admin & EFFI ERP';
+        return 'Admin & EFFI ERP';
       case 'tienda':
-        return '🛒 Tienda Pública';
+        return 'Tienda Pública';
       case 'mobile':
-        return '📱 Vista Móvil';
+        return 'Vista Móvil';
       case 'operaciones':
-        return '⛽ Operaciones & Tanques';
+        return 'Operaciones & Tanques';
       case 'turnos':
-        return '⏱️ Turnos & Nómina';
+        return 'Turnos & Nómina';
       case 'corporativo':
-        return '🏢 Ventas Corp & SICOM';
+        return 'Ventas Corp & SICOM';
       case 'landing':
-        return '🌐 Landing & Acceso';
+        return 'Landing & Acceso';
       default:
         return 'Módulo';
     }
@@ -136,10 +138,10 @@ export default function ProjectInteractiveGallery({
   const activeItem = activeImageIndex !== null ? filteredItems[activeImageIndex] : null;
 
   return (
-    <section className="py-20 md:py-28 px-4 sm:px-6 bg-[#030507] border-t border-white/5 relative overflow-hidden">
+    <section className="py-20 md:py-28 px-4 sm:px-6 bg-background border-t border-surface-border relative overflow-hidden transition-colors">
       {/* Ambient background lighting */}
       <div className="absolute top-1/3 left-0 w-[500px] h-[500px] bg-primary/5 blur-[160px] pointer-events-none" />
-      <div className="absolute bottom-1/3 right-0 w-[500px] h-[500px] bg-cyan-500/5 blur-[160px] pointer-events-none" />
+      <div className="absolute bottom-1/3 right-0 w-[500px] h-[500px] bg-primary/5 blur-[160px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         
@@ -149,16 +151,16 @@ export default function ProjectInteractiveGallery({
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-primary/30 bg-primary/10 text-cyan-300 font-mono text-xs uppercase tracking-widest mb-4"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-primary/30 bg-primary/10 text-primary font-mono text-xs uppercase tracking-widest mb-4 font-semibold"
           >
             <Sparkles size={13} className="text-primary" />
             <span>Evidencia Visual en Producción ({items.length} Vistas)</span>
           </motion.div>
 
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-white tracking-tight mb-4">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-foreground tracking-tight mb-4">
             Galería Interactiva del Sistema
           </h2>
-          <p className="text-gray-400 text-sm sm:text-base leading-relaxed">
+          <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
             {isFuelix
               ? `Explora las ${items.length} pantallas operativas de Fuelix: desde el monitoreo volumétrico de tanques y liquidación laboral de turnos, hasta la gestión de flotas corporativas y reportes regulatorios ante el SICOM.`
               : `Explora las ${items.length} pantallas reales de la plataforma ${projectTitle}: desde la experiencia del cliente mayorista en tienda y dispositivos móviles, hasta los módulos de analítica BI y la integración fiscal con EFFI ERP.`}
@@ -166,19 +168,19 @@ export default function ProjectInteractiveGallery({
         </div>
 
         {/* Technical Callout Comparison */}
-        <div className="mb-14 p-6 md:p-8 rounded-3xl bg-[#080d14]/90 border border-white/10 shadow-2xl relative overflow-hidden">
-          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 pb-6 border-b border-white/10">
+        <div className="mb-14 p-6 md:p-8 rounded-3xl bg-surface-card border border-surface-border shadow-xl relative overflow-hidden">
+          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 pb-6 border-b border-surface-border">
             <div>
               <span className="text-[10px] font-mono text-primary uppercase tracking-widest font-bold block mb-1">
                 {isFuelix ? 'Arquitectura de Misión Crítica // IoT Edge Industrial' : 'Arquitectura en Evolución // Caso Real de Negocio'}
               </span>
-              <h3 className="text-xl md:text-2xl font-bold text-white">
+              <h3 className="text-xl md:text-2xl font-bold text-foreground">
                 {isFuelix
                   ? 'Innovación de Hardware: Commodity Edge Nodes vs Controladores Privativos'
                   : 'Migración Estratégica: Firebase Serverless → VPS Auto-Hospedado'}
               </h3>
             </div>
-            <span className="px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs font-bold">
+            <span className="px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-600 dark:text-emerald-400 font-mono text-xs font-bold">
               {isFuelix ? 'OFFLINE-FIRST & SIC COMPLIANT' : 'ROI & COSTOS OPTIMIZADOS'}
             </span>
           </div>
@@ -187,11 +189,12 @@ export default function ProjectInteractiveGallery({
             {isFuelix ? (
               <>
                 {/* Fuelix Antes / Tradicional */}
-                <div className="p-5 rounded-2xl bg-red-500/[0.03] border border-red-500/20 space-y-2">
-                  <div className="flex items-center gap-2 text-red-400 font-mono text-xs uppercase tracking-wider font-bold">
-                    <span>✕ Controladores Legacy Tradicionales (Dominus / Iscom)</span>
+                <div className="p-5 rounded-2xl bg-red-500/[0.04] border border-red-500/20 space-y-2">
+                  <div className="flex items-center gap-2 text-red-500 dark:text-red-400 font-mono text-xs uppercase tracking-wider font-bold">
+                    <XCircle size={14} className="text-red-500 flex-shrink-0" />
+                    <span>Controladores Legacy Tradicionales (Dominus / Iscom)</span>
                   </div>
-                  <ul className="text-xs font-mono text-gray-400 space-y-1.5 pt-2">
+                  <ul className="text-xs font-mono text-muted-foreground space-y-1.5 pt-2">
                     <li>• Costo de adquisición excesivo: controladores privativos de más de $3,000 USD.</li>
                     <li>• Caídas de red o fallas del PC en isla detienen inmediatamente el despacho.</li>
                     <li>• Cuadres de caja y turnos manuales propensos a pérdidas de combustible.</li>
@@ -200,11 +203,12 @@ export default function ProjectInteractiveGallery({
                 </div>
 
                 {/* Fuelix Ahora */}
-                <div className="p-5 rounded-2xl bg-emerald-500/[0.03] border border-emerald-500/20 space-y-2">
-                  <div className="flex items-center gap-2 text-emerald-400 font-mono text-xs uppercase tracking-wider font-bold">
-                    <span>✓ Arquitectura Fuelix (Edge Multi-Tier + Angular PWA + Supabase)</span>
+                <div className="p-5 rounded-2xl bg-emerald-500/[0.04] border border-emerald-500/20 space-y-2">
+                  <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-mono text-xs uppercase tracking-wider font-bold">
+                    <CheckCircle2 size={14} className="text-emerald-500 flex-shrink-0" />
+                    <span>Arquitectura Fuelix (Edge Multi-Tier + Angular PWA + Supabase)</span>
                   </div>
-                  <ul className="text-xs font-mono text-gray-300 space-y-1.5 pt-2">
+                  <ul className="text-xs font-mono text-foreground/80 space-y-1.5 pt-2">
                     <li>• Hardware accesible: Raspberry Pi (~$50 USD) con lectura serial pasiva RS-485.</li>
                     <li>• Autonomía Offline-First: Spool local SQLite + Postgres en PC sin parar ventas.</li>
                     <li>• Liquidación automática con ley laboral colombiana, horas extras y recargos.</li>
@@ -215,11 +219,12 @@ export default function ProjectInteractiveGallery({
             ) : (
               <>
                 {/* NaTec Antes */}
-                <div className="p-5 rounded-2xl bg-red-500/[0.03] border border-red-500/20 space-y-2">
-                  <div className="flex items-center gap-2 text-red-400 font-mono text-xs uppercase tracking-wider font-bold">
-                    <span>✕ Arquitectura Previa (Firebase Serverless)</span>
+                <div className="p-5 rounded-2xl bg-red-500/[0.04] border border-red-500/20 space-y-2">
+                  <div className="flex items-center gap-2 text-red-500 dark:text-red-400 font-mono text-xs uppercase tracking-wider font-bold">
+                    <XCircle size={14} className="text-red-500 flex-shrink-0" />
+                    <span>Arquitectura Previa (Firebase Serverless)</span>
                   </div>
-                  <ul className="text-xs font-mono text-gray-400 space-y-1.5 pt-2">
+                  <ul className="text-xs font-mono text-muted-foreground space-y-1.5 pt-2">
                     <li>• Facturación elástica impredecible por lecturas continuas de Firestore.</li>
                     <li>• Exportación manual y digitación repetitiva de pedidos en software contable.</li>
                     <li>• Ausencia de modo kiosko interactivo con bloqueo de seguridad en bodega.</li>
@@ -228,11 +233,12 @@ export default function ProjectInteractiveGallery({
                 </div>
 
                 {/* NaTec Ahora */}
-                <div className="p-5 rounded-2xl bg-emerald-500/[0.03] border border-emerald-500/20 space-y-2">
-                  <div className="flex items-center gap-2 text-emerald-400 font-mono text-xs uppercase tracking-wider font-bold">
-                    <span>✓ NaTec V2 (NestJS + Docker VPS + EFFI ERP)</span>
+                <div className="p-5 rounded-2xl bg-emerald-500/[0.04] border border-emerald-500/20 space-y-2">
+                  <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-mono text-xs uppercase tracking-wider font-bold">
+                    <CheckCircle2 size={14} className="text-emerald-500 flex-shrink-0" />
+                    <span>NaTec V2 (NestJS + Docker VPS + EFFI ERP)</span>
                   </div>
-                  <ul className="text-xs font-mono text-gray-300 space-y-1.5 pt-2">
+                  <ul className="text-xs font-mono text-foreground/80 space-y-1.5 pt-2">
                     <li>• Costo fijo mensual de $14 USD/mes en Droplet VPS DigitalOcean + Nginx.</li>
                     <li>• Integración oficial con EFFI ERP: exportación masiva en .xlsx con ExcelJS.</li>
                     <li>• Modo Kiosko táctil con PIN de seguridad y reinicio automático por inactividad.</li>
@@ -261,8 +267,8 @@ export default function ProjectInteractiveGallery({
                 onMouseEnter={() => playHover()}
                 className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono uppercase tracking-wider transition-all interactive cursor-pointer ${
                   isSelected
-                    ? 'bg-primary text-black font-bold shadow-[0_0_20px_rgba(0,242,254,0.35)]'
-                    : 'bg-white/[0.03] text-gray-400 border border-white/10 hover:border-white/30 hover:text-white'
+                    ? 'bg-primary text-white dark:text-slate-950 font-bold shadow-sm'
+                    : 'bg-surface-elevated/40 text-muted-foreground border border-surface-border hover:border-primary/40 hover:text-foreground'
                 }`}
               >
                 <Icon size={14} />
@@ -288,10 +294,10 @@ export default function ProjectInteractiveGallery({
                 transition={{ duration: 0.3 }}
                 onClick={() => openLightbox(idx)}
                 onMouseEnter={() => playHover()}
-                className="group relative rounded-2xl md:rounded-3xl overflow-hidden border border-white/10 bg-[#090e16] hover:border-primary/50 transition-all duration-500 shadow-xl cursor-pointer flex flex-col"
+                className="group relative rounded-2xl md:rounded-3xl overflow-hidden border border-surface-border bg-surface-card hover:border-primary/50 transition-all duration-500 shadow-md hover:shadow-xl cursor-pointer flex flex-col"
               >
                 {/* Image Container */}
-                <div className={`relative w-full overflow-hidden bg-[#040608] ${
+                <div className={`relative w-full overflow-hidden bg-surface-elevated ${
                   item.category === 'mobile' ? 'aspect-[9/14]' : 'aspect-video'
                 }`}>
                   <Image
@@ -304,31 +310,31 @@ export default function ProjectInteractiveGallery({
                   
                   {/* Category Pill Badge */}
                   <div className="absolute top-3 left-3 z-10">
-                    <span className="px-2.5 py-1 rounded-full bg-black/80 backdrop-blur-md border border-white/15 text-[9px] font-mono uppercase tracking-wider text-gray-200">
+                    <span className="px-2.5 py-1 rounded-full bg-surface/85 backdrop-blur-md border border-surface-border text-[9px] font-mono uppercase tracking-wider text-foreground/80 font-medium">
                       {getCategoryBadgeLabel(item.category)}
                     </span>
                   </div>
 
                   {/* Zoom overlay on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <div className="p-3 rounded-full bg-primary text-black shadow-[0_0_20px_rgba(0,242,254,0.5)] transform scale-75 group-hover:scale-100 transition-transform duration-300">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <div className="p-3 rounded-full bg-primary text-white dark:text-slate-950 shadow-md transform scale-75 group-hover:scale-100 transition-transform duration-300">
                       <Maximize2 size={18} />
                     </div>
                   </div>
                 </div>
 
                 {/* Card Meta Content */}
-                <div className="p-5 flex-1 flex flex-col justify-between border-t border-white/5 bg-[#070b12]">
+                <div className="p-5 flex-1 flex flex-col justify-between border-t border-surface-border bg-surface-card">
                   <div>
-                    <h4 className="text-sm md:text-base font-bold text-white group-hover:text-primary transition-colors line-clamp-1">
+                    <h4 className="text-sm md:text-base font-bold text-foreground group-hover:text-primary transition-colors line-clamp-1">
                       {item.title}
                     </h4>
-                    <p className="text-xs text-gray-400 font-mono mt-1 line-clamp-2 leading-relaxed">
+                    <p className="text-xs text-muted-foreground font-mono mt-1 line-clamp-2 leading-relaxed">
                       {item.description}
                     </p>
                   </div>
 
-                  <div className="pt-3 mt-3 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-gray-500">
+                  <div className="pt-3 mt-3 border-t border-surface-border flex items-center justify-between text-[10px] font-mono text-muted-foreground">
                     <span>AMPLIAR EN ALTA DEFINICIÓN</span>
                     <ArrowUpRight size={12} className="text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </div>

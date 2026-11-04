@@ -1,24 +1,73 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #050505;
-  --foreground: #ededed;
-  --primary: #0070f3;
-  --primary-light: #60a5fa;
-  --primary-glow: rgba(0, 112, 243, 0.3);
-  --secondary: #141414;
-  --surface: #0a0a0a;
-  --surface-card: #0d0d0d;
+  /* Light Mode: Architectural Alabaster & Deep Sage Mint */
+  --background: #f8f9fa;
+  --foreground: #0f172a;
+  --surface: #ffffff;
+  --surface-card: #ffffff;
+  --surface-hover: #f1f5f9;
+  --surface-border: rgba(15, 23, 42, 0.08);
+  --surface-border-strong: rgba(15, 23, 42, 0.15);
+  --surface-subtle: rgba(15, 23, 42, 0.03);
+
+  /* Sober Mint Primary */
+  --primary: #0d9488;
+  --primary-hover: #0f766e;
+  --primary-light: #14b8a6;
+  --primary-subtle: rgba(13, 148, 136, 0.08);
+  --primary-border: rgba(13, 148, 136, 0.25);
+  
+  --secondary: #f1f5f9;
+  --muted: #64748b;
+  --muted-foreground: #475569;
+}
+
+.dark {
+  /* Dark Mode: Obsidian Slate & Crisp Mineral Mint */
+  --background: #0b0f14;
+  --foreground: #f8fafc;
+  --surface: #111720;
+  --surface-card: #141c26;
+  --surface-hover: #1b2432;
+  --surface-border: rgba(255, 255, 255, 0.08);
+  --surface-border-strong: rgba(255, 255, 255, 0.16);
+  --surface-subtle: rgba(255, 255, 255, 0.03);
+
+  /* Sober Mint Primary */
+  --primary: #10b981;
+  --primary-hover: #059669;
+  --primary-light: #34d399;
+  --primary-subtle: rgba(16, 185, 129, 0.1);
+  --primary-border: rgba(52, 211, 153, 0.25);
+
+  --secondary: #16202c;
+  --muted: #64748b;
+  --muted-foreground: #94a3b8;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-primary: var(--primary);
-  --color-primary-light: var(--primary-light);
-  --color-secondary: var(--secondary);
   --color-surface: var(--surface);
   --color-surface-card: var(--surface-card);
+  --color-surface-hover: var(--surface-hover);
+  --color-surface-border: var(--surface-border);
+  --color-surface-border-strong: var(--surface-border-strong);
+  --color-surface-subtle: var(--surface-subtle);
+  
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-light: var(--primary-light);
+  --color-primary-subtle: var(--primary-subtle);
+  --color-primary-border: var(--primary-border);
+
+  --color-secondary: var(--secondary);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -35,6 +84,7 @@ body {
   color: var(--foreground);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Lenis Smooth Scroll Recommended CSS */
@@ -66,31 +116,21 @@ html.lenis body {
 
 ::selection {
   background: var(--primary);
-  color: white;
+  color: #ffffff;
 }
 
-/* Gradient animation for hero name */
-@keyframes gradient-shift {
-  0% { background-position: 0% center; }
-  100% { background-position: 200% center; }
-}
-
-.animate-gradient {
-  animation: gradient-shift 4s linear infinite;
-}
-
-/* Custom minimalist dark scrollbar */
+/* Custom refined scrollbar themed to mode */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #050505;
+  background: var(--background);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #222222;
+  background: var(--surface-border-strong);
   border-radius: 9999px;
   transition: background 0.2s ease;
 }
@@ -106,17 +146,44 @@ html.lenis body {
   border-radius: 4px;
 }
 
-/* Subtle noise texture overlay */
+/* Clean, subtle noise texture overlay */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
   z-index: 9999;
   pointer-events: none;
-  opacity: 0.025;
+  opacity: 0.015;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 128px;
 }
 
+/* High-Density Engineering Print Stylesheet (Ctrl + P / Resume Export) */
+@media print {
+  body::before,
+  nav,
+  header,
+  button,
+  [role="button"],
+  .fixed {
+    display: none !important;
+  }
 
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    font-size: 10.5pt !important;
+  }
+
+  section {
+    padding: 1.5rem 0 !important;
+    page-break-inside: avoid;
+    border-color: #cbd5e1 !important;
+  }
+
+  a {
+    color: #0f172a !important;
+    text-decoration: none !important;
+  }
+}

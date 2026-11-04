@@ -9,6 +9,8 @@ import ScrollToTop from '@/components/ScrollToTop';
 import Preloader from '@/components/Preloader';
 import CommandPalette from '@/components/CommandPalette';
 import DevTerminal from '@/components/DevTerminal';
+import ShortcutsModal from '@/components/ShortcutsModal';
+import { ThemeProvider } from '@/components/ThemeProvider';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -68,18 +70,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Preloader />
-        <CommandPalette />
-        <DevTerminal />
-        <SmoothScroll>
-          <ScrollToTop />
-          <ScrollProgress />
-          <Navbar />
-          <CustomCursor />
-          {children}
-        </SmoothScroll>
+    <html lang="es" suppressHydrationWarning>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          <Preloader />
+          <CommandPalette />
+          <DevTerminal />
+          <ShortcutsModal />
+          <SmoothScroll>
+            <ScrollToTop />
+            <ScrollProgress />
+            <Navbar />
+            <CustomCursor />
+            {children}
+          </SmoothScroll>
+        </ThemeProvider>
       </body>
     </html>
   );

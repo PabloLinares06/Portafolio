@@ -9,7 +9,7 @@ const skillCategories = [
   {
     label: 'Backend & Core Systems',
     icon: Server,
-    color: '#00f2fe',
+    color: '#10b981',
     description: 'Arquitecturas escalables, lógica de negocio y APIs de alto rendimiento.',
     skills: [
       { name: '.NET 9', note: 'Web API · Minimal APIs' },
@@ -25,7 +25,7 @@ const skillCategories = [
   {
     label: 'Frontend Reactivo & Kioskos',
     icon: Monitor,
-    color: '#a855f7',
+    color: '#8b5cf6',
     description: 'Interfaces interactivas, modo kiosko táctil, signals y gráficos 2D.',
     skills: [
       { name: 'Angular 22 (Signals)', note: 'Standalone · Reactive' },
@@ -40,7 +40,7 @@ const skillCategories = [
   {
     label: 'Persistencia & Bases de Datos',
     icon: Database,
-    color: '#10b981',
+    color: '#0d9488',
     description: 'Modelado relacional, micro-ORMs y optimización de consultas SQL.',
     skills: [
       { name: 'PostgreSQL', note: 'Transacciones ACID' },
@@ -70,7 +70,7 @@ const skillCategories = [
 
 export default function Skills() {
   return (
-    <section id="skills" className="pt-20 pb-28 md:pt-28 md:pb-36 px-6 bg-[#040608] border-t border-white/5 relative overflow-hidden">
+    <section id="skills" className="pt-20 pb-28 md:pt-28 md:pb-36 px-6 bg-background border-t border-surface-border relative overflow-hidden transition-colors">
       {/* Subtle ambient lighting */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 blur-[180px] rounded-full pointer-events-none" />
 
@@ -79,9 +79,9 @@ export default function Skills() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="text-primary font-mono text-xs uppercase tracking-[0.3em] mb-5 block font-semibold"
+          className="text-primary font-mono text-xs uppercase tracking-[0.25em] mb-5 block font-semibold"
         >
-          04. Arsenal Técnico
+          Arsenal Técnico
         </motion.span>
 
         <motion.h2
@@ -89,9 +89,9 @@ export default function Skills() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="text-4xl md:text-6xl font-black text-white tracking-tighter mb-14 md:mb-16"
+          className="text-4xl md:text-6xl font-black text-foreground tracking-tighter mb-14 md:mb-16"
         >
-          El Stack <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-cyan-300 to-blue-400 italic">Especializado.</span>
+          El Stack <span className="text-primary italic">Especializado.</span>
         </motion.h2>
 
         {/* 2×2 luxury spotlight cards */}
@@ -109,7 +109,7 @@ export default function Skills() {
                 <SpotlightCard
                   spotlightColor={`${cat.color}15`}
                   spotlightRadius={380}
-                  className="p-6 sm:p-8 h-full bg-[#070b12]/80 border-white/10 hover:border-white/25 transition-all duration-300 group flex flex-col justify-between"
+                  className="p-6 sm:p-8 h-full bg-surface-card border-surface-border hover:border-primary/40 transition-all duration-300 group flex flex-col justify-between"
                 >
                   <div>
                     {/* Card Header */}
@@ -126,18 +126,18 @@ export default function Skills() {
                           <Icon size={24} />
                         </div>
                         <div>
-                          <h3 className="text-white font-bold text-lg md:text-xl tracking-tight group-hover:text-primary transition-colors">
+                          <h3 className="text-foreground font-bold text-lg md:text-xl tracking-tight group-hover:text-primary transition-colors">
                             {cat.label}
                           </h3>
-                          <p className="text-gray-400 font-mono text-xs mt-0.5">
+                          <p className="text-muted-foreground font-mono text-xs mt-0.5">
                             {cat.description}
                           </p>
                         </div>
                       </div>
 
                       <span
-                        className="w-2.5 h-2.5 rounded-full shadow-[0_0_12px_currentColor] mt-2 animate-pulse flex-shrink-0"
-                        style={{ backgroundColor: cat.color, color: cat.color }}
+                        className="w-2.5 h-2.5 rounded-full ring-2 ring-surface mt-2 flex-shrink-0"
+                        style={{ backgroundColor: cat.color }}
                       />
                     </div>
 
@@ -147,10 +147,10 @@ export default function Skills() {
                         <div
                           key={skill.name}
                           onMouseEnter={() => playHover()}
-                          className="px-3 py-1.5 rounded-xl border border-white/10 bg-white/[0.03] text-gray-300 hover:text-white hover:border-primary/50 hover:bg-white/[0.07] transition-all duration-200 cursor-default flex items-center gap-1.5"
+                          className="px-3 py-1.5 rounded-xl border border-surface-border bg-surface-elevated/40 text-muted-foreground hover:text-foreground hover:border-primary/40 hover:bg-surface-elevated transition-all duration-200 cursor-default flex items-center gap-1.5"
                         >
-                          <span className="text-xs font-mono font-medium text-white">{skill.name}</span>
-                          <span className="text-[10px] font-mono text-gray-500 hidden sm:inline">· {skill.note}</span>
+                          <span className="text-xs font-mono font-medium text-foreground">{skill.name}</span>
+                          <span className="text-[10px] font-mono text-muted-foreground/80 hidden sm:inline">· {skill.note}</span>
                         </div>
                       ))}
                     </div>

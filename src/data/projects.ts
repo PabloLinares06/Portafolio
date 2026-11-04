@@ -74,7 +74,7 @@ export const projects: Record<string, ProjectData> = {
       "/projects/natechnology/gallery/mobile/05_Mobile_Carrito_Mi_Pedido.png"
     ],
     galleryItems: [
-      // 🛒 TIENDA PÚBLICA (DESKTOP)
+      // [MODULO: TIENDA PUBLICA DESKTOP]
       {
         src: "/projects/natechnology/gallery/tienda/03_Catalogo_Hero_y_Banners.png",
         title: "Catálogo Público & Banners Dinámicos",
@@ -128,7 +128,7 @@ export const projects: Record<string, ProjectData> = {
         description: "Acceso protegido mediante credenciales para clientes verificados con tarifas especiales de distribuidor."
       },
 
-      // ⚙️ PANEL ADMINISTRADOR, ERP & BI
+      // [MODULO: PANEL ADMINISTRADOR, ERP & BI]
       {
         src: "/projects/natechnology/gallery/admin/05_Admin_Pedidos_y_EFFI.png",
         title: "Integración Oficial EFFI ERP & Pedidos",
@@ -212,7 +212,7 @@ export const projects: Record<string, ProjectData> = {
         description: "Autenticación robusta con JWT, refresh tokens seguros y control de accesos basados en roles administrativos."
       },
 
-      // 📱 EXPERIENCIA MÓVIL (RESPONSIVE UX)
+      // [MODULO: EXPERIENCIA MOVIL (RESPONSIVE UX)]
       {
         src: "/projects/natechnology/gallery/mobile/03_Mobile_Home_Hero_Banners.png",
         title: "Mobile Home: Banners & Navegación",
@@ -304,7 +304,7 @@ export const projects: Record<string, ProjectData> = {
       "/projects/fuelix/gallery/corporativo/04_Reportes_Regulatorios_SICOM.png"
     ],
     galleryItems: [
-      // ⛽ OPERACIONES & TELEMETRÍA DE TANQUES
+      // [MODULO: OPERACIONES & TELEMETRIA DE TANQUES]
       {
         src: "/projects/fuelix/gallery/operaciones/01_Dashboard_Consolidado.png",
         title: "Dashboard Consolidado de Operaciones",
@@ -357,7 +357,7 @@ export const projects: Record<string, ProjectData> = {
         description: "Registro de traslados, compras de combustible y ajustes de merma con trazabilidad completa."
       },
 
-      // ⏱️ GESTIÓN DE TURNOS & NÓMINA DE PISTA
+      // [MODULO: GESTION DE TURNOS & NOMINA DE PISTA]
       {
         src: "/projects/fuelix/gallery/turnos/01_Grilla_Turnos.png",
         title: "Grilla Operativa de Turnos en Isla",
@@ -410,7 +410,7 @@ export const projects: Record<string, ProjectData> = {
         description: "Configuración de datos contractuales, rol de permisos y PIN de acceso a la terminal táctil de isla."
       },
 
-      // 🏢 VENTAS CORPORATIVAS & REGULACIÓN SICOM
+      // [MODULO: VENTAS CORPORATIVAS & REGULACION SICOM]
       {
         src: "/projects/fuelix/gallery/corporativo/01_Despacho_Corporativo.png",
         title: "Despacho y Crédito a Flotas Corporativas",
@@ -445,7 +445,7 @@ export const projects: Record<string, ProjectData> = {
         description: "Ajustes de comunicación con los nodos Raspberry Pi, baud rate de bucle serial y parámetros fiscales."
       },
 
-      // 📱 EXPERIENCIA MÓVIL (PWA EN PATIO DE ESTACIÓN)
+      // [MODULO: EXPERIENCIA MOVIL (PWA EN PATIO DE ESTACION)]
       {
         src: "/projects/fuelix/gallery/mobile/03_Mobile_Dashboard.png",
         title: "Mobile Dashboard: Métricas de Pista",
@@ -498,7 +498,7 @@ export const projects: Record<string, ProjectData> = {
         description: "Acceso simplificado con PIN para tabletas de operación en isla de dispensadores."
       },
 
-      // 🌐 LANDING & ACCESO
+      // [MODULO: LANDING & ACCESO]
       {
         src: "/projects/fuelix/gallery/landing/01_Landing_Hero.png",
         title: "Landing Page: Propuesta de Valor & Forecourt",

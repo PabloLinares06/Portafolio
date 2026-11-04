@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Activity, Clock, MapPin, Terminal, Search } from 'lucide-react';
+import { Activity, Clock, MapPin, Terminal, Search, Keyboard, FileText } from 'lucide-react';
 import { playOpen, playClick } from '@/utils/audio';
 
 export default function TelemetryHUD() {
@@ -36,27 +36,32 @@ export default function TelemetryHUD() {
     window.dispatchEvent(new CustomEvent('open-terminal'));
   };
 
+  const openShortcuts = () => {
+    playOpen();
+    window.dispatchEvent(new CustomEvent('open-shortcuts'));
+  };
+
   return (
-    <div className="w-full border-y border-white/5 bg-[#040608]/80 backdrop-blur-md py-3 px-6 select-none relative z-20">
-      <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4 font-mono text-[11px] text-gray-400">
+    <div className="w-full border-y border-surface-border bg-surface/85 backdrop-blur-md py-2.5 px-6 select-none relative z-20 transition-colors">
+      <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4 font-mono text-[11px] text-muted-foreground">
         
         {/* Left: Location & Local Time */}
         <div className="flex items-center gap-5">
-          <div className="flex items-center gap-1.5 text-gray-300">
+          <div className="flex items-center gap-1.5 text-foreground/80">
             <MapPin size={12} className="text-primary flex-shrink-0" />
             <span>MEDELLÍN, CO</span>
-            <span className="text-gray-600 hidden sm:inline">[6.2442° N, 75.5812° W]</span>
+            <span className="text-muted-foreground/60 hidden sm:inline">[6.2442° N, 75.5812° W]</span>
           </div>
 
-          <div className="flex items-center gap-1.5 text-gray-400">
-            <Clock size={12} className="text-cyan-400 flex-shrink-0" />
+          <div className="flex items-center gap-1.5 text-muted-foreground">
+            <Clock size={12} className="text-primary flex-shrink-0" />
             <span>{time || '--:--:--'} COT (GMT-5)</span>
           </div>
         </div>
 
         {/* Center: System Status */}
-        <div className="hidden lg:flex items-center gap-2 text-emerald-400 font-bold">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+        <div className="hidden lg:flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-medium">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
           <span>SYS_STATUS: ALL SERVICES OPERATIONAL // 0.2ms LOCAL LATENCY</span>
         </div>
 
@@ -64,23 +69,47 @@ export default function TelemetryHUD() {
         <div className="flex items-center gap-3">
           <button
             onClick={openCmd}
-            className="flex items-center gap-1 hover:text-white transition-colors cursor-pointer"
-            title="Paleta de Comandos"
+            className="flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors cursor-pointer py-1 px-1.5 rounded hover:bg-surface-elevated/60"
+            title="Paleta de Comandos (Ctrl+K)"
           >
             <Search size={11} className="text-primary" />
-            <span className="text-gray-300">Ctrl+K</span>
+            <span className="font-semibold text-foreground/90">Ctrl+K</span>
           </button>
 
-          <span className="text-gray-700">·</span>
+          <span className="text-surface-border">·</span>
 
           <button
             onClick={openTerminal}
-            className="flex items-center gap-1 hover:text-white transition-colors cursor-pointer"
-            title="Consola Terminal"
+            className="flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors cursor-pointer py-1 px-1.5 rounded hover:bg-surface-elevated/60"
+            title="Consola Terminal (`)"
           >
-            <Terminal size={11} className="text-cyan-400" />
-            <span className="text-gray-300">` Consola</span>
+            <Terminal size={11} className="text-primary" />
+            <span className="font-semibold text-foreground/90">` Consola</span>
           </button>
+
+          <span className="text-surface-border hidden sm:inline">·</span>
+
+          <button
+            onClick={openShortcuts}
+            className="hidden sm:flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors cursor-pointer py-1 px-1.5 rounded hover:bg-surface-elevated/60"
+            title="Guía de Atajos de Teclado (?)"
+          >
+            <Keyboard size={11} className="text-primary" />
+            <span className="font-semibold text-foreground/90">? Atajos</span>
+          </button>
+
+          <span className="text-surface-border hidden md:inline">·</span>
+
+          <a
+            href="/llms.txt"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden md:flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors py-1 px-1.5 rounded hover:bg-surface-elevated/60"
+            title="Formato Markdown estructurado para LLMs y Agentes"
+          >
+            <FileText size={11} className="text-primary" />
+            <span className="font-semibold text-foreground/90">llms.txt</span>
+          </a>
         </div>
 
       </div>

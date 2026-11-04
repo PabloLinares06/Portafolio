@@ -80,8 +80,8 @@ export default function CustomCursor() {
         ref={followerRef}
         className={`fixed top-0 left-0 rounded-full pointer-events-none z-[200] hidden md:block transition-[width,height,background-color,border-color,box-shadow] duration-200 ease-out ${
           isHovering
-            ? 'w-14 h-14 bg-primary/15 border border-primary/60 shadow-[0_0_25px_rgba(0,112,243,0.35)]'
-            : 'w-7 h-7 bg-transparent border-[1.5px] border-primary/80 shadow-[0_0_12px_rgba(0,112,243,0.2)]'
+            ? 'w-14 h-14 bg-primary/15 border border-primary/60 shadow-[0_0_20px_rgba(16,185,129,0.3)]'
+            : 'w-7 h-7 bg-transparent border-[1.5px] border-primary/80 shadow-[0_0_10px_rgba(16,185,129,0.2)]'
         }`}
         style={{
           opacity: isVisible ? 1 : 0,
@@ -93,7 +93,7 @@ export default function CustomCursor() {
       <div
         ref={dotRef}
         className={`fixed top-0 left-0 rounded-full pointer-events-none z-[201] hidden md:block transition-all duration-150 ${
-          isHovering ? 'w-2 h-2 bg-primary-light shadow-[0_0_8px_#60a5fa]' : 'w-1.5 h-1.5 bg-primary'
+          isHovering ? 'w-2 h-2 bg-primary-light shadow-[0_0_8px_rgba(52,211,153,0.8)]' : 'w-1.5 h-1.5 bg-primary'
         }`}
         style={{
           opacity: isVisible ? 1 : 0,
